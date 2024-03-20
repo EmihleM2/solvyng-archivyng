@@ -30,13 +30,13 @@ Subscription Model:
 Implement a user subscription system for application access.
 
 Technology Stack:
-Frontend: Choose a framework like React, Angular, or Vue.js (Flask)
-Backend: Node.js with a framework like Express.js or a serverless framework on AWS (Lambda)
+Frontend: (Flask)
+Backend: 
 Database: Amazon DynamoDB (NoSQL) for scalability and flexibility.
 Storage: Amazon S3 for secure and durable document storage.
 Search: Amazon S3 Bitrange
 Security & Authentication: Amazon Cognito for user authentication and authorization.
-Subscription Management: AWS Billing or a third-party subscription management service (mention the specific one you choose if using a third-party tool)
+Subscription Management: 
 
 Disclaimer:
 This README serves as a starting point and may evolve as the project progresses.
