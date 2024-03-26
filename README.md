@@ -46,7 +46,7 @@ Git branching strategy:
 
 Main branch stability: The core principle is to maintain a stable main branch that reflects the production-ready code. This ensures always deploy a working version from this branch.
 
-Dev staging branch: This id going to ensure that all the changes made are ready for production before going going to main branch.
+Dev staging branch: This is going to ensure that all the changes made are ready for production before going to main branch.
 
 Feature branches for isolated development: Create feature branches for new features or bug fixes. These branches branch off from the main branch and can be short-lived, focused on a single unit of work.
 
