@@ -29,9 +29,9 @@ Allow users to revert to previous document versions if necessary.
 
 Technology Stack:
 
-Frontend: Vue.js
+Frontend: React
 
-Backend: Flask (Python)
+Backend: Nodejs
 
 Database: Amazon DynamoDB (NoSQL)
 
