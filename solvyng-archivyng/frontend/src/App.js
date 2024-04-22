@@ -9,7 +9,7 @@ import { Amplify } from 'aws-amplify';
 import amplifyconfig from './amplifyconfiguration.json';
 import ResetPassword from './components/auth/reset-password';
 import ConfirmResetPassword from './components/auth/confirm-reset-password';
-
+//Amplify environment is to be changed before running auth pages
 
 Amplify.configure(amplifyconfig);
 
