@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './auth.css';
-import { FaUser, FaLock } from "react-icons/fa";
+import { User, Lock} from 'lucide-react';
 import { signIn } from 'aws-amplify/auth';
 import { useNavigate } from 'react-router-dom'
 
@@ -47,18 +47,12 @@ const Login = () => {
 
     if (name === 'password') {
       setPassword(value);
-      setPasswordError(validatePassword(value) ? '' : 'Password must be at least 7 characters long');
+      setPasswordError(validatePassword(value) ? '' : 'Atleast 1 Uppercase, 1 lower, 1 digit, 1 special char, 7 chars long!');
     }
   }
 
   const handleLogin = async (evt) => {
     evt.preventDefault();
-
-    if (emailError || passwordError) {
-      console.log('Cannot login due to validation errors');
-      return; // Exit function when there are errors
-    }
-
     try {
       console.log(username)
       console.log(password)
@@ -85,7 +79,7 @@ const Login = () => {
           value={username}
           onChange={handleInput}
         />
-        <FaUser className="icon" />
+        <User className="icon" />
         {emailError && <span>{emailError}</span>}
       </div>
       <div>
@@ -97,7 +91,7 @@ const Login = () => {
           value={password}
           onChange={handleInput}
         />
-        <FaLock className="icon" />
+        <Lock className="icon" />
         {passwordError && <span>{passwordError}</span>}
       </div>
       <div>

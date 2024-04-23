@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './auth.css';
-import { FaUser, FaCode } from "react-icons/fa";
+import { User, Code} from 'lucide-react';
 import { confirmSignUp } from 'aws-amplify/auth';
 
 function Verify() {
@@ -74,7 +74,7 @@ function Verify() {
                     value={username}
                     onChange={handleInput}
                 />
-                <FaUser className="icon" />
+                <User className="icon" />
                 {usernameError && <span>{usernameError}</span>}
             </div>
             <div>
@@ -86,7 +86,7 @@ function Verify() {
                     value={confirmationCode}
                     onChange={handleInput}
                 />
-                <FaCode className="icon" />
+                <Code className="icon" />
                 {confirmationCodeError && <span>{confirmationCodeError}</span>}
             </div>
             <div>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './auth.css';
-import { FaUser, FaLock, FaCode } from "react-icons/fa";
+import { User, Lock, Code} from 'lucide-react';
 import { confirmResetPassword } from 'aws-amplify/auth';
 
 function ConfirmResetPassword() {
@@ -33,7 +33,7 @@ function ConfirmResetPassword() {
     }
 
     const validateRepeatPassword = (repeatNewPassword) => {
-        return repeatNewPassword == newPassword;
+        return repeatNewPassword === newPassword;
       }
 
     const handleInput = (evt) => {
@@ -53,7 +53,7 @@ function ConfirmResetPassword() {
 
         if (name === 'newPassword') {
             setnewPassword(value);
-            setnewPasswordError(validatePassword(value) ? '' : 'Password must be at least 7 characters long');
+            setnewPasswordError(validatePassword(value) ? '' : 'Atleast 1 Uppercase, 1 lower, 1 digit, 1 special char, 7 chars long!');
         }
 
         if (name === 'repeatNewPassword') {
@@ -87,7 +87,7 @@ function ConfirmResetPassword() {
                     value={username}
                     onChange={handleInput}
                 />
-                <FaUser className="icon" />
+                <User className="icon" />
                 {usernameError && <span>{usernameError}</span>}
             </div>
             <div>
@@ -99,7 +99,7 @@ function ConfirmResetPassword() {
                     value={confirmationCode}
                     onChange={handleInput}
                 />
-                <FaCode className="icon" />
+                <Code className="icon" />
                 {confirmationCodeError && <span>{confirmationCodeError}</span>}
             </div>
             <div>
@@ -111,7 +111,7 @@ function ConfirmResetPassword() {
                     value={newPassword}
                     onChange={handleInput}
                 />
-                <FaLock className="icon" />
+                <Lock className="icon" />
                 {newPasswordError && <span>{newPasswordError}</span>}
             </div>
             <div>
@@ -123,7 +123,7 @@ function ConfirmResetPassword() {
                     value={repeatNewPassword}
                     onChange={handleInput}
                 />
-                <FaLock className="icon" />
+                <Lock className="icon" />
                 {repeatNewPasswordError && <span>{repeatNewPasswordError}</span>}
             </div>
             <div>

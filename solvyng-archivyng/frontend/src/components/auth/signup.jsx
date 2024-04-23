@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import './auth.css';
-import { FaUser, FaLock } from "react-icons/fa";
+import { User, Lock} from 'lucide-react';
 import { signUp } from 'aws-amplify/auth';
 import { useNavigate } from 'react-router-dom';
 
@@ -56,7 +56,7 @@ const Signup = () => {
         }
         if (name === 'password') {
             setPassword(value);
-            setPasswordError(validatePassword(value) ? '' : 'Password must be at least 7 characters long');
+            setPasswordError(validatePassword(value) ? '' : 'Atleast 1 Uppercase, 1 lower, 1 digit, 1 special char, 7 chars long!');
         }
     }
 
@@ -100,7 +100,7 @@ const Signup = () => {
                     value={fullname}
                     onChange={handleInput}
                 />
-                <FaUser className="icon" />
+                <User className="icon" />
                 {fullnameError && <span>{fullnameError}</span>}
             </div>
             <div>
@@ -112,7 +112,7 @@ const Signup = () => {
                     value={username}
                     onChange={handleInput}
                 />
-                <FaUser className="icon" />
+                <User className="icon" />
                 {usernameError && <span>{usernameError}</span>}
             </div>
             <div>
@@ -124,7 +124,7 @@ const Signup = () => {
                     value={email}
                     onChange={handleInput}
                 />
-                <FaUser className="icon" />
+                <User className="icon" />
                 {emailError && <span>{emailError}</span>}
             </div>
             <div>
@@ -136,7 +136,7 @@ const Signup = () => {
                     value={password}
                     onChange={handleInput}
                 />
-                <FaLock className="icon" />
+                <Lock className="icon" />
                 {passwordError && <span>{passwordError}</span>}
             </div>
             <div>
