@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './auth.css';
-import { User, Lock, Code} from 'lucide-react';
+import { Mail, Lock, Code} from 'lucide-react';
 import { confirmResetPassword } from 'aws-amplify/auth';
 
 function ConfirmResetPassword() {
@@ -87,7 +87,7 @@ function ConfirmResetPassword() {
                     value={username}
                     onChange={handleInput}
                 />
-                <User className="icon" />
+                <Mail className="icon" />
                 {usernameError && <span>{usernameError}</span>}
             </div>
             <div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './auth.css';
-import { User} from 'lucide-react';
+import { Mail } from 'lucide-react';
 import { resetPassword } from 'aws-amplify/auth';
 import { useNavigate } from 'react-router-dom';
 
@@ -69,7 +69,7 @@ const ResetPassword = () => {
           value={username}
           onChange={handleInput}
         />
-        <User className="icon" />
+        <Mail className="icon" />
         {usernameError && <span>{usernameError}</span>}
       </div>
       <div>

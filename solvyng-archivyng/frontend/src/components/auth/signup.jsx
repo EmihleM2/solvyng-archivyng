@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import './auth.css';
-import { User, Lock} from 'lucide-react';
+import { User, Lock, Mail} from 'lucide-react';
 import { signUp } from 'aws-amplify/auth';
 import { useNavigate } from 'react-router-dom';
 
@@ -124,7 +124,7 @@ const Signup = () => {
                     value={email}
                     onChange={handleInput}
                 />
-                <User className="icon" />
+                <Mail className="icon" />
                 {emailError && <span>{emailError}</span>}
             </div>
             <div>

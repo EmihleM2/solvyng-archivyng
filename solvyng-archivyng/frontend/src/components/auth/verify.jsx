@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './auth.css';
-import { User, Code} from 'lucide-react';
+import { Mail, Code } from 'lucide-react';
 import { confirmSignUp } from 'aws-amplify/auth';
+import AWS from 'aws-sdk'
 
 function Verify() {
     const navigate = useNavigate()
@@ -45,22 +46,49 @@ function Verify() {
 
     async function handleSignUpConfirmation(evt) {
         evt.preventDefault();
-            try {
-                console.log(username)
-                console.log(confirmationCode)
-                const { isSignUpComplete } = await confirmSignUp({
-                    username,
-                    confirmationCode
-                });
-                console.log('Successful verification')
-                if (isSignUpComplete === true) {
-                    navigate("/login");
-                }
-            } catch (error) {
-                setErrors('Invalid details, Try again!')
-                console.log('error confirming sign up', error);
+        try {
+            console.log(username)
+            console.log(confirmationCode)
+            const { isSignUpComplete } = await confirmSignUp({
+                username,
+                confirmationCode
+            });
+            console.log('Successful verification')
+            if (isSignUpComplete === true) {
+                subscribeToTopic()
+                navigate("/login");
             }
+        } catch (error) {
+            setErrors('Invalid details, Try again!')
+            console.log('error confirming sign up', error);
+        }
     }
+
+    AWS.config.update({
+        region: 'eu-west-1',
+        accessKeyId: 'AKIAWUTJI5P3O3ER4UWG',
+        secretAccessKey: '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',
+    });
+
+    const sns = new AWS.SNS();
+
+    const subscribeToTopic = () => {
+        const params = {
+            Protocol: "email",
+            TopicArn: 'arn:aws:sns:eu-west-1:456561060854:solvyng-archivyng',
+            Endpoint: username
+        };
+
+        sns.subscribe(params, (err, data) => {
+            if (err) {
+                console.error(err, data);
+            } else {
+                console.log(`Subscribed email to topic: ${params.TopicArn}`)
+            }
+        });
+    };
+
+
 
     return (
         <form className='form-verify'>
@@ -74,11 +102,11 @@ function Verify() {
                     value={username}
                     onChange={handleInput}
                 />
-                <User className="icon" />
+                <Mail className="icon" />
                 {usernameError && <span>{usernameError}</span>}
             </div>
             <div>
-                <label>Password:</label>
+                <label>Enter code you recieved in your email:</label>
                 <input
                     type="number"
                     name="confirmationCode"
@@ -90,7 +118,7 @@ function Verify() {
                 {confirmationCodeError && <span>{confirmationCodeError}</span>}
             </div>
             <div>
-                <button className="button" onClick={handleSignUpConfirmation}>Verify</button>
+                <button className="button" onClick={handleSignUpConfirmation}>Verify Sign-up</button>
             </div>
             {errors && <span className='error-span-verify'>{errors}</span>}
         </form>

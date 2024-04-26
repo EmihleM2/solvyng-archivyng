@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@vitejs/plugin-react": "^4.2.1",
     "aws-amplify": "^6.0.28",
+    "aws-sdk": "^2.1604.0",
     "bootstrap": "^5.3.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
