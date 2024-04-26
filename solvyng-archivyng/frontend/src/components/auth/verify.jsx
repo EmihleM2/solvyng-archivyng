@@ -16,6 +16,22 @@ function Verify() {
 
     const [errors, setErrors] = useState('');
 
+    const [isOpen, setIsOpen] = useState(false);
+
+    const openDialog = () => {
+        setIsOpen(true);
+    };
+
+    const closeDialog = () => {
+        setIsOpen(false);
+    };
+
+    const handlegotoLogin = () => {
+        navigate('/login')
+        console.log("Confirm button clicked");
+        closeDialog();
+    };
+
     const validateEmail = (username) => {
         const emailFormat = /\S+@\S+\.\S+/;
         return emailFormat.test(username);
@@ -55,15 +71,14 @@ function Verify() {
             });
             console.log('Successful verification')
             if (isSignUpComplete === true) {
-                subscribeToTopic()
-                navigate("/login");
+                publishToTopic()
+                openDialog();
             }
         } catch (error) {
             setErrors('Invalid details, Try again!')
             console.log('error confirming sign up', error);
         }
     }
-
     AWS.config.update({
         region: 'eu-west-1',
         accessKeyId: 'AKIAWUTJI5P3O3ER4UWG',
@@ -72,56 +87,72 @@ function Verify() {
 
     const sns = new AWS.SNS();
 
-    const subscribeToTopic = () => {
-        const params = {
-            Protocol: "email",
+    const publishToTopic = () => {
+        const customEmailContent = `Welcome to Solvyng Archivyng!\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultrices gravida congue. \n\nCras diam tortor, vehicula eu semper id, varius sed urna. Fusce sed elit quis mi placerat malesuada.Suspendisse potenti. Aliquam finibus finibus lorem in tempor. Nunc blandit tellus et diam faucibus facilisis. Praesent vel venenatis erat, non consectetur dolor. \n\n @2024 Solvyng Archivyng. All rights reserved.\n\nWish to Unsubscribe, see below: `;
+
+        const publishParams = {
+            Message: JSON.stringify({
+                default: 'Hello from Solvyng Archivyng!',
+                email: customEmailContent,
+            }),
+            Subject: 'Solvyng Archivyng',
+            MessageStructure: 'json',
             TopicArn: 'arn:aws:sns:eu-west-1:456561060854:solvyng-archivyng',
-            Endpoint: username
         };
 
-        sns.subscribe(params, (err, data) => {
+        sns.publish(publishParams, (err, data) => {
             if (err) {
                 console.error(err, data);
             } else {
-                console.log(`Subscribed email to topic: ${params.TopicArn}`)
+                console.log(`Published message to: ${publishParams.TopicArn}`);
             }
         });
-    };
-
+    }
 
 
     return (
-        <form className='form-verify'>
-            <h1>Verification</h1>
-            <div>
-                <label>Email:</label>
-                <input
-                    type="text"
-                    name="username"
-                    placeholder='example@gmail.com'
-                    value={username}
-                    onChange={handleInput}
-                />
-                <Mail className="icon" />
-                {usernameError && <span>{usernameError}</span>}
-            </div>
-            <div>
-                <label>Enter code you recieved in your email:</label>
-                <input
-                    type="number"
-                    name="confirmationCode"
-                    placeholder='******'
-                    value={confirmationCode}
-                    onChange={handleInput}
-                />
-                <Code className="icon" />
-                {confirmationCodeError && <span>{confirmationCodeError}</span>}
-            </div>
-            <div>
-                <button className="button" onClick={handleSignUpConfirmation}>Verify Sign-up</button>
-            </div>
-            {errors && <span className='error-span-verify'>{errors}</span>}
-        </form>
+        <><div>
+            {isOpen && (
+                <div className="dialog-overlay-verify">
+                    <div className="dialog-content">
+                        <h2>Information:</h2>
+                        <p>Verification Successful! Click Ok to continue...</p>
+                        <button onClick={handlegotoLogin}>Ok</button>
+                    </div>
+                </div>
+            )}
+        </div>
+            <form className='form-verify'>
+                <h1>Verification</h1>
+                <div>
+                    <label>Email:</label>
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder='example@gmail.com'
+                        value={username}
+                        onChange={handleInput}
+                    />
+                    <Mail className="icon" />
+                    {usernameError && <span>{usernameError}</span>}
+                </div>
+                <div>
+                    <label>Enter code you recieved in your email:</label>
+                    <input
+                        type="number"
+                        name="confirmationCode"
+                        placeholder='******'
+                        value={confirmationCode}
+                        onChange={handleInput}
+                    />
+                    <Code className="icon" />
+                    {confirmationCodeError && <span>{confirmationCodeError}</span>}
+                </div>
+                <div>
+                    <button className="button" onClick={handleSignUpConfirmation}>Verify Sign-up</button>
+                </div>
+                {errors && <span className='error-span-verify'>{errors}</span>}
+            </form></>
     )
 }
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './auth.css';
-import { Lock, Mail} from 'lucide-react';
+import { Lock, Mail } from 'lucide-react';
 import { signIn } from 'aws-amplify/auth';
 import { useNavigate } from 'react-router-dom'
 import AWS from 'aws-sdk'
@@ -12,7 +12,8 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [errors, setErrors] = useState('');
-  
+  const [loading, setLoading] = useState(false);
+
 
   const ForgotLink = () => {
     navigate("/reset-password");
@@ -62,63 +63,12 @@ const Login = () => {
       });
       console.log(isSignedIn)
       console.log('Sign in complete')
-      publishToTopic()
       navigate("/");
     } catch (error) {
       setErrors('Incorrect login details, Try again!')
       console.log('Unable to login, error:', error);
     }
   }
-
-  AWS.config.update({
-    region: 'eu-west-1',
-    accessKeyId: 'AKIAWUTJI5P3O3ER4UWG',
-    secretAccessKey: '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',
-});
-
-const sns = new AWS.SNS();
-
-const publishToTopic = () => {
-    const customEmailContent = `
-      <html>
-        <head>
-          <style>
-            /* Your custom CSS styles for the email */
-          </style>
-        </head>
-        <body>
-          <header>
-            <h1>Welcome to Solvyng Archivyng!</h1>
-          </header>
-          <main>
-            <p>Hello from React!</p>
-            <p>This is a custom email content example.</p>
-          </main>
-          <footer>
-            <p>&copy; 2024 Solvyng Archivyng. All rights reserved.</p>
-          </footer>
-        </body>
-      </html>
-    `;
-
-    const publishParams = {
-        Message: JSON.stringify({
-            default: 'Hello from Solvyng Archivyng!',
-            email: customEmailContent,
-        }),
-        MessageStructure: 'json',
-        TopicArn: 'arn:aws:sns:eu-west-1:456561060854:solvyng-archivyng',
-    };
-
-    
-    sns.publish(publishParams, (err, data) => {
-      if (err) {
-          console.error(err, data);
-      } else {
-          console.log(`Published message to: ${publishParams.TopicArn}`);
-      }
-  });
-};
 
   return (
     <form className='form-login'>

@@ -4,6 +4,7 @@ import './auth.css';
 import { User, Lock, Mail} from 'lucide-react';
 import { signUp } from 'aws-amplify/auth';
 import { useNavigate } from 'react-router-dom';
+import AWS from 'aws-sdk'
 
 const Signup = () => {
     const navigate = useNavigate()
@@ -16,6 +17,24 @@ const Signup = () => {
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     // const [errors, setErrors] = useState('');
+
+    
+    const [isOpen, setIsOpen] = useState(false);
+
+    const openDialog = () => {
+        setIsOpen(true);
+    };
+
+    const closeDialog = () => {
+        setIsOpen(false);
+    };
+
+    const handlegotoLogin = () => {
+        navigate('/verify')
+        console.log("Ok button clicked");
+        closeDialog();
+    };
+
 
     const loginLink = () => {
         navigate("/login");
@@ -60,6 +79,30 @@ const Signup = () => {
         }
     }
 
+    
+    AWS.config.update({
+        region: 'eu-west-1',
+        accessKeyId: 'AKIAWUTJI5P3O3ER4UWG',
+        secretAccessKey: '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',
+    });
+
+    const sns = new AWS.SNS();
+
+    const subscribeToTopic = () => {
+        const params = {
+            Protocol: "email",
+            TopicArn: 'arn:aws:sns:eu-west-1:456561060854:solvyng-archivyng',
+            Endpoint: email
+        };
+
+        sns.subscribe(params, (err, data) => {
+            if (err) {
+                console.error(err, data);
+            } else {
+                console.log(`Subscribed email to topic: ${params.TopicArn}`)
+            }
+        });
+    };
 
 
     const handleSignUp = async (evt) => {
@@ -82,13 +125,25 @@ const Signup = () => {
                     }
                 });
                 console.log("Sign up complete:", userId)
-                navigate("/verify");
+                subscribeToTopic()
+                openDialog();
             } catch (error) {
                 console.log('Unable to sign up, error:', error);
                 // setErrors('Unable to register, Try again!')
             }
         }
     return (
+        <><div>
+        {isOpen && (
+            <div className="dialog-overlay">
+                <div className="dialog-content">
+                    <h2>Information:</h2>
+                    <p>Please confirm your subscription to AWS Solvyng Archivyng <br></br> in your emails before verifying your sign up on the next page.<br></br>Click Ok to continue...</p>
+                    <button onClick={handlegotoLogin}>Ok</button>
+                </div>
+            </div>
+        )}
+    </div>
         <form className='form-sign-up'>
             <h1>Sign up</h1>
             <div>
@@ -148,7 +203,7 @@ const Signup = () => {
             <div>
                 <button className="button-Google">Sign up with Google</button>
             </div>
-        </form>
+        </form></>
     );
 };
 
