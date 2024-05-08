@@ -3,7 +3,7 @@ h1 {
   text-align: center;
 }
 
-body {
+body .body-home {
   font-family: "Poppins", sans-serrif;
   display: flex;
   justify-content: center;

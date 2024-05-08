@@ -17,8 +17,8 @@ const HomePage = () => {
   }
   return (
     <><h1>Landing Page</h1><div>
-        <button type="submit" className="button-landpage" onClick={handleSignOut}> Log Out </button>
-      </div></>
+      <button type="submit" className="button-landpage" onClick={handleSignOut}> Log Out </button>
+    </div></>
 
   );
 };

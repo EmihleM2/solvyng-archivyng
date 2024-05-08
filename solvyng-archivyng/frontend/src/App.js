@@ -3,8 +3,10 @@ import React from 'react';
 import Login from './components/auth/login';
 import Signup from './components/auth/signup';
 import Verify from './components/auth/verify';
+import Notifications from './components/pages/notifications';
 import HomePage from './components/pages/homepage';
-import {Route, Routes} from 'react-router-dom'
+import MailDetails from './components/pages/maildetails';
+import {Route, Routes} from 'react-router-dom';
 import { Amplify } from 'aws-amplify';
 import amplifyconfig from './amplifyconfiguration.json';
 import ResetPassword from './components/auth/reset-password';
@@ -20,6 +22,8 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/verify" element={<Verify />} />
+      <Route path="/maildetails" element={<MailDetails />} />
+      <Route path="/notifications" element={<Notifications />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/confirm-reset-password" element={<ConfirmResetPassword />} />
     </Routes>

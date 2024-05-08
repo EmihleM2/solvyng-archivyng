@@ -29,7 +29,7 @@ const Signup = () => {
         setIsOpen(false);
     };
 
-    const handlegotoLogin = () => {
+    const handlegotoVerify = () => {
         navigate('/verify')
         console.log("Ok button clicked");
         closeDialog();
@@ -139,7 +139,7 @@ const Signup = () => {
                 <div className="dialog-content">
                     <h2>Information:</h2>
                     <p>Please confirm your subscription to AWS Solvyng Archivyng <br></br> in your emails before verifying your sign up on the next page.<br></br>Click Ok to continue...</p>
-                    <button onClick={handlegotoLogin}>Ok</button>
+                    <button onClick={handlegotoVerify}>Ok</button>
                 </div>
             </div>
         )}

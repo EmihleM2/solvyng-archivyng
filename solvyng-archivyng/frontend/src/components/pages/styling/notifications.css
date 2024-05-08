@@ -1,0 +1,69 @@
+.boxes {
+  margin-bottom: 10px;
+  background: #ccc;
+  width: 600px;
+  position: relative;
+  padding: 10px;
+  border-radius: 2px;
+  background-color: rgba(85, 82, 82, 0.24);
+  align-items: center;
+  border: 2px;
+  border-color: rgb(0, 0, 0);
+}
+
+.boxes-notifications {
+  margin-bottom: 10px;
+  background: #ccc;
+  width: 600px;
+  position: relative;
+  padding: 10px;
+  border-radius: 2px;
+  background-color: rgba(85, 82, 82, 0.24);
+  align-items: center;
+  border: 2px;
+  border-color: rgb(0, 0, 0);
+  height: 90px;
+}
+
+.icon-notifications {
+  position: inherit;
+  translate: 2199% -240%;
+  font-size: 25px;
+  size: 150px;
+  color: black;
+  cursor: pointer;
+}
+
+.icon-mail-details {
+  position: inherit;
+  translate: 2229% -80%;
+  font-size: 25px;
+  size: 150px;
+  color: black;
+  cursor: pointer;
+}
+
+.line {
+  color: black;
+  size: 5px;
+  height: 3px;
+  background-color: black;
+}
+
+.h3-notifications {
+  cursor: pointer;
+}
+
+.p-notifications {
+  cursor: pointer;
+  max-height: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.message-container {
+  max-height: 20px; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
