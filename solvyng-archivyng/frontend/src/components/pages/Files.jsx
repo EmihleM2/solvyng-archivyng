@@ -2,7 +2,40 @@ import React, { useState } from "react";
 import useQuery from "../../hooks/useQuery.js";
 import NavBar from "../pages/Navbar.jsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CameraIcon } from "lucide-react";
+import {
+  ArrowUpRight,
+  File,
+  Home,
+  ListFilter,
+  Package2,
+  PanelLeft,
+  Search,
+  Settings,
+  AudioLines,
+  Bell,
+  CameraIcon,
+  Clock,
+  Folder,
+  MoreHorizontal,
+  Share2,
+  Share2Icon,
+  Star,
+  VideoIcon,
+  UploadCloudIcon,
+  LayoutDashboardIcon,
+  MoreVertical,
+} from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+
 
 const URL = "/images";
 
@@ -24,18 +57,65 @@ const Files = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {imageUrls.length > 0 ? (
             imageUrls.map((url) => (
-              <Card key={url} className="rounded-lg shadow-lg">
+              <Card key={url} className="rounded-lg">
                 <CardHeader>
-                  <CardTitle>
-                    <CameraIcon className="h-5 w-5" />
-                  </CardTitle>
+                  {/* <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="teal"
+                        aria-haspopup="true"
+                        size="icon"
+                        className="ml-auto"
+                      >
+                        <MoreVertical className="h-4 w-4" />
+                        <span className="sr-only">Toggle menu</span>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                      <DropdownMenuItem>Edit</DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() =>
+                          handleDelete(url.split("/").pop().split("?")[0])
+                        }
+                      >
+                        Delete
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu> */}
                 </CardHeader>
                 <CardContent>
                   <img
                     src={url}
                     alt="Uploaded File"
-                    className="w-full h-40"
+                    className="w-full h-50 aspect-square rounded-md object-cover"
                   />
+                  <div className="flex justify-between items-center mt-2">
+                    <p className="text-sm">{url.split("/").pop().split("?")[0]}</p>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          aria-haspopup="true"
+                          size="icon"
+                          className="bg-transparent hover:bg-transparent"
+                        >
+                          <MoreVertical className="h-4 w-4 text-black" />
+                          <span className="sr-only">Toggle menu</span>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                        <DropdownMenuItem>Edit</DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() =>
+                            handleDelete(url.split("/").pop().split("?")[0])
+                          }
+                        >
+                          Delete
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
                 </CardContent>
               </Card>
             ))
