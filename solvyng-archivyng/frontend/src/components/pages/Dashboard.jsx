@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Logo from "../assets/logo.jpg";
 
 import {
+  ArrowUpRight,
   File,
   Home,
   ListFilter,
@@ -20,6 +21,7 @@ import {
   Star,
   VideoIcon,
   UploadCloudIcon,
+  LayoutDashboardIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -32,7 +34,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
+ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
   Table,
@@ -49,8 +51,73 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useState } from "react";
+import useMutation from '../../hooks/useMutation';
+import useQuery from '../../hooks/useQuery';
+import axiosClient from "../../config/axios";
+
+
+const ErrorText = ({ children, ...props }) => (
+  <p className="text-lg text-red-300" {...props}>
+    {children}
+  </p>
+);
 
 export function Dashboard() {
+const [uploadProgress, setUploadProgress] = useState(0);
+
+
+// const validFileTypes = ["image/jpg", "image/jpeg", "image/png"];
+const URL = "/images";
+
+
+{/* Handle delete Function */}
+
+const handleDelete = async (key) => {
+  try {
+    const response = await axiosClient.delete(`/images/${key}`);
+    console.log(response.data);
+    // Here you can add code to remove the deleted image from the UI
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+
+{/* Handle Upload Function */}
+  const {
+    mutate: uploadImage,
+    isLoading: uploading,
+    error: uploadError,
+  } = useMutation({ url: URL, onUploadProgress: setUploadProgress });
+
+  const [refetch, setRefetch] = useState(0);
+  const [error, setError] = useState("");
+  const {
+    data: imageUrls = [],
+    isLoading: imagesLoading,
+    error: fetchError,
+  } = useQuery(URL, refetch);
+
+  const handleUpload = async e => {
+    console.log(e);
+    const file = e.target.files[0];
+    console.log(file);
+
+    //  if (!validFileTypes.find((type) => type === file.type)) {
+    //    setError("File must be in JPG/PNG format");
+    //    return;
+    //  }
+
+      const form = new FormData();
+      form.append("image", file);
+
+      await uploadImage(form);
+  };
+  
+
+
   return (
     <TooltipProvider>
       <div className="flex min-h-screen w-full flex-col bg-muted/40">
@@ -60,13 +127,12 @@ export function Dashboard() {
               href="#"
               className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
             >
-              <Package2 className="h-4 w-4 transition-all group-hover:scale-110" />
-              <span className="sr-only">Acme Inc</span>
+              <LayoutDashboardIcon className="h-4 w-4 transition-all group-hover:scale-110" />
+              <span className="sr-only">Solvyng Archivyng</span>
             </Link>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Link
-                  href="#"
+                <Link to="/"
                   className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                 >
                   <Home className="h-5 w-5" />
@@ -78,19 +144,19 @@ export function Dashboard() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  href="#"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+                  to="/files"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg  text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                 >
                   <Folder className="h-5 w-5" />
-                  <span className="sr-only"> My Drive</span>
+                  <span className="sr-only"> Files</span>
                 </Link>
               </TooltipTrigger>
-              <TooltipContent side="right">My Drive</TooltipContent>
+              <TooltipContent side="right">Files</TooltipContent>
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  href="#"
+                  to="/navbar"
                   className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                 >
                   <Bell className="h-5 w-5" />
@@ -155,7 +221,7 @@ export function Dashboard() {
           <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
             <Sheet>
               <SheetTrigger asChild>
-                <Button size="icon" variant="outline" className="sm:hidden">
+                <Button size="icon" variant="teal" className="sm:hidden">
                   <PanelLeft className="h-5 w-5" />
                   <span className="sr-only">Toggle Menu</span>
                 </Button>
@@ -167,7 +233,7 @@ export function Dashboard() {
                     className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
                   >
                     <Package2 className="h-5 w-5 transition-all group-hover:scale-110" />
-                    <span className="sr-only">Solvyng Archibvyng</span>
+                    <span className="sr-only">Solvyng Archivyng</span>
                   </Link>
                   <Link
                     href="#"
@@ -181,7 +247,7 @@ export function Dashboard() {
                     className="flex items-center gap-4 px-2.5 text-foreground"
                   >
                     <Folder className="h-5 w-5" />
-                    My Drive
+                    Files
                   </Link>
                   <Link
                     href="#"
@@ -248,48 +314,63 @@ export function Dashboard() {
               </DropdownMenuContent>
             </DropdownMenu>
           </header>
+          {/* Upload Starts here*/}
+
           <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
             <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
-              <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
-                <Card x-chunk="dashboard-01-chunk-0">
+              <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4 text-white">
+                <Card
+                  x-chunk="dashboard-01-chunk-0"
+                  style={{ backgroundColor: "#003366", color: "#ffffff" }}
+                >
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
                       Videos
                     </CardTitle>
-                    <VideoIcon className="h-4 w-4 text-muted-foreground" />
+                    <VideoIcon className="h-4 w-4 text-muted-foreground text-white" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-semibold">350</div>
                   </CardContent>
                 </Card>
-                <Card x-chunk="dashboard-01-chunk-1">
+                <Card
+                  x-chunk="dashboard-01-chunk-1"
+                  style={{ backgroundColor: "#003366", color: "#ffffff" }}
+                >
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
                       Audios
                     </CardTitle>
-                    <AudioLines className="h-4 w-4 text-muted-foreground" />
+                    <AudioLines className="h-4 w-4 text-muted-foreground text-white" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-semibold">150</div>
                   </CardContent>
                 </Card>
-                <Card x-chunk="dashboard-01-chunk-2">
+                <Card
+                  className="text-white"
+                  x-chunk="dashboard-01-chunk-2"
+                  style={{ backgroundColor: "#003366", color: "#ffffff" }}
+                >
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
                       Documents
                     </CardTitle>
-                    <File className="h-4 w-4 text-muted-foreground" />
+                    <File className="h-4 w-4 text-muted-foreground text-white" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">1000</div>
                   </CardContent>
                 </Card>
-                <Card x-chunk="dashboard-01-chunk-3">
+                <Card
+                  x-chunk="dashboard-01-chunk-3"
+                  style={{ backgroundColor: "#003366", color: "#ffffff" }}
+                >
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
                       Photos
                     </CardTitle>
-                    <CameraIcon className="h-4 w-4 text-muted-foreground" />
+                    <CameraIcon className="h-4 w-4 text-muted-foreground text-white" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">65</div>
@@ -302,7 +383,7 @@ export function Dashboard() {
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button
-                          variant="outline"
+                          variant="teal"
                           size="sm"
                           className="h-7 gap-1 text-sm"
                         >
@@ -331,178 +412,102 @@ export function Dashboard() {
                 </div>
                 <TabsContent value="week">
                   <Card x-chunk="dashboard-05-chunk-3">
-                    <CardHeader className="px-7">
-                      <CardTitle>Recent Files</CardTitle>
+                    <CardHeader className="flex flex-row items-center px-7 ">
+                      <CardTitle>Recent Uploads</CardTitle>
+                      <Button
+                        variant="teal"
+                        asChild
+                        size="sm"
+                        className="ml-auto gap-1"
+                      >
+                        <Link to="/">
+                          View All
+                          <ArrowUpRight className="h-4 w-4" />
+                        </Link>
+                      </Button>
                     </CardHeader>
                     <CardContent>
                       <Table>
                         <TableHeader>
                           <TableRow>
+                            <TableHead className="hidden w-[100px] sm:table-cell">
+                              <span className="sr-only">img</span>
+                            </TableHead>
                             <TableHead>Name</TableHead>
-                            <TableHead className="hidden sm:table-cell">
-                              Format
-                            </TableHead>
-                            <TableHead className="hidden sm:table-cell">
-                              Share
-                            </TableHead>
                             <TableHead className="hidden md:table-cell">
-                              Size
+                              Options
+                            </TableHead>
+                            <TableHead>
+                              <span className="sr-only">Actions</span>
                             </TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
-                          <TableRow>
-                            <TableCell className="hidden sm:table-cell">
-                              Audio_009.mp3
-                            </TableCell>
-                            <TableCell>
-                              <div className="font-medium">
-                                {/* {" "} */}
-                                <AudioLines />
-                              </div>
-                            </TableCell>
-                            <TableCell className="hidden sm:table-cell">
-                              <Share2 />
-                            </TableCell>
-                            <TableCell className="hidden md:table-cell">
-                              3 MB
-                            </TableCell>
-                            <TableCell className="h-5 w-5">
-                              <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                  <Button
-                                    variant="plain"
-                                    size="none"
-                                    className="h-5 w-5"
-                                  >
-                                    <MoreHorizontal />
-                                  </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="start">
-                                  <DropdownMenuItem>Edit</DropdownMenuItem>
-                                  <DropdownMenuItem>Delete</DropdownMenuItem>
-                                  <DropdownMenuCheckboxItem checked>
-                                    Video
-                                  </DropdownMenuCheckboxItem>
-                                </DropdownMenuContent>
-                              </DropdownMenu>
-                            </TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="hidden sm:table-cell">
-                              Video_009.mp4
-                            </TableCell>
-                            <TableCell>
-                              <div className="font-medium">
-                                {/* {" "} */}
-                                <VideoIcon />
-                              </div>
-                            </TableCell>
-                            <TableCell className="hidden sm:table-cell">
-                              <Share2 />
-                            </TableCell>
-                            <TableCell className="hidden md:table-cell">
-                              12 MB
-                            </TableCell>
-                            <TableCell className="h-5 w-5">
-                              <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                  <Button
-                                    variant="plain"
-                                    size="none"
-                                    className="h-5 w-5"
-                                  >
-                                    <MoreHorizontal />
-                                  </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="start">
-                                  <DropdownMenuCheckboxItem checked>
-                                    Video
-                                  </DropdownMenuCheckboxItem>
-                                  <DropdownMenuItem>Delete</DropdownMenuItem>
-                                  <DropdownMenuItem>View</DropdownMenuItem>
-                                </DropdownMenuContent>
-                              </DropdownMenu>
-                            </TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="hidden sm:table-cell">
-                              solvyng.pdf
-                            </TableCell>
-                            <TableCell>
-                              <div className="font-medium">
-                                {/* {" "} */}
-                                <File />
-                              </div>
-                            </TableCell>
-                            <TableCell className="hidden sm:table-cell">
-                              <Share2 />
-                            </TableCell>
-                            <TableCell className="hidden md:table-cell">
-                              3 MB
-                            </TableCell>
-                            <TableCell className="h-5 w-5">
-                              <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                  <Button
-                                    variant="plain"
-                                    size="none"
-                                    className="h-5 w-5"
-                                  >
-                                    <MoreHorizontal />
-                                  </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="start">
-                                  <DropdownMenuItem>Edit</DropdownMenuItem>
-                                  <DropdownMenuCheckboxItem checked>
-                                    Video
-                                  </DropdownMenuCheckboxItem>
-                                  <DropdownMenuItem>View</DropdownMenuItem>
-                                </DropdownMenuContent>
-                              </DropdownMenu>
-                            </TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell className="hidden sm:table-cell">
-                              Video_009.mp4
-                            </TableCell>
-                            <TableCell>
-                              <div className="font-medium">
-                                {/* {" "} */}
-                                <VideoIcon />
-                              </div>
-                            </TableCell>
-                            <TableCell className="hidden sm:table-cell">
-                              <Share2 />
-                            </TableCell>
-                            <TableCell className="hidden md:table-cell">
-                              12 MB
-                            </TableCell>
-                            <TableCell className="h-5 w-5">
-                              <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                  <Button
-                                    variant="plain"
-                                    size="none"
-                                    className="h-5 w-5"
-                                  >
-                                    <MoreHorizontal />
-                                  </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="start">
-                                  {" "}
-                                  <div className="flex flex-col">
-                                    {" "}
-                                    <DropdownMenuCheckboxItem checked>
-                                      Video
-                                    </DropdownMenuCheckboxItem>
-                                    <DropdownMenuItem>Delete</DropdownMenuItem>
-                                    <DropdownMenuItem>View</DropdownMenuItem>
-                                  </div>
-                                </DropdownMenuContent>
-                              </DropdownMenu>
-                            </TableCell>
-                          </TableRow>
+                          {imageUrls?.length > 0 ? (
+                            imageUrls.map((url) => (
+                              <TableRow key={url}>
+                                <TableCell className="hidden sm:table-cell">
+                                  <img
+                                    alt="image"
+                                    className="aspect-square rounded-md object-cover"
+                                    src={url}
+                                    width="64"
+                                    height="64"
+                                  />
+                                </TableCell>
+                                <TableCell className="font-medium">
+                                  {url.split("/").pop().split("?")[0]}{" "}
+                                </TableCell>
+                                <TableCell>
+                                  <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                      <Button
+                                        aria-haspopup="true"
+                                        size="icon"
+                                        variant="teal"
+                                      >
+                                        <MoreHorizontal className="h-4 w-4" />
+                                        <span className="sr-only">
+                                          Toggle menu
+                                        </span>
+                                      </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="end">
+                                      <DropdownMenuLabel>
+                                        Actions
+                                      </DropdownMenuLabel>
+                                      <DropdownMenuItem>Edit</DropdownMenuItem>
+                                      <DropdownMenuItem
+                                        onClick={() =>
+                                          handleDelete(
+                                            url.split("/").pop().split("?")[0]
+                                          )
+                                        }
+                                      >
+                                        Delete
+                                      </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                  </DropdownMenu>
+                                </TableCell>
+                              </TableRow>
+                            ))
+                          ) : (
+                            <TableRow>
+                              <TableCell className="hidden sm:table-cell">
+                                <img
+                                  alt="Dummy img"
+                                  className="aspect-square rounded-md object-cover"
+                                  src="https://placehold.co/600x400" // Replace with your dummy image path
+                                  width="64"
+                                  height="64"
+                                />
+                              </TableCell>
+                              <TableCell className="font-medium">
+                                No images available
+                              </TableCell>
+                              <TableCell></TableCell>
+                            </TableRow>
+                          )}
                         </TableBody>
                       </Table>
                     </CardContent>
@@ -510,24 +515,36 @@ export function Dashboard() {
                 </TabsContent>
               </Tabs>
             </div>
-            {/* Upload Starts here*/}
-            <Card className="overflow-hidden" x-chunk="dashboard-05-chunk-4">
-              <CardHeader className="flex flex-row justify-center bg-muted/50">
-                <div className="grid gap-0.5">
-                  <CardTitle className="group flex items-center gap-2 text-lg ">
-                    Upload Files
-                  </CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent className="p-6 text-sm flex items-center justify-center min-h-64">
-                <button
-                  type="button"
-                  className="px-4 py-2 bg-custom-blue text-white font-bold rounded hover:bg-blue-600 p-5"
+            <div
+              className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm h-30vh md:h-90vh"
+              x-chunk="dashboard-02-chunk-1"
+            >
+              <div className="flex flex-col items-center gap-1 text-center">
+                <h3 className="text-2xl font-bold tracking-tight">
+                  Upload your files here
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  You can drag and drop your files.
+                </p>
+                <input
+                  id="imageInput"
+                  type="file"
+                  className="hidden"
+                  onChange={handleUpload}
+                />
+                <label
+                  htmlFor="imageInput"
+                  variant="teal"
+                  className="mt-4 cursor-pointer isLoading={uploading} h-9 rounded-md px-3 inline-block text-primary-foreground hover:bg-primary/90 text-white py-2"
+                  style={{ backgroundColor: "#FFA500" }}
                 >
-                  <UploadCloudIcon />
-                </button>
-              </CardContent>
-            </Card>
+                  Upload
+                </label>
+                {error && <ErrorText>{error}</ErrorText>}
+                {uploadError && <ErrorText>{uploadError}</ErrorText>}
+                {uploading && <div>Upload progress: {uploadProgress}%</div>}
+              </div>
+            </div>
           </div>
         </div>
       </div>

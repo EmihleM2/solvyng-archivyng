@@ -17,8 +17,13 @@ module.exports = {
       },
     },
     extend: {
+      height: {
+        '30vh': '30vh',
+        '80vh': '80vh',
+        '100vh': '100vh'
+      },
       colors: {
-        'custom-blue': '#2666D0',
+        'teal': '#008080',
 
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
