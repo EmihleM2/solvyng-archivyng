@@ -12,13 +12,11 @@ export default defineConfig({
             '/api': 'http://localhost:5173'
         }
     },
-    server: {
-        open: true
-    },      
     plugins: [react()],
     resolve: {
-    alias: {
-        "@": path.resolve(__dirname, "./src"),
+        alias: {
+            "@": path.resolve(__dirname, "./src"),
+        },
     },
-},
+    open: true
 })
