@@ -20,7 +20,7 @@ const Files = () => {
   return (
     <>
       <NavBar />
-      <div className="flex justify-center items-center p-6 pl-6">
+      <div className="flex justify-center items-center p-6 ml-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {imageUrls.length > 0 ? (
             imageUrls.map((url) => (
@@ -34,7 +34,7 @@ const Files = () => {
                   <img
                     src={url}
                     alt="Uploaded File"
-                    className="w-full h-auto"
+                    className="w-full h-40"
                   />
                 </CardContent>
               </Card>
