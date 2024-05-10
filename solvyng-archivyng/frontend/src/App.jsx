@@ -15,7 +15,7 @@ import Files from './components/pages/Files';
 import NavBar from './components/pages/Navbar';
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import LandingPage from './components/pages/LandingPage';
+import Dashboard from './components/pages/Dashboard';
 
 //Amplify environment is to be changed before running auth pages
 

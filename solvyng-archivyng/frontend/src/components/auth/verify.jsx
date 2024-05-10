@@ -89,7 +89,7 @@ function Verify() {
 
 
     //SES needs to be used for sending emails to specific users. Welcome email also needs to be sent by SES as using SNS will send to all subscribers instead of just the new registee 
-    const sns = new AWS.SNS();
+    // const sns = new AWS.SNS();
 
     AWS.config.update({
         region: 'eu-west-1',
@@ -110,7 +110,7 @@ function Verify() {
             TopicArn: 'arn:aws:sns:eu-west-1:456561060854:solvyng-archivyng',
         };
 
-        sns.publish(publishParams, (err, data) => {
+        AWS.SNS.publish(publishParams, (err, data) => {
             if (err) {
                 console.error(err, data);
             } else {

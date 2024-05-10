@@ -86,7 +86,7 @@ const Signup = () => {
         secretAccessKey: 'CpMRUQseFC7LXBy15XmP+RcvKP6UcE/KQzKD9u1V',
     });
 
-    const sns = new AWS.SNS();
+    // const sns = new AWS.SNS();
 
     const subscribeToTopic = () => {
         const params = {
@@ -95,7 +95,7 @@ const Signup = () => {
             Endpoint: email
         };
 
-        sns.subscribe(params, (err, data) => {
+        AWS.SNS.Subscribe(params, (err, data) => {
             if (err) {
                 console.error(err, data);
             } else {
