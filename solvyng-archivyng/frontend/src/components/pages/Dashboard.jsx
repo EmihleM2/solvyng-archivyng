@@ -132,7 +132,8 @@ const handleDelete = async (key) => {
             </Link>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Link to="/"
+                <Link
+                  to="/"
                   className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                 >
                   <Home className="h-5 w-5" />
@@ -378,7 +379,7 @@ const handleDelete = async (key) => {
                 </Card>
               </div>
               <Tabs defaultValue="week">
-                <div className="flex items-center">
+                {/* <div className="flex items-center">
                   <div className="ml-auto flex items-center gap-2">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -409,7 +410,7 @@ const handleDelete = async (key) => {
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
-                </div>
+                </div> */}
                 <TabsContent value="week">
                   <Card x-chunk="dashboard-05-chunk-3">
                     <CardHeader className="flex flex-row items-center px-7 ">
@@ -420,7 +421,7 @@ const handleDelete = async (key) => {
                         size="sm"
                         className="ml-auto gap-1"
                       >
-                        <Link to="/">
+                        <Link to="/files">
                           View All
                           <ArrowUpRight className="h-4 w-4" />
                         </Link>
@@ -464,9 +465,9 @@ const handleDelete = async (key) => {
                                       <Button
                                         aria-haspopup="true"
                                         size="icon"
-                                        variant="teal"
+                                        className="bg-transparent hover:bg-transparent"
                                       >
-                                        <MoreHorizontal className="h-4 w-4" />
+                                        <MoreHorizontal className="h-4 w-4 text-black" />
                                         <span className="sr-only">
                                           Toggle menu
                                         </span>

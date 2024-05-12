@@ -3,26 +3,8 @@ import useQuery from "../../hooks/useQuery.js";
 import NavBar from "../pages/Navbar.jsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  ArrowUpRight,
-  File,
-  Home,
-  ListFilter,
-  Package2,
-  PanelLeft,
-  Search,
-  Settings,
-  AudioLines,
-  Bell,
-  CameraIcon,
-  Clock,
-  Folder,
-  MoreHorizontal,
   Share2,
   Share2Icon,
-  Star,
-  VideoIcon,
-  UploadCloudIcon,
-  LayoutDashboardIcon,
   MoreVertical,
 } from "lucide-react";
 import {
@@ -55,34 +37,11 @@ const Files = () => {
       <NavBar />
       <div className="flex justify-center items-center p-6 ml-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {imageUrls.length > 0 ? (
+          {
+          imageUrls.length > 0 ? (
             imageUrls.map((url) => (
               <Card key={url} className="rounded-lg">
                 <CardHeader>
-                  {/* <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="teal"
-                        aria-haspopup="true"
-                        size="icon"
-                        className="ml-auto"
-                      >
-                        <MoreVertical className="h-4 w-4" />
-                        <span className="sr-only">Toggle menu</span>
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                      <DropdownMenuItem>Edit</DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={() =>
-                          handleDelete(url.split("/").pop().split("?")[0])
-                        }
-                      >
-                        Delete
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu> */}
                 </CardHeader>
                 <CardContent>
                   <img
@@ -106,6 +65,7 @@ const Files = () => {
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuItem>Edit</DropdownMenuItem>
+                        <DropdownMenuItem>Share</DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() =>
                             handleDelete(url.split("/").pop().split("?")[0])

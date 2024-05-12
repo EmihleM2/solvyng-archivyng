@@ -36,14 +36,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import {
   Tooltip,
@@ -92,7 +85,7 @@ export function Navbar() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  to="/homepage"
+                  to=""
                   className="flex h-9 w-9 items-center justify-center rounded-lg  text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                 >
                   <Bell className="h-5 w-5" />
