@@ -4,23 +4,50 @@
   box-sizing: border-box;
 }
 
-body{
+/* body {
   font-family: "Poppins", sans-serrif;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url(/src/components/assets/logo-design.png); 
+  background-image: url(/src/components/assets/logo-design.png);
   background-repeat: no-repeat;
   background-size: fill;
   background-position: 1px -10px;
-}  
+} */
 
-.form-sign-up{
+.sign-up-page{
+  font-family: "Poppins", sans-serrif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(/src/components/assets/logo-design.png);
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: 1px -10px;
+  height: 880px;
+  width: 1473px;
+  overflow: hidden;
+}
+
+.login-page, .verify-page, .reset-password-page, .confirm-reset-password-page{
+  font-family: "Poppins", sans-serrif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(/src/components/assets/logo-design.png);
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: 1px -10px;
+  height: 755px;
+  width: 1487px;
+  overflow: hidden;
+}
+
+.form-sign-up {
   position: relative;
-  top: 90px;
   left: 420px;
   width: 420px;
-  height: 680px;
+  height: 710px;
   margin: 0 auto;
   padding: 60px;
   border-radius: 15px;
@@ -30,13 +57,12 @@ body{
   border-color: black;
 }
 
-.form-login{
+.form-login {
   position: relative;
-  top: 90px;
+  bottom: 30px;
   left: 420px;
   width: 420px;
-  height: 500px;
-  margin: 0 auto;
+  height: 540px;
   padding: 60px;
   border-radius: 15px;
   background-color: rgba(85, 82, 82, 0.24);
@@ -46,27 +72,12 @@ body{
   /* background: rgb(218, 217, 217);  */
 }
 
-.form-verify{
+.form-verify {
   position: relative;
-  top: 135px;
   left: 420px;
   width: 420px;
   height: 386px;
-  margin: 0 auto;
-  padding: 60px;
-  border-radius: 15px;
-  background-color: rgba(85, 82, 82, 0.24);
-  align-items: center;
-  border: 82px;
-  border-color: black;
-} 
-
- .form-reset-password{
-  position: relative;
-  top: 90px;
-  left: 420px;
-  width: 420px;
-  height: 290px;
+  bottom: 40px;
   margin: 0 auto;
   padding: 60px;
   border-radius: 15px;
@@ -76,12 +87,12 @@ body{
   border-color: black;
 }
 
-.form-confirm-reset-password{
+.form-reset-password {
   position: relative;
-  top: 90px;
   left: 420px;
   width: 420px;
-  height: 595px;
+  height: 310px;
+  bottom: 70px;
   margin: 0 auto;
   padding: 60px;
   border-radius: 15px;
@@ -89,19 +100,43 @@ body{
   align-items: center;
   border: 82px;
   border-color: black;
+}
 
-} 
+.form-confirm-reset-password {
+  position: relative;
+  left: 420px;
+  width: 420px;
+  height: 655px;
+  margin: 0 auto;
+  padding: 60px;
+  border-radius: 15px;
+  background-color: rgba(85, 82, 82, 0.24);
+  align-items: center;
+  border: 82px;
+  border-color: black;
+}
 
 
- h1 {
+h1 {
   font-size: 36px;
   text-align: center;
   top: -25px;
   position: inherit;
-} 
+}
+
+h2{
+  font-size: 22px;
+  font-weight: 800;
+}
+
+
+h3{
+  font-size: 20px;
+  font-weight: 600;
+}
 
 /* Styles for the form fields and labels */
- form div {
+form div {
   position: inherit;
   top: -20px;
   margin: 0px 1px -15px;
@@ -185,7 +220,7 @@ span {
   position: inherit;
 }
 
-.button:hover{
+.button:hover {
   cursor: pointer;
 }
 
@@ -196,7 +231,7 @@ span {
   text-decoration: none;
 }
 
-.navigate-link:hover{
+.navigate-link:hover {
   text-decoration: underline;
 }
 
@@ -237,27 +272,27 @@ span {
   background-image: url(/src/components/assets/google_symbol.png);
   background-repeat: no-repeat;
   background-position: 50px;
-} 
+}
 
-.dialog-overlay{
+.dialog-overlay {
   display: flex;
   justify-content: center;
   align-items: center;
-  position:fixed;
+  position: fixed;
   top: 170px;
   left: 465px;
 }
 
-.dialog-overlay-verify{
+.dialog-overlay-verify {
   display: flex;
   justify-content: center;
   align-items: center;
-  position:fixed;
+  position: fixed;
   top: 170px;
   left: 505px;
 }
 
-.dialog-content{
+.dialog-content {
   padding: 20px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
@@ -285,6 +320,7 @@ span {
   border-radius: 10px;
   color: white;
   cursor: pointer;
+  
 }
 
 .dialog-overlay-verify button {
@@ -301,4 +337,3 @@ span {
   color: white;
   cursor: pointer;
 }
-

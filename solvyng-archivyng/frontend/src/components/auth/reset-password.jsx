@@ -11,6 +11,22 @@ const ResetPassword = () => {
 
   const [errors, setErrors] = useState('');
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openDialog = () => {
+    setIsOpen(true);
+  };
+
+  const closeDialog = () => {
+    setIsOpen(false);
+  };
+
+  const handlegotoconfirmPassword = () => {
+    navigate("/confirm-reset-password");
+    console.log("Confirm button clicked")
+    closeDialog();
+  };
+
   const validateEmail = (username) => {
     const emailFormat = /\S+@\S+\.\S+/;
     return emailFormat.test(username);
@@ -29,16 +45,16 @@ const ResetPassword = () => {
 
 
   const handleResetPassword = async (evt) => {
-      evt.preventDefault();
-      try {
-        const output = await resetPassword({ username })
-        handleResetPasswordNextSteps(output)
-        console.log(output)
-        navigate("/confirm-reset-password");
-      } catch (error) {
-        setErrors('Invalid, Try again!')
-        console.log(error);
-      }
+    evt.preventDefault();
+    try {
+      const output = await resetPassword({ username })
+      handleResetPasswordNextSteps(output)
+      console.log(output)
+      openDialog();
+    } catch (error) {
+      setErrors('Invalid, Try again!')
+      console.log(error);
+    }
   }
 
   function handleResetPasswordNextSteps(output) {
@@ -58,25 +74,38 @@ const ResetPassword = () => {
   }
 
   return (
-    <form className='form-reset-password'>
-      <h1>Get Code</h1>
+    <div className='reset-password-page'>
       <div>
-        <label>Enter Email to recieve reset code:</label>
-        <input
-          type="text"
-          name="username"
-          placeholder='example@gmail.com'
-          value={username}
-          onChange={handleInput}
-        />
-        <Mail className="icon" />
-        {usernameError && <span>{usernameError}</span>}
+        {isOpen && (
+          <div className="dialog-overlay-verify">
+            <div className="dialog-content">
+              <h2>Information:</h2>
+              <p>Reset code sent! Click Ok to update password...</p>
+              <button onClick={handlegotoconfirmPassword}>Ok</button>
+            </div>
+          </div>
+        )}
       </div>
-      <div>
-        <button className="button" onClick={handleResetPassword}>Get Code</button>
-      </div>
-      {errors && <span className='error-span-verify'>{errors}</span>}
-    </form>
+      <form className='form-reset-password'>
+        <h1>Get Code</h1>
+        <div>
+          <label>Enter Email to recieve reset code:</label>
+          <input
+            type="text"
+            name="username"
+            placeholder='example@gmail.com'
+            value={username}
+            onChange={handleInput}
+          />
+          <Mail className="icon" />
+          {usernameError && <span>{usernameError}</span>}
+        </div>
+        <div>
+          <button className="button" onClick={handleResetPassword}>Get Code</button>
+        </div>
+        {errors && <span className='error-span-verify'>{errors}</span>}
+      </form>
+    </div>
   );
 };
 

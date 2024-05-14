@@ -4,7 +4,6 @@ import Login from './components/auth/login';
 import Signup from './components/auth/signup';
 import Verify from './components/auth/verify';
 import Notifications from './components/pages/Notifications';
-import HomePage from './components/pages/HomePage'
 import MailDetails from './components/pages/MailDetails';
 import { Route, Routes } from 'react-router-dom';
 import { Amplify } from 'aws-amplify';
@@ -31,7 +30,6 @@ function App() {
         <Route path="/Navbar" element={<NavBar />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/verify" element={<Verify />} />
-        <Route path="/HomePage" element={<HomePage />} />
         <Route path="/MailDetails" element={<MailDetails />} />
         <Route path="/Notifications" element={<Notifications />} />
         <Route path="/reset-password" element={<ResetPassword />} />

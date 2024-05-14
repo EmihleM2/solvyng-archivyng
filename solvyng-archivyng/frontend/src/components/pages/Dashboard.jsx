@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Logo from "../assets/logo.jpg";
+import { useNavigate } from 'react-router-dom';
 
 import {
   ArrowUpRight,
@@ -34,7 +35,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
- import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
   Table,
@@ -55,7 +56,7 @@ import { useState } from "react";
 import useMutation from '../../hooks/useMutation';
 import useQuery from '../../hooks/useQuery';
 import axiosClient from "../../config/axios";
-
+import { signOut } from 'aws-amplify/auth';
 
 const ErrorText = ({ children, ...props }) => (
   <p className="text-lg text-red-300" {...props}>
@@ -64,28 +65,38 @@ const ErrorText = ({ children, ...props }) => (
 );
 
 export function Dashboard() {
-const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
 
-// const validFileTypes = ["image/jpg", "image/jpeg", "image/png"];
-const URL = "/images";
+  // const validFileTypes = ["image/jpg", "image/jpeg", "image/png"];
+  const URL = "/images";
+  const navigate = useNavigate()
 
-
-{/* Handle delete Function */}
-
-const handleDelete = async (key) => {
-  try {
-    const response = await axiosClient.delete(`/images/${key}`);
-    console.log(response.data);
-    // Here you can add code to remove the deleted image from the UI
-  } catch (error) {
-    console.error(error);
+  async function handleSignOut() {
+    try {
+      await signOut()
+      console.log("Logout works");
+      navigate("/login");
+    } catch (error) {
+      console.log('error signing out: ', error);
+    }
   }
-};
+
+  {/* Handle delete Function */ }
+
+  const handleDelete = async (key) => {
+    try {
+      const response = await axiosClient.delete(`/images/${key}`);
+      console.log(response.data);
+      // Here you can add code to remove the deleted image from the UI
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
 
 
-{/* Handle Upload Function */}
+  {/* Handle Upload Function */ }
   const {
     mutate: uploadImage,
     isLoading: uploading,
@@ -110,12 +121,12 @@ const handleDelete = async (key) => {
     //    return;
     //  }
 
-      const form = new FormData();
-      form.append("image", file);
+    const form = new FormData();
+    form.append("image", file);
 
-      await uploadImage(form);
+    await uploadImage(form);
   };
-  
+
 
 
   return (
@@ -156,7 +167,7 @@ const handleDelete = async (key) => {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  to="/navbar"
+                  to="/Notifications"
                   className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                 >
                   <Bell className="h-5 w-5" />
@@ -310,7 +321,7 @@ const handleDelete = async (key) => {
                 <DropdownMenuItem>Settings</DropdownMenuItem>
                 <DropdownMenuItem>Support</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Logout</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleSignOut}>Logout</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </header>

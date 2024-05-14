@@ -36,7 +36,8 @@ const EmailItem = ({ email, onDelete }) => {
 
 const Notifications = () => {
     const [emails, setEmails] = useState([]);
-
+    const [isLoading, setIsLoading] = useState(true);
+    
     useEffect(() => {
         async function fetchData() {
             try {
@@ -59,6 +60,7 @@ const Notifications = () => {
                     date: formatDate(item.createdAt)
                 }));
                 setEmails(formattedEmails);
+                setIsLoading(false);
             } catch (error) {
                 console.log('error: ', error);
             }
@@ -95,11 +97,18 @@ const Notifications = () => {
     return (
         <div>
             <h1>Notifications</h1>
-            {emails.map(email => (
-                <EmailItem key={email.id} email={email} onDelete={() => deleteEmail(email.id)} />
-            ))}
+            {isLoading ? (
+                <p>Loading...</p>
+            ) : emails.length === 0 ? (
+                <p>No emails</p>
+            ) : (
+                emails.map(email => (
+                    <EmailItem key={email.id} email={email} onDelete={() => deleteEmail(email.id)} />
+                ))
+            )}
         </div>
     );
+    
 };
 
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './auth.css';
-import { Mail, Lock, Code} from 'lucide-react';
+import { Mail, Lock, Code } from 'lucide-react';
 import { confirmResetPassword } from 'aws-amplify/auth';
 
 function ConfirmResetPassword() {
@@ -17,6 +17,22 @@ function ConfirmResetPassword() {
     const [newPasswordError, setnewPasswordError] = useState('');
     const [repeatNewPasswordError, setrepeatNewPasswordError] = useState('');
     const [errors, setErrors] = useState('');
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const openDialog = () => {
+        setIsOpen(true);
+    };
+
+    const closeDialog = () => {
+        setIsOpen(false);
+    };
+
+    const handlegotoLogin = () => {
+        navigate('/login')
+        console.log("Confirm button clicked")
+        closeDialog();
+    };
 
     const validateEmail = (username) => {
         const emailFormat = /\S+@\S+\.\S+/;
@@ -34,7 +50,7 @@ function ConfirmResetPassword() {
 
     const validateRepeatPassword = (repeatNewPassword) => {
         return repeatNewPassword === newPassword;
-      }
+    }
 
     const handleInput = (evt) => {
         evt.preventDefault();
@@ -68,7 +84,7 @@ function ConfirmResetPassword() {
         try {
             await confirmResetPassword({ username, confirmationCode, newPassword })
             console.log("Reset Successful")
-            navigate("/login");
+            openDialog();
         } catch (error) {
             setErrors('Invalid details, Try again!')
             console.log("Error:", error);
@@ -76,61 +92,75 @@ function ConfirmResetPassword() {
     }
 
     return (
-        <form className='form-confirm-reset-password'>
-            <h1>Reset Password</h1>
+        <div className='confirm-reset-password-page'>
             <div>
-                <label>Email:</label>
-                <input
-                    type="text"
-                    name="username"
-                    placeholder='example@gmail.com'
-                    value={username}
-                    onChange={handleInput}
-                />
-                <Mail className="icon" />
-                {usernameError && <span>{usernameError}</span>}
+                {isOpen && (
+                    <div className="dialog-overlay-verify">
+                        <div className="dialog-content">
+                            <h2>Information:</h2>
+                            <p className='dialog-space'>Reset Successful! Click Ok to Login...</p>
+                            <button onClick={handlegotoLogin}>Ok</button>
+
+                        </div>
+                    </div>
+                )}
             </div>
-            <div>
-                <label>Code:</label>
-                <input
-                    type="number"
-                    name="confirmationCode"
-                    placeholder='******'
-                    value={confirmationCode}
-                    onChange={handleInput}
-                />
-                <Code className="icon" />
-                {confirmationCodeError && <span>{confirmationCodeError}</span>}
-            </div>
-            <div>
-                <label>New Password:</label>
-                <input
-                    type="password"
-                    name="newPassword"
-                    placeholder='*******'
-                    value={newPassword}
-                    onChange={handleInput}
-                />
-                <Lock className="icon" />
-                {newPasswordError && <span>{newPasswordError}</span>}
-            </div>
-            <div>
-                <label>Confirm Password:</label>
-                <input
-                    type="password"
-                    name="repeatNewPassword"
-                    placeholder='*******'
-                    value={repeatNewPassword}
-                    onChange={handleInput}
-                />
-                <Lock className="icon" />
-                {repeatNewPasswordError && <span>{repeatNewPasswordError}</span>}
-            </div>
-            <div>
-                <button className="button" onClick={handleConfirmResetPassword}>Verify</button>
-            </div>
-            {errors && <span className='error-span-verify'>{errors}</span>}
-        </form>
+            <form className='form-confirm-reset-password'>
+                <h1>Reset Password</h1>
+                <div>
+                    <label>Email:</label>
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder='example@gmail.com'
+                        value={username}
+                        onChange={handleInput}
+                    />
+                    <Mail className="icon" />
+                    {usernameError && <span>{usernameError}</span>}
+                </div>
+                <div>
+                    <label>Enter code sent to your email:</label>
+                    <input
+                        type="number"
+                        name="confirmationCode"
+                        placeholder='******'
+                        value={confirmationCode}
+                        onChange={handleInput}
+                    />
+                    <Code className="icon" />
+                    {confirmationCodeError && <span>{confirmationCodeError}</span>}
+                </div>
+                <div>
+                    <label>New Password:</label>
+                    <input
+                        type="password"
+                        name="newPassword"
+                        placeholder='*******'
+                        value={newPassword}
+                        onChange={handleInput}
+                    />
+                    <Lock className="icon" />
+                    {newPasswordError && <span>{newPasswordError}</span>}
+                </div>
+                <div>
+                    <label>Confirm Password:</label>
+                    <input
+                        type="password"
+                        name="repeatNewPassword"
+                        placeholder='*******'
+                        value={repeatNewPassword}
+                        onChange={handleInput}
+                    />
+                    <Lock className="icon" />
+                    {repeatNewPasswordError && <span>{repeatNewPasswordError}</span>}
+                </div>
+                <div>
+                    <button className="button" onClick={handleConfirmResetPassword}>Verify</button>
+                </div>
+                {errors && <span className='error-span-verify'>{errors}</span>}
+            </form>
+        </div>
     )
 }
 

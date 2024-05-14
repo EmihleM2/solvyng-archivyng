@@ -6,11 +6,21 @@ import { confirmSignUp } from 'aws-amplify/auth';
 import AWS from 'aws-sdk'
 import { generateClient } from "aws-amplify/api";
 import { createUserMails } from "../../graphql/mutations";
+import { SNSClient, PublishCommand } from "@aws-sdk/client-sns";
 
 const client = generateClient();
 
 const customEmailContent = `Welcome to Solvyng Archivyng!\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultrices gravida congue. \n\nCras diam tortor, vehicula eu semper id, varius sed urna. Fusce sed elit quis mi placerat malesuada.Suspendisse potenti. Aliquam finibus finibus lorem in tempor. Nunc blandit tellus et diam faucibus facilisis. Praesent vel venenatis erat, non consectetur dolor. \n\n @2024 Solvyng Archivyng. All rights reserved.\n\nWish to Unsubscribe, see below: `;
 const emailSubject = 'Solvyng Archivyng'
+
+const sns = new SNSClient({
+    region: 'eu-west-1',
+    credentials: {
+        accessKeyId: 'AKIAWUTJI5P3O3ER4UWG',
+        secretAccessKey: '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',
+    },
+});
+
 
 function Verify() {
     const navigate = useNavigate()
@@ -89,13 +99,6 @@ function Verify() {
 
 
     //SES needs to be used for sending emails to specific users. Welcome email also needs to be sent by SES as using SNS will send to all subscribers instead of just the new registee 
-    // const sns = new AWS.SNS();
-
-    AWS.config.update({
-        region: 'eu-west-1',
-        accessKeyId: 'AKIAWUTJI5P3O3ER4UWG',
-        secretAccessKey: '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',
-    });
 
     const publishToTopic = () => {
         const customEmailContent = `Welcome to Solvyng Archivyng!\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultrices gravida congue. \n\nCras diam tortor, vehicula eu semper id, varius sed urna. Fusce sed elit quis mi placerat malesuada.Suspendisse potenti. Aliquam finibus finibus lorem in tempor. Nunc blandit tellus et diam faucibus facilisis. Praesent vel venenatis erat, non consectetur dolor. \n\n @2024 Solvyng Archivyng. All rights reserved.\n\nWish to Unsubscribe, see below: `;
@@ -109,8 +112,9 @@ function Verify() {
             MessageStructure: 'json',
             TopicArn: 'arn:aws:sns:eu-west-1:456561060854:solvyng-archivyng',
         };
+        const command = new PublishCommand(publishParams);
 
-        AWS.SNS.publish(publishParams, (err, data) => {
+        sns.send(command, (err, data) => {
             if (err) {
                 console.error(err, data);
             } else {
@@ -139,6 +143,7 @@ function Verify() {
 
 
     return (
+        <div className='verify-page'>
         <><div>
             {isOpen && (
                 <div className="dialog-overlay-verify">
@@ -180,7 +185,7 @@ function Verify() {
                     <button className="button" onClick={handleSignUpConfirmation}>Verify Sign-up</button>
                 </div>
                 {errors && <span className='error-span-verify'>{errors}</span>}
-            </form></>
+            </form></></div>
     )
 }
 
