@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import useQuery from "../../hooks/useQuery.js";
 import NavBar from "../pages/Navbar.jsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Share2,
-  Share2Icon,
-  MoreVertical,
-} from "lucide-react";
+import { Share2, Share2Icon, MoreVertical } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -17,12 +13,28 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-
+import useMutation from "../../hooks/useMutation";
+import axiosClient from "../../config/axios";
 
 const URL = "/images";
 
+{
+  /* Handle delete Function */
+}
+
+const handleDelete = async (key) => {
+  try {
+    const response = await axiosClient.delete(`/images/${key}`);
+    console.log(response.data);
+    // Remove the deleted image from the state
+    setRefetch((prevRefetch) => prevRefetch + 1); // Use the functional form of setState
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const Files = () => {
-  const [refetch] = useState(0);
+  const [refetch, setRefetch] = useState(0); // Add setRefetch here
   const {
     data: imageUrls = [],
     isLoading: imagesLoading,
@@ -37,12 +49,10 @@ const Files = () => {
       <NavBar />
       <div className="flex justify-center items-center p-6 ml-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {
-          imageUrls.length > 0 ? (
+          {imageUrls.length > 0 ? (
             imageUrls.map((url) => (
               <Card key={url} className="rounded-lg">
-                <CardHeader>
-                </CardHeader>
+                <CardHeader></CardHeader>
                 <CardContent>
                   <img
                     src={url}
@@ -50,7 +60,9 @@ const Files = () => {
                     className="w-full h-50 aspect-square rounded-md object-cover"
                   />
                   <div className="flex justify-between items-center mt-2">
-                    <p className="text-sm">{url.split("/").pop().split("?")[0]}</p>
+                    <p className="text-sm">
+                      {url.split("/").pop().split("?")[0]}
+                    </p>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button

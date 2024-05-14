@@ -100,11 +100,13 @@ const handleDelete = async (key) => {
     try {
         const response = await axiosClient.delete(`/images/${key}`);
         console.log(response.data);
-        toast.success('File deleted successfully', {
+        // Display a success toast
+        toast.success('Image deleted successfully', {
             position: "bottom-right",
             autoClose: 4000,
         });
-        // Here you can add code to remove the deleted image from the UI
+        // Remove the deleted image from the state
+        setRefetch(refetch + 1);
     } catch (error) {
         console.error(error);
         toast.error('Error deleting file', {

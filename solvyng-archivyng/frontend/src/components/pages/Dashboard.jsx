@@ -3,6 +3,7 @@ import Logo from "../assets/logo.jpg";
 
 import {
   ArrowUpRight,
+  Bookmark,
   File,
   Home,
   ListFilter,
@@ -77,11 +78,13 @@ const handleDelete = async (key) => {
   try {
     const response = await axiosClient.delete(`/images/${key}`);
     console.log(response.data);
-    // Here you can add code to remove the deleted image from the UI
+    // Remove the deleted image from the state
+    setRefetch(refetch + 1);
   } catch (error) {
     console.error(error);
   }
 };
+
 
 
 
@@ -172,11 +175,11 @@ const handleDelete = async (key) => {
                   href="#"
                   className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                 >
-                  <Star className="h-5 w-5" />
-                  <span className="sr-only">Favourites</span>
+                  <Bookmark className="h-5 w-5" />
+                  <span className="sr-only">Bookmarks</span>
                 </Link>
               </TooltipTrigger>
-              <TooltipContent side="right">Favourites</TooltipContent>
+              <TooltipContent side="right">Bookmarks</TooltipContent>
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -504,7 +507,7 @@ const handleDelete = async (key) => {
                                 />
                               </TableCell>
                               <TableCell className="font-medium">
-                                No images available
+                                No files 
                               </TableCell>
                               <TableCell></TableCell>
                             </TableRow>
