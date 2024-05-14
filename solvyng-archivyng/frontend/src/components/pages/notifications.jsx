@@ -93,7 +93,7 @@ const Notifications = () => {
             console.log('error: ', error);
         }
     };
-
+//*
     return (
         <div>
             <h1>Notifications</h1>
