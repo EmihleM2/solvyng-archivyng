@@ -1,0 +1,28 @@
+{
+  "authSelections": "userPoolOnly",
+  "resourceName": "solvyngarchivyng",
+  "serviceType": "imported",
+  "region": "eu-west-1",
+  "usernameAttributes": [
+    "email"
+  ],
+  "requiredAttributes": [
+    "address",
+    "birthdate",
+    "phone_number",
+    "email",
+    "name"
+  ],
+  "passwordPolicyMinLength": 7,
+  "passwordPolicyCharacters": [
+    "Requires Lowercase",
+    "Requires Uppercase",
+    "Requires Numbers",
+    "Requires Symbols"
+  ],
+  "mfaConfiguration": "OFF",
+  "autoVerifiedAttributes": [
+    "email"
+  ],
+  "mfaTypes": []
+}

@@ -117,9 +117,13 @@ const Signup = () => {
                 password: password,
                 options: {
                     userAttributes: {
-                        preferred_username: username,
-                        email: email,
+                        birthdate: '1001-01-01',
+                        address: 'None',
+                        phone_number: '+1234567890',
                         name: fullname,
+                        'custom:department': username,
+                        'custom:job_title': 'None',
+                        'custom:Company': 'None',
                     },
                     //autoSignIn: true 
                 }
@@ -161,11 +165,11 @@ const Signup = () => {
                         {fullnameError && <span>{fullnameError}</span>}
                     </div>
                     <div>
-                        <label>Username:</label>
+                        <label>Department:</label>
                         <input
                             type="text"
                             name="username"
-                            placeholder='Solvyng Department'
+                            placeholder='I.T'
                             value={username}
                             onChange={handleInput}
                         />

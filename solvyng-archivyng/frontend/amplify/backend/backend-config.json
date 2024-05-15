@@ -23,38 +23,46 @@
     }
   },
   "auth": {
-    "SolvyngArchivyng": {
+    "solvyngarchivyng": {
       "customAuth": false,
       "dependsOn": [],
-      "frontendAuthConfig": {
-        "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
-        ],
-        "passwordProtectionSettings": {
-          "passwordPolicyCharacters": [
-            "REQUIRES_LOWERCASE",
-            "REQUIRES_NUMBERS",
-            "REQUIRES_SYMBOLS",
-            "REQUIRES_UPPERCASE"
-          ],
-          "passwordPolicyMinLength": 7
-        },
-        "signupAttributes": [
-          "NAME",
-          "PREFERRED_USERNAME",
-          "EMAIL"
-        ],
-        "socialProviders": [],
-        "usernameAttributes": [
-          "EMAIL"
-        ],
-        "verificationMechanisms": [
-          "EMAIL"
-        ]
-      },
       "providerPlugin": "awscloudformation",
-      "service": "Cognito"
+      "service": "Cognito",
+      "serviceType": "imported"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_auth_solvyngarchivyng_nativeClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "solvyngarchivyng"
+        }
+      ]
+    },
+    "AMPLIFY_auth_solvyngarchivyng_userPoolId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "solvyngarchivyng"
+        }
+      ]
+    },
+    "AMPLIFY_auth_solvyngarchivyng_userPoolName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "solvyngarchivyng"
+        }
+      ]
+    },
+    "AMPLIFY_auth_solvyngarchivyng_webClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "solvyngarchivyng"
+        }
+      ]
     }
   }
 }
