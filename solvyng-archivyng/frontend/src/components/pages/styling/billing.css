@@ -1,0 +1,94 @@
+.billing-form {
+    position: inherit;
+    width: 720px;
+    height: 610px;
+    margin: 0 auto;
+    padding: 60px;
+    border-radius: 15px;
+    background-color: rgba(85, 82, 82, 0.24);
+    align-items: center;
+    border: 82px;
+    border-color: black;
+}
+
+.section {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.billing-input {
+    position: relative;
+    width: 74%;
+    height: 40px;
+    border: none;
+    outline: none;
+    padding: 13px 15px 13px;
+    border-color: black;
+    font-size: 17px;
+    border-radius: 10px;
+    background: #ffffff;
+    display: flex;
+    position: relative;
+    margin: 0 1px 0;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+
+.billing-input-1 {
+    position: relative;
+    width: 34%;
+    height: 40px;
+    border: none;
+    outline: none;
+    padding: 13px 15px 13px;
+    border-color: black;
+    font-size: 17px;
+    border-radius: 10px;
+    background: #ffffff;
+    display: flex;
+    position: relative;
+    margin: 0 1px 0;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+
+
+.billing-update-button {
+    transition: background-color 0.3s;
+    width: 250%;
+    height: 35px;
+    background: #2666d0;
+    border-radius: 10px;
+    font-size: 16px;
+    color: white;
+    position: relative;
+    left: 118px;
+}
+
+.billing-update-button:hover {
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    width: 25%;
+    height: 40px;
+    border: none;
+    outline: none;
+    padding: 1px 15px 1px;
+    border-color: black;
+    font-size: 17px;
+    border-radius: 10px;
+    background: #ffffff;
+    display: flex;
+    margin: 5px 1px;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+
+.dropdown-options {
+    background-color: #ffffff;
+    color: #ffffff;
+}

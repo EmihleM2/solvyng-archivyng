@@ -109,6 +109,7 @@ const Signup = () => {
         evt.preventDefault();
         if (usernameError || fullnameError || emailError || passwordError) {
             console.log('Cannot register due to errors');
+            setErrors('Unable to register, Try again!')
             return;
         }
         try {
