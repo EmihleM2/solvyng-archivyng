@@ -3,8 +3,9 @@ import React from 'react';
 import Login from './components/auth/login';
 import Signup from './components/auth/signup';
 import Verify from './components/auth/verify';
-import Notifications from './components/pages/Notifications';
-import MailDetails from './components/pages/MailDetails';
+import NotificationEmails from './components/pages/NotificationEmails';
+import EmailDetails from './components/pages/EmailDetails';
+import Billing from './components/pages/Billing';
 import { Route, Routes } from 'react-router-dom';
 import { Amplify } from 'aws-amplify';
 import amplifyconfig from './amplifyconfiguration.json';
@@ -30,9 +31,10 @@ function App() {
         <Route path="/Navbar" element={<NavBar />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/verify" element={<Verify />} />
-        <Route path="/MailDetails" element={<MailDetails />} />
-        <Route path="/Notifications" element={<Notifications />} />
+        <Route path="/Billing" element={<Billing />} />
+        <Route path="/EmailDetails" element={<EmailDetails />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/NotificationEmails" element={<NotificationEmails />} />
         <Route path="/confirm-reset-password" element={<ConfirmResetPassword />} />
       </Routes>
       <ToastContainer />
