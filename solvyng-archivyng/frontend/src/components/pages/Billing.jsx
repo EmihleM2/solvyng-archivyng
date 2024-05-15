@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './styling/billing.css';
+import NavBar from "../pages/Navbar.jsx";
 import { useNavigate } from 'react-router-dom'
 import { generateClient } from "aws-amplify/api";
 import * as queries from "../../graphql/queries";
@@ -8,7 +9,6 @@ import { fetchUserAttributes } from 'aws-amplify/auth';
 
 const Billing = () => {
   const navigate = useNavigate();
-  const location = useLocation();
 
   const client = generateClient();
 
