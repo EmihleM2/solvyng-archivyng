@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Logo from "../assets/logo.jpg";
+import { useNavigate } from 'react-router-dom';
 
 import {
   ArrowUpRight,
@@ -51,8 +52,21 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { signOut } from 'aws-amplify/auth';
+
 
 export function Navbar() {
+  const navigate = useNavigate()
+
+  async function handleSignOut() {
+    try {
+      await signOut()
+      console.log("Logout works");
+      navigate("/login");
+    } catch (error) {
+      console.log('error signing out: ', error);
+    }
+  }
   return (
     <TooltipProvider>
       {/* <div className="flex min-h-screen w-full flex-col bg-muted/40"> */}
@@ -247,7 +261,7 @@ export function Navbar() {
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleSignOut}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>

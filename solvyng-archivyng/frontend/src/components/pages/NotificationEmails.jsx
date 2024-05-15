@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './styling/notifications.css';
+import NavBar from "../pages/Navbar.jsx";
 import { Trash2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom'
 import { generateClient } from "aws-amplify/api";
@@ -14,7 +15,7 @@ const EmailItem = ({ email, onDelete }) => {
     const navigate = useNavigate();
 
     const gotoMail = () => {
-        navigate("/maildetails", { state: { id, subject, message } });
+        navigate("/EmailDetails", { state: { id, subject, message } });
     }
 
     return (
@@ -34,7 +35,7 @@ const EmailItem = ({ email, onDelete }) => {
     );
 };
 
-const Notifications = () => {
+const NotificationEmails = () => {
     const [emails, setEmails] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     
@@ -95,6 +96,8 @@ const Notifications = () => {
     };
 //*
     return (
+        <>
+        <NavBar/>
         <div>
             <h1>Notifications</h1>
             {isLoading ? (
@@ -107,9 +110,10 @@ const Notifications = () => {
                 ))
             )}
         </div>
+        </>
     );
     
 };
 
 
-export default Notifications;
+export default NotificationEmails;
