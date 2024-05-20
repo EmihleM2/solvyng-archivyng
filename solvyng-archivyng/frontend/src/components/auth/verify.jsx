@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import './auth.css';
 import { Mail, Code } from 'lucide-react';
 import { confirmSignUp } from 'aws-amplify/auth';
-import AWS from 'aws-sdk'
 import { generateClient } from "aws-amplify/api";
 import { createUserMails } from "../../graphql/mutations";
 import { SNSClient, PublishCommand } from "@aws-sdk/client-sns";
@@ -27,12 +26,9 @@ function Verify() {
 
     const [username, setUsername] = useState('');
     const [confirmationCode, setConfirmationCode] = useState('');
-
     const [usernameError, setUsernameError] = useState('');
     const [confirmationCodeError, setConfirmationCodeError] = useState('');
-
     const [errors, setErrors] = useState('');
-
     const [isOpen, setIsOpen] = useState(false);
 
     const openDialog = () => {

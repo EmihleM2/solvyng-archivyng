@@ -27,7 +27,6 @@ const EmailItem = ({ email, onDelete }) => {
                 <div className="message-container">
                     <p className='p-notifications'>{message}</p>
                 </div>
-
                 <Trash2 className="icon-notifications" onClick={onDelete} />
             </div>
             <hr className="line"></hr><br></br>
@@ -38,6 +37,16 @@ const EmailItem = ({ email, onDelete }) => {
 const NotificationEmails = () => {
     const [emails, setEmails] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+
+    const formatDate = (createdAt) => {
+        const dateObj = new Date(createdAt);
+        const day = dateObj.getDate();
+        const month = dateObj.toLocaleString('default', { month: 'short' }); 
+        const year = dateObj.getFullYear();
+        const time = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); 
+        const amOrPm = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).split(' ')[1]; 
+        return `${day} ${month} ${year}, ${time} ${amOrPm}`;
+    };
     
     useEffect(() => {
         async function fetchData() {
@@ -69,16 +78,6 @@ const NotificationEmails = () => {
         fetchData();
     }, []);
 
-    const formatDate = (createdAt) => {
-        const dateObj = new Date(createdAt);
-        const day = dateObj.getDate();
-        const month = dateObj.toLocaleString('default', { month: 'short' }); 
-        const year = dateObj.getFullYear();
-        const time = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); 
-        const amOrPm = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }).split(' ')[1]; 
-        return `${day} ${month} ${year}, ${time} ${amOrPm}`;
-    };
-    
     async function deleteEmail(id) {
         try {
             const details = {
@@ -94,7 +93,7 @@ const NotificationEmails = () => {
             console.log('error: ', error);
         }
     };
-//*
+
     return (
         <>
         <NavBar/>

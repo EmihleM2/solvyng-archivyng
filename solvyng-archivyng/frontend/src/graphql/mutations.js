@@ -1,6 +1,63 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createUserCardDetails = /* GraphQL */ `
+  mutation CreateUserCardDetails(
+    $input: CreateUserCardDetailsInput!
+    $condition: ModelUserCardDetailsConditionInput
+  ) {
+    createUserCardDetails(input: $input, condition: $condition) {
+      id
+      card_name
+      card_number
+      expire_date
+      cvc_number
+      subscription_plan
+      user_email
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const updateUserCardDetails = /* GraphQL */ `
+  mutation UpdateUserCardDetails(
+    $input: UpdateUserCardDetailsInput!
+    $condition: ModelUserCardDetailsConditionInput
+  ) {
+    updateUserCardDetails(input: $input, condition: $condition) {
+      id
+      card_name
+      card_number
+      expire_date
+      cvc_number
+      subscription_plan
+      user_email
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const deleteUserCardDetails = /* GraphQL */ `
+  mutation DeleteUserCardDetails(
+    $input: DeleteUserCardDetailsInput!
+    $condition: ModelUserCardDetailsConditionInput
+  ) {
+    deleteUserCardDetails(input: $input, condition: $condition) {
+      id
+      card_name
+      card_number
+      expire_date
+      cvc_number
+      subscription_plan
+      user_email
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
 export const createUserMails = /* GraphQL */ `
   mutation CreateUserMails(
     $input: CreateUserMailsInput!

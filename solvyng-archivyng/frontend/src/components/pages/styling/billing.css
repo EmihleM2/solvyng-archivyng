@@ -1,14 +1,20 @@
 .billing-form {
     position: inherit;
-    width: 720px;
-    height: 610px;
+    width: 670px;
+    height: 750px;
     margin: 0 auto;
-    padding: 60px;
+    padding: 40px;
     border-radius: 15px;
-    background-color: rgba(85, 82, 82, 0.24);
+    /* background-color: rgba(85, 82, 82, 0.120); */
+    background-color: white;
     align-items: center;
-    border: 82px;
+    border: 1px solid;
     border-color: black;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.6);
+}
+
+.billing-h3 {
+    margin-top: 10px;
 }
 
 .section {
@@ -20,12 +26,13 @@
 
 .billing-input {
     position: relative;
-    width: 74%;
+    width: 79%;
     height: 40px;
     border: none;
     outline: none;
     padding: 13px 15px 13px;
     border-color: black;
+    border: 1px solid;
     font-size: 17px;
     border-radius: 10px;
     background: #ffffff;
@@ -44,6 +51,7 @@
     outline: none;
     padding: 13px 15px 13px;
     border-color: black;
+    border: 1px solid;
     font-size: 17px;
     border-radius: 10px;
     background: #ffffff;
@@ -55,7 +63,7 @@
 }
 
 
-.billing-update-button {
+.billing-button {
     transition: background-color 0.3s;
     width: 250%;
     height: 35px;
@@ -64,12 +72,48 @@
     font-size: 16px;
     color: white;
     position: relative;
-    left: 118px;
+    left: 95px;
 }
 
-.billing-update-button:hover {
+.billing-button:hover {
     cursor: pointer;
 }
+
+.billing-button-1 {
+    transition: background-color 0.3s;
+    width: 250%;
+    height: 35px;
+    background: #2666d0;
+    border-radius: 10px;
+    font-size: 16px;
+    color: white;
+    position: relative;
+    top: 40px;
+    left: 38px;
+}
+
+.billing-button-1:hover {
+    cursor: pointer;
+}
+
+
+.billing-button-2 {
+    transition: background-color 0.3s;
+    width: 150%;
+    height: 35px;
+    background: #2666d0;
+    border-radius: 10px;
+    font-size: 16px;
+    color: white;
+    position: relative;
+    top: 80px;
+    left: -8px;
+}
+
+.billing-button-2:hover {
+    cursor: pointer;
+}
+
 
 .dropdown {
     position: relative;
@@ -78,6 +122,7 @@
     border: none;
     outline: none;
     padding: 1px 15px 1px;
+    border: 1px solid;
     border-color: black;
     font-size: 17px;
     border-radius: 10px;
@@ -88,7 +133,90 @@
     box-sizing: border-box;
 }
 
-.dropdown-options {
-    background-color: #ffffff;
+.currentPlan {
+    font-weight: 540;
+    color: #2666d0;
+    font-size: 19px;
+}
+
+.current-p{
+    margin-right: 25px;
+}
+
+.billing-h4{
+    
+}
+
+.current-section{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    right: 25px;
+}
+
+.billing-line {
+    height: 1.5px;
+    background-color: black;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+}
+
+.billing-line-2 {
+    height: 1.3px;
+    background-color: rgba(219, 219, 219, 0.719);
+    align-items: center;
+    justify-content: center;
+}
+
+.billing-error {
+    color: #e74c3c;
+    font-size: 15px;
+    display: block;
+    position: inherit;
+}
+
+.billing-dialog-box {
+    justify-content: center;
+    align-items: center;
+}
+
+.billing-dialog-content {
+    padding: 30px;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.6);
+    border-radius: 15px;
+    background-color: rgba(85, 82, 82, 0.68);
+    /*Blue: background-color: rgba(0, 51, 102); */
+    align-items: center;
+    border: 1px solid rgba(85, 82, 82, 0.68);
+    position: fixed;
+    justify-content: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.billing-dialog-content p {
+    margin-bottom: 2px;
     color: #ffffff;
 }
+
+.billing-dialog-content h2 {
+    margin-bottom: 2px;
+    color: #ffffff;
+}
+
+
+.billing-dialog-content button {
+    width: 30%;
+    padding: 5px;
+    transition: background-color 0.3s;
+    margin-right: 10px;
+    background: #2666d0;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+.billing-dialog-space {}

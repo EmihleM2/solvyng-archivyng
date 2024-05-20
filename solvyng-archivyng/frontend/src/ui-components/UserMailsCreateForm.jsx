@@ -9,7 +9,7 @@ import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
-import { createUserMails } from "../graphql/mutations";
+import { createUserMails } from "../../mutations";
 const client = generateClient();
 export default function UserMailsCreateForm(props) {
   const {

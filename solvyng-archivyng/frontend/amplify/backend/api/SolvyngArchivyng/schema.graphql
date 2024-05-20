@@ -1,6 +1,17 @@
+type UserCardDetails @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  card_name: String!
+  card_number: String!
+  expire_date: String!
+  cvc_number: Int!
+  subscription_plan: String!
+  user_email: String!
+}
+
 type UserMails @model @auth(rules: [{allow: public}]) {
-  id: ID! 
+  id: ID!
   user_email: String!
   mail_subject: String!
   mail_message: String!
 }
+ 
