@@ -172,7 +172,7 @@ const handleDelete = async (key) => {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  href="#"
+                  to="/Bookmarks"
                   className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                 >
                   <Bookmark className="h-5 w-5" />
@@ -265,7 +265,7 @@ const handleDelete = async (key) => {
                     className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                   >
                     <Star className="h-5 w-5" />
-                    Favourites
+                    Bookmarks
                   </Link>
                   <Link
                     href="#"
@@ -507,7 +507,7 @@ const handleDelete = async (key) => {
                                 />
                               </TableCell>
                               <TableCell className="font-medium">
-                                No files 
+                                No files
                               </TableCell>
                               <TableCell></TableCell>
                             </TableRow>

@@ -99,7 +99,7 @@ export function Navbar() {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                href="#"
+                to="/Bookmarks"
                 className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
               >
                 <Bookmark className="h-5 w-5" />
