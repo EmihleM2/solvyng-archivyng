@@ -57,7 +57,13 @@ export function Navbar() {
             href="#"
             className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
           >
-            <LayoutDashboardIcon className="h-4 w-4 transition-all group-hover:scale-110" />
+            <img
+              src={Logo}
+              width={46}
+              height={46}
+              alt="Avatar"
+              className="overflow-hidden rounded-full"
+            />{" "}
             <span className="sr-only">Solvyng Archivyng</span>
           </Link>
           <Tooltip>
@@ -132,8 +138,6 @@ export function Navbar() {
             </TooltipTrigger>
             <TooltipContent side="right">Shared Files</TooltipContent>
           </Tooltip>
-        </nav>
-        <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
@@ -145,6 +149,42 @@ export function Navbar() {
               </Link>
             </TooltipTrigger>
             <TooltipContent side="right">Settings</TooltipContent>
+          </Tooltip>
+        </nav>
+        <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link
+                href="#"
+                className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+              >
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="overflow-hidden rounded-full"
+                    >
+                      <img
+                        src={Logo}
+                        width={35}
+                        height={35}
+                        alt="Avatar"
+                        className="overflow-hidden rounded-full"
+                      />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start">
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Settings</DropdownMenuItem>
+                    <DropdownMenuItem>Support</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Logout</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </Link>
+            </TooltipTrigger>
           </Tooltip>
         </nav>
       </aside>
@@ -211,39 +251,6 @@ export function Navbar() {
               </nav>
             </SheetContent>
           </Sheet>
-          <div className="relative ml-auto flex-1 md:grow-0">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Search..."
-              className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
-            />
-          </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                size="icon"
-                className="overflow-hidden rounded-full"
-              >
-                <img
-                  src={Logo}
-                  width={36}
-                  height={36}
-                  alt="Avatar"
-                  className="overflow-hidden rounded-full"
-                />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </header>
       </div>
       {/* </div> */}
