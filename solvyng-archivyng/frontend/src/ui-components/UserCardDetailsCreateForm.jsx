@@ -9,9 +9,9 @@ import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
-import { createUserMails } from "../../mutations";
+import { createUserCardDetails } from "../../mutations";
 const client = generateClient();
-export default function UserMailsCreateForm(props) {
+export default function UserCardDetailsCreateForm(props) {
   const {
     clearOnSuccess = true,
     onSuccess,
@@ -23,28 +23,36 @@ export default function UserMailsCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
+    card_name: "",
+    card_number: "",
+    expire_date: "",
+    cvc_number: "",
     user_email: "",
-    mail_subject: "",
-    mail_message: "",
   };
+  const [card_name, setCard_name] = React.useState(initialValues.card_name);
+  const [card_number, setCard_number] = React.useState(
+    initialValues.card_number
+  );
+  const [expire_date, setExpire_date] = React.useState(
+    initialValues.expire_date
+  );
+  const [cvc_number, setCvc_number] = React.useState(initialValues.cvc_number);
   const [user_email, setUser_email] = React.useState(initialValues.user_email);
-  const [mail_subject, setMail_subject] = React.useState(
-    initialValues.mail_subject
-  );
-  const [mail_message, setMail_message] = React.useState(
-    initialValues.mail_message
-  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
+    setCard_name(initialValues.card_name);
+    setCard_number(initialValues.card_number);
+    setExpire_date(initialValues.expire_date);
+    setCvc_number(initialValues.cvc_number);
     setUser_email(initialValues.user_email);
-    setMail_subject(initialValues.mail_subject);
-    setMail_message(initialValues.mail_message);
     setErrors({});
   };
   const validations = {
+    card_name: [{ type: "Required" }],
+    card_number: [{ type: "Required" }],
+    expire_date: [{ type: "Required" }],
+    cvc_number: [{ type: "Required" }],
     user_email: [{ type: "Required" }],
-    mail_subject: [{ type: "Required" }],
-    mail_message: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -72,9 +80,11 @@ export default function UserMailsCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
+          card_name,
+          card_number,
+          expire_date,
+          cvc_number,
           user_email,
-          mail_subject,
-          mail_message,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -105,7 +115,7 @@ export default function UserMailsCreateForm(props) {
             }
           });
           await client.graphql({
-            query: createUserMails.replaceAll("__typename", ""),
+            query: createUserCardDetails.replaceAll("__typename", ""),
             variables: {
               input: {
                 ...modelFields,
@@ -125,9 +135,125 @@ export default function UserMailsCreateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "UserMailsCreateForm")}
+      {...getOverrideProps(overrides, "UserCardDetailsCreateForm")}
       {...rest}
     >
+      <TextField
+        label="Card name"
+        isRequired={true}
+        isReadOnly={false}
+        value={card_name}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              card_name: value,
+              card_number,
+              expire_date,
+              cvc_number,
+              user_email,
+            };
+            const result = onChange(modelFields);
+            value = result?.card_name ?? value;
+          }
+          if (errors.card_name?.hasError) {
+            runValidationTasks("card_name", value);
+          }
+          setCard_name(value);
+        }}
+        onBlur={() => runValidationTasks("card_name", card_name)}
+        errorMessage={errors.card_name?.errorMessage}
+        hasError={errors.card_name?.hasError}
+        {...getOverrideProps(overrides, "card_name")}
+      ></TextField>
+      <TextField
+        label="Card number"
+        isRequired={true}
+        isReadOnly={false}
+        value={card_number}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              card_name,
+              card_number: value,
+              expire_date,
+              cvc_number,
+              user_email,
+            };
+            const result = onChange(modelFields);
+            value = result?.card_number ?? value;
+          }
+          if (errors.card_number?.hasError) {
+            runValidationTasks("card_number", value);
+          }
+          setCard_number(value);
+        }}
+        onBlur={() => runValidationTasks("card_number", card_number)}
+        errorMessage={errors.card_number?.errorMessage}
+        hasError={errors.card_number?.hasError}
+        {...getOverrideProps(overrides, "card_number")}
+      ></TextField>
+      <TextField
+        label="Expire date"
+        isRequired={true}
+        isReadOnly={false}
+        value={expire_date}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              card_name,
+              card_number,
+              expire_date: value,
+              cvc_number,
+              user_email,
+            };
+            const result = onChange(modelFields);
+            value = result?.expire_date ?? value;
+          }
+          if (errors.expire_date?.hasError) {
+            runValidationTasks("expire_date", value);
+          }
+          setExpire_date(value);
+        }}
+        onBlur={() => runValidationTasks("expire_date", expire_date)}
+        errorMessage={errors.expire_date?.errorMessage}
+        hasError={errors.expire_date?.hasError}
+        {...getOverrideProps(overrides, "expire_date")}
+      ></TextField>
+      <TextField
+        label="Cvc number"
+        isRequired={true}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={cvc_number}
+        onChange={(e) => {
+          let value = isNaN(parseInt(e.target.value))
+            ? e.target.value
+            : parseInt(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              card_name,
+              card_number,
+              expire_date,
+              cvc_number: value,
+              user_email,
+            };
+            const result = onChange(modelFields);
+            value = result?.cvc_number ?? value;
+          }
+          if (errors.cvc_number?.hasError) {
+            runValidationTasks("cvc_number", value);
+          }
+          setCvc_number(value);
+        }}
+        onBlur={() => runValidationTasks("cvc_number", cvc_number)}
+        errorMessage={errors.cvc_number?.errorMessage}
+        hasError={errors.cvc_number?.hasError}
+        {...getOverrideProps(overrides, "cvc_number")}
+      ></TextField>
       <TextField
         label="User email"
         isRequired={true}
@@ -137,9 +263,11 @@ export default function UserMailsCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              card_name,
+              card_number,
+              expire_date,
+              cvc_number,
               user_email: value,
-              mail_subject,
-              mail_message,
             };
             const result = onChange(modelFields);
             value = result?.user_email ?? value;
@@ -153,58 +281,6 @@ export default function UserMailsCreateForm(props) {
         errorMessage={errors.user_email?.errorMessage}
         hasError={errors.user_email?.hasError}
         {...getOverrideProps(overrides, "user_email")}
-      ></TextField>
-      <TextField
-        label="Mail subject"
-        isRequired={true}
-        isReadOnly={false}
-        value={mail_subject}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              user_email,
-              mail_subject: value,
-              mail_message,
-            };
-            const result = onChange(modelFields);
-            value = result?.mail_subject ?? value;
-          }
-          if (errors.mail_subject?.hasError) {
-            runValidationTasks("mail_subject", value);
-          }
-          setMail_subject(value);
-        }}
-        onBlur={() => runValidationTasks("mail_subject", mail_subject)}
-        errorMessage={errors.mail_subject?.errorMessage}
-        hasError={errors.mail_subject?.hasError}
-        {...getOverrideProps(overrides, "mail_subject")}
-      ></TextField>
-      <TextField
-        label="Mail message"
-        isRequired={true}
-        isReadOnly={false}
-        value={mail_message}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              user_email,
-              mail_subject,
-              mail_message: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.mail_message ?? value;
-          }
-          if (errors.mail_message?.hasError) {
-            runValidationTasks("mail_message", value);
-          }
-          setMail_message(value);
-        }}
-        onBlur={() => runValidationTasks("mail_message", mail_message)}
-        errorMessage={errors.mail_message?.errorMessage}
-        hasError={errors.mail_message?.hasError}
-        {...getOverrideProps(overrides, "mail_message")}
       ></TextField>
       <Flex
         justifyContent="space-between"

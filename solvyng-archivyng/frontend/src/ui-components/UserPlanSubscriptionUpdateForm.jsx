@@ -9,11 +9,13 @@ import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
-import { createUserMails } from "../../mutations";
+import { getUserPlanSubscription } from "../../queries";
+import { updateUserPlanSubscription } from "../../mutations";
 const client = generateClient();
-export default function UserMailsCreateForm(props) {
+export default function UserPlanSubscriptionUpdateForm(props) {
   const {
-    clearOnSuccess = true,
+    id: idProp,
+    userPlanSubscription: userPlanSubscriptionModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -23,28 +25,48 @@ export default function UserMailsCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
+    current_plan: "",
     user_email: "",
-    mail_subject: "",
-    mail_message: "",
+    current_plan_price: "",
   };
-  const [user_email, setUser_email] = React.useState(initialValues.user_email);
-  const [mail_subject, setMail_subject] = React.useState(
-    initialValues.mail_subject
+  const [current_plan, setCurrent_plan] = React.useState(
+    initialValues.current_plan
   );
-  const [mail_message, setMail_message] = React.useState(
-    initialValues.mail_message
+  const [user_email, setUser_email] = React.useState(initialValues.user_email);
+  const [current_plan_price, setCurrent_plan_price] = React.useState(
+    initialValues.current_plan_price
   );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setUser_email(initialValues.user_email);
-    setMail_subject(initialValues.mail_subject);
-    setMail_message(initialValues.mail_message);
+    const cleanValues = userPlanSubscriptionRecord
+      ? { ...initialValues, ...userPlanSubscriptionRecord }
+      : initialValues;
+    setCurrent_plan(cleanValues.current_plan);
+    setUser_email(cleanValues.user_email);
+    setCurrent_plan_price(cleanValues.current_plan_price);
     setErrors({});
   };
+  const [userPlanSubscriptionRecord, setUserPlanSubscriptionRecord] =
+    React.useState(userPlanSubscriptionModelProp);
+  React.useEffect(() => {
+    const queryData = async () => {
+      const record = idProp
+        ? (
+            await client.graphql({
+              query: getUserPlanSubscription.replaceAll("__typename", ""),
+              variables: { id: idProp },
+            })
+          )?.data?.getUserPlanSubscription
+        : userPlanSubscriptionModelProp;
+      setUserPlanSubscriptionRecord(record);
+    };
+    queryData();
+  }, [idProp, userPlanSubscriptionModelProp]);
+  React.useEffect(resetStateValues, [userPlanSubscriptionRecord]);
   const validations = {
+    current_plan: [{ type: "Required" }],
     user_email: [{ type: "Required" }],
-    mail_subject: [{ type: "Required" }],
-    mail_message: [{ type: "Required" }],
+    current_plan_price: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -72,9 +94,9 @@ export default function UserMailsCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
+          current_plan,
           user_email,
-          mail_subject,
-          mail_message,
+          current_plan_price,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -105,18 +127,16 @@ export default function UserMailsCreateForm(props) {
             }
           });
           await client.graphql({
-            query: createUserMails.replaceAll("__typename", ""),
+            query: updateUserPlanSubscription.replaceAll("__typename", ""),
             variables: {
               input: {
+                id: userPlanSubscriptionRecord.id,
                 ...modelFields,
               },
             },
           });
           if (onSuccess) {
             onSuccess(modelFields);
-          }
-          if (clearOnSuccess) {
-            resetStateValues();
           }
         } catch (err) {
           if (onError) {
@@ -125,9 +145,35 @@ export default function UserMailsCreateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "UserMailsCreateForm")}
+      {...getOverrideProps(overrides, "UserPlanSubscriptionUpdateForm")}
       {...rest}
     >
+      <TextField
+        label="Current plan"
+        isRequired={true}
+        isReadOnly={false}
+        value={current_plan}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              current_plan: value,
+              user_email,
+              current_plan_price,
+            };
+            const result = onChange(modelFields);
+            value = result?.current_plan ?? value;
+          }
+          if (errors.current_plan?.hasError) {
+            runValidationTasks("current_plan", value);
+          }
+          setCurrent_plan(value);
+        }}
+        onBlur={() => runValidationTasks("current_plan", current_plan)}
+        errorMessage={errors.current_plan?.errorMessage}
+        hasError={errors.current_plan?.hasError}
+        {...getOverrideProps(overrides, "current_plan")}
+      ></TextField>
       <TextField
         label="User email"
         isRequired={true}
@@ -137,9 +183,9 @@ export default function UserMailsCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              current_plan,
               user_email: value,
-              mail_subject,
-              mail_message,
+              current_plan_price,
             };
             const result = onChange(modelFields);
             value = result?.user_email ?? value;
@@ -155,69 +201,50 @@ export default function UserMailsCreateForm(props) {
         {...getOverrideProps(overrides, "user_email")}
       ></TextField>
       <TextField
-        label="Mail subject"
+        label="Current plan price"
         isRequired={true}
         isReadOnly={false}
-        value={mail_subject}
+        type="number"
+        step="any"
+        value={current_plan_price}
         onChange={(e) => {
-          let { value } = e.target;
+          let value = isNaN(parseFloat(e.target.value))
+            ? e.target.value
+            : parseFloat(e.target.value);
           if (onChange) {
             const modelFields = {
+              current_plan,
               user_email,
-              mail_subject: value,
-              mail_message,
+              current_plan_price: value,
             };
             const result = onChange(modelFields);
-            value = result?.mail_subject ?? value;
+            value = result?.current_plan_price ?? value;
           }
-          if (errors.mail_subject?.hasError) {
-            runValidationTasks("mail_subject", value);
+          if (errors.current_plan_price?.hasError) {
+            runValidationTasks("current_plan_price", value);
           }
-          setMail_subject(value);
+          setCurrent_plan_price(value);
         }}
-        onBlur={() => runValidationTasks("mail_subject", mail_subject)}
-        errorMessage={errors.mail_subject?.errorMessage}
-        hasError={errors.mail_subject?.hasError}
-        {...getOverrideProps(overrides, "mail_subject")}
-      ></TextField>
-      <TextField
-        label="Mail message"
-        isRequired={true}
-        isReadOnly={false}
-        value={mail_message}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              user_email,
-              mail_subject,
-              mail_message: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.mail_message ?? value;
-          }
-          if (errors.mail_message?.hasError) {
-            runValidationTasks("mail_message", value);
-          }
-          setMail_message(value);
-        }}
-        onBlur={() => runValidationTasks("mail_message", mail_message)}
-        errorMessage={errors.mail_message?.errorMessage}
-        hasError={errors.mail_message?.hasError}
-        {...getOverrideProps(overrides, "mail_message")}
+        onBlur={() =>
+          runValidationTasks("current_plan_price", current_plan_price)
+        }
+        errorMessage={errors.current_plan_price?.errorMessage}
+        hasError={errors.current_plan_price?.hasError}
+        {...getOverrideProps(overrides, "current_plan_price")}
       ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children="Clear"
+          children="Reset"
           type="reset"
           onClick={(event) => {
             event.preventDefault();
             resetStateValues();
           }}
-          {...getOverrideProps(overrides, "ClearButton")}
+          isDisabled={!(idProp || userPlanSubscriptionModelProp)}
+          {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
           gap="15px"
@@ -227,7 +254,10 @@ export default function UserMailsCreateForm(props) {
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={Object.values(errors).some((e) => e?.hasError)}
+            isDisabled={
+              !(idProp || userPlanSubscriptionModelProp) ||
+              Object.values(errors).some((e) => e?.hasError)
+            }
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>
