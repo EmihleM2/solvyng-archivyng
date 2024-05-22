@@ -3,7 +3,6 @@ import './auth.css';
 import { Lock, Mail } from 'lucide-react';
 import { signIn } from 'aws-amplify/auth';
 import { useNavigate } from 'react-router-dom'
-import AWS from 'aws-sdk'
 
 const Login = () => {
   const navigate = useNavigate()
