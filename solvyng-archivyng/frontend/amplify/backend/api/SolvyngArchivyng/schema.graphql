@@ -1,10 +1,16 @@
+type UserPlanSubscription @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  current_plan: String!
+  user_email: String!
+  current_plan_price: Float!
+}
+
 type UserCardDetails @model @auth(rules: [{allow: public}]) {
   id: ID!
   card_name: String!
   card_number: String!
   expire_date: String!
   cvc_number: Int!
-  subscription_plan: String!
   user_email: String!
 }
 

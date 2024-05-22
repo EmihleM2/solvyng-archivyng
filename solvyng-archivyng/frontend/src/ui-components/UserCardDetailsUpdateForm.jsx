@@ -29,7 +29,6 @@ export default function UserCardDetailsUpdateForm(props) {
     card_number: "",
     expire_date: "",
     cvc_number: "",
-    subscription_plan: "",
     user_email: "",
   };
   const [card_name, setCard_name] = React.useState(initialValues.card_name);
@@ -40,9 +39,6 @@ export default function UserCardDetailsUpdateForm(props) {
     initialValues.expire_date
   );
   const [cvc_number, setCvc_number] = React.useState(initialValues.cvc_number);
-  const [subscription_plan, setSubscription_plan] = React.useState(
-    initialValues.subscription_plan
-  );
   const [user_email, setUser_email] = React.useState(initialValues.user_email);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
@@ -53,7 +49,6 @@ export default function UserCardDetailsUpdateForm(props) {
     setCard_number(cleanValues.card_number);
     setExpire_date(cleanValues.expire_date);
     setCvc_number(cleanValues.cvc_number);
-    setSubscription_plan(cleanValues.subscription_plan);
     setUser_email(cleanValues.user_email);
     setErrors({});
   };
@@ -80,7 +75,6 @@ export default function UserCardDetailsUpdateForm(props) {
     card_number: [{ type: "Required" }],
     expire_date: [{ type: "Required" }],
     cvc_number: [{ type: "Required" }],
-    subscription_plan: [{ type: "Required" }],
     user_email: [{ type: "Required" }],
   };
   const runValidationTasks = async (
@@ -113,7 +107,6 @@ export default function UserCardDetailsUpdateForm(props) {
           card_number,
           expire_date,
           cvc_number,
-          subscription_plan,
           user_email,
         };
         const validationResponses = await Promise.all(
@@ -179,7 +172,6 @@ export default function UserCardDetailsUpdateForm(props) {
               card_number,
               expire_date,
               cvc_number,
-              subscription_plan,
               user_email,
             };
             const result = onChange(modelFields);
@@ -208,7 +200,6 @@ export default function UserCardDetailsUpdateForm(props) {
               card_number: value,
               expire_date,
               cvc_number,
-              subscription_plan,
               user_email,
             };
             const result = onChange(modelFields);
@@ -237,7 +228,6 @@ export default function UserCardDetailsUpdateForm(props) {
               card_number,
               expire_date: value,
               cvc_number,
-              subscription_plan,
               user_email,
             };
             const result = onChange(modelFields);
@@ -270,7 +260,6 @@ export default function UserCardDetailsUpdateForm(props) {
               card_number,
               expire_date,
               cvc_number: value,
-              subscription_plan,
               user_email,
             };
             const result = onChange(modelFields);
@@ -287,37 +276,6 @@ export default function UserCardDetailsUpdateForm(props) {
         {...getOverrideProps(overrides, "cvc_number")}
       ></TextField>
       <TextField
-        label="Subscription plan"
-        isRequired={true}
-        isReadOnly={false}
-        value={subscription_plan}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              card_name,
-              card_number,
-              expire_date,
-              cvc_number,
-              subscription_plan: value,
-              user_email,
-            };
-            const result = onChange(modelFields);
-            value = result?.subscription_plan ?? value;
-          }
-          if (errors.subscription_plan?.hasError) {
-            runValidationTasks("subscription_plan", value);
-          }
-          setSubscription_plan(value);
-        }}
-        onBlur={() =>
-          runValidationTasks("subscription_plan", subscription_plan)
-        }
-        errorMessage={errors.subscription_plan?.errorMessage}
-        hasError={errors.subscription_plan?.hasError}
-        {...getOverrideProps(overrides, "subscription_plan")}
-      ></TextField>
-      <TextField
         label="User email"
         isRequired={true}
         isReadOnly={false}
@@ -330,7 +288,6 @@ export default function UserCardDetailsUpdateForm(props) {
               card_number,
               expire_date,
               cvc_number,
-              subscription_plan,
               user_email: value,
             };
             const result = onChange(modelFields);

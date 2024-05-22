@@ -1,6 +1,51 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateUserPlanSubscription = /* GraphQL */ `
+  subscription OnCreateUserPlanSubscription(
+    $filter: ModelSubscriptionUserPlanSubscriptionFilterInput
+  ) {
+    onCreateUserPlanSubscription(filter: $filter) {
+      id
+      current_plan
+      user_email
+      current_plan_price
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onUpdateUserPlanSubscription = /* GraphQL */ `
+  subscription OnUpdateUserPlanSubscription(
+    $filter: ModelSubscriptionUserPlanSubscriptionFilterInput
+  ) {
+    onUpdateUserPlanSubscription(filter: $filter) {
+      id
+      current_plan
+      user_email
+      current_plan_price
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onDeleteUserPlanSubscription = /* GraphQL */ `
+  subscription OnDeleteUserPlanSubscription(
+    $filter: ModelSubscriptionUserPlanSubscriptionFilterInput
+  ) {
+    onDeleteUserPlanSubscription(filter: $filter) {
+      id
+      current_plan
+      user_email
+      current_plan_price
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
 export const onCreateUserCardDetails = /* GraphQL */ `
   subscription OnCreateUserCardDetails(
     $filter: ModelSubscriptionUserCardDetailsFilterInput
@@ -11,7 +56,6 @@ export const onCreateUserCardDetails = /* GraphQL */ `
       card_number
       expire_date
       cvc_number
-      subscription_plan
       user_email
       createdAt
       updatedAt
@@ -29,7 +73,6 @@ export const onUpdateUserCardDetails = /* GraphQL */ `
       card_number
       expire_date
       cvc_number
-      subscription_plan
       user_email
       createdAt
       updatedAt
@@ -47,7 +90,6 @@ export const onDeleteUserCardDetails = /* GraphQL */ `
       card_number
       expire_date
       cvc_number
-      subscription_plan
       user_email
       createdAt
       updatedAt

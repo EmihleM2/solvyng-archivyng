@@ -26,7 +26,6 @@ export declare type UserCardDetailsCreateFormInputValues = {
     card_number?: string;
     expire_date?: string;
     cvc_number?: number;
-    subscription_plan?: string;
     user_email?: string;
 };
 export declare type UserCardDetailsCreateFormValidationValues = {
@@ -34,7 +33,6 @@ export declare type UserCardDetailsCreateFormValidationValues = {
     card_number?: ValidationFunction<string>;
     expire_date?: ValidationFunction<string>;
     cvc_number?: ValidationFunction<number>;
-    subscription_plan?: ValidationFunction<string>;
     user_email?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -44,7 +42,6 @@ export declare type UserCardDetailsCreateFormOverridesProps = {
     card_number?: PrimitiveOverrideProps<TextFieldProps>;
     expire_date?: PrimitiveOverrideProps<TextFieldProps>;
     cvc_number?: PrimitiveOverrideProps<TextFieldProps>;
-    subscription_plan?: PrimitiveOverrideProps<TextFieldProps>;
     user_email?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type UserCardDetailsCreateFormProps = React.PropsWithChildren<{

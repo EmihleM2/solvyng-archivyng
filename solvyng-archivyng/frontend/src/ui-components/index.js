@@ -8,4 +8,6 @@ export { default as UserCardDetailsCreateForm } from "./UserCardDetailsCreateFor
 export { default as UserCardDetailsUpdateForm } from "./UserCardDetailsUpdateForm";
 export { default as UserMailsCreateForm } from "./UserMailsCreateForm";
 export { default as UserMailsUpdateForm } from "./UserMailsUpdateForm";
+export { default as UserPlanSubscriptionCreateForm } from "./UserPlanSubscriptionCreateForm";
+export { default as UserPlanSubscriptionUpdateForm } from "./UserPlanSubscriptionUpdateForm";
 export { default as studioTheme } from "./studioTheme";

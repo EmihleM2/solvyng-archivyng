@@ -1,6 +1,54 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createUserPlanSubscription = /* GraphQL */ `
+  mutation CreateUserPlanSubscription(
+    $input: CreateUserPlanSubscriptionInput!
+    $condition: ModelUserPlanSubscriptionConditionInput
+  ) {
+    createUserPlanSubscription(input: $input, condition: $condition) {
+      id
+      current_plan
+      user_email
+      current_plan_price
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const updateUserPlanSubscription = /* GraphQL */ `
+  mutation UpdateUserPlanSubscription(
+    $input: UpdateUserPlanSubscriptionInput!
+    $condition: ModelUserPlanSubscriptionConditionInput
+  ) {
+    updateUserPlanSubscription(input: $input, condition: $condition) {
+      id
+      current_plan
+      user_email
+      current_plan_price
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const deleteUserPlanSubscription = /* GraphQL */ `
+  mutation DeleteUserPlanSubscription(
+    $input: DeleteUserPlanSubscriptionInput!
+    $condition: ModelUserPlanSubscriptionConditionInput
+  ) {
+    deleteUserPlanSubscription(input: $input, condition: $condition) {
+      id
+      current_plan
+      user_email
+      current_plan_price
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
 export const createUserCardDetails = /* GraphQL */ `
   mutation CreateUserCardDetails(
     $input: CreateUserCardDetailsInput!
@@ -12,7 +60,6 @@ export const createUserCardDetails = /* GraphQL */ `
       card_number
       expire_date
       cvc_number
-      subscription_plan
       user_email
       createdAt
       updatedAt
@@ -31,7 +78,6 @@ export const updateUserCardDetails = /* GraphQL */ `
       card_number
       expire_date
       cvc_number
-      subscription_plan
       user_email
       createdAt
       updatedAt
@@ -50,7 +96,6 @@ export const deleteUserCardDetails = /* GraphQL */ `
       card_number
       expire_date
       cvc_number
-      subscription_plan
       user_email
       createdAt
       updatedAt

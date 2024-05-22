@@ -1,7 +1,7 @@
 .billing-form {
     position: inherit;
     width: 670px;
-    height: 750px;
+    height: 810px;
     margin: 0 auto;
     padding: 40px;
     border-radius: 15px;
@@ -13,6 +13,15 @@
     box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.6);
 }
 
+.card-details-form{
+    border-radius: 15px;
+    padding: 20px;
+    border-color: rgb(255, 0, 0);
+    border: 1px solid;
+    width: 90%;
+    margin-top: -10px;
+}
+
 .billing-h3 {
     margin-top: 10px;
 }
@@ -22,6 +31,21 @@
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 25px;
+}
+
+.section-1 {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 25px;
+    margin-top: -15px;
+}
+
+.button-section{
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
 
 .billing-input {
@@ -63,7 +87,22 @@
 }
 
 
-.billing-button {
+.billing-save-button {
+    transition: background-color 0.3s;
+    width: 350%;
+    height: 35px;
+    background: #2666d0;
+    border-radius: 10px;
+    font-size: 16px;
+    color: white;
+    position: relative;
+}
+
+.billing-save-button:hover {
+    cursor: pointer;
+}
+
+.billing-remove-button {
     transition: background-color 0.3s;
     width: 250%;
     height: 35px;
@@ -75,21 +114,21 @@
     left: 95px;
 }
 
-.billing-button:hover {
+.billing-remove-button:hover {
     cursor: pointer;
 }
 
-.billing-button-1 {
+
+.billing-update-button {
     transition: background-color 0.3s;
-    width: 250%;
+    width: 30%;
     height: 35px;
     background: #2666d0;
     border-radius: 10px;
     font-size: 16px;
     color: white;
     position: relative;
-    top: 40px;
-    left: 38px;
+    top: 15px;
 }
 
 .billing-button-1:hover {
@@ -97,20 +136,21 @@
 }
 
 
-.billing-button-2 {
+.billing-cancel-button {
     transition: background-color 0.3s;
-    width: 150%;
+    width: 30%;
     height: 35px;
     background: #2666d0;
     border-radius: 10px;
     font-size: 16px;
     color: white;
     position: relative;
-    top: 80px;
-    left: -8px;
+    top: 40px;
+    align-items: center;
+    justify-content: center;
 }
 
-.billing-button-2:hover {
+.billing-cancel-button:hover {
     cursor: pointer;
 }
 
@@ -140,18 +180,23 @@
 }
 
 .current-p{
-    margin-right: 25px;
+    margin-left: 10px;
 }
 
-.billing-h4{
-    
+.card-details{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.card-details:hover{
+    text-decoration: underline;
+   
 }
 
 .current-section{
-    display: flex;
-    justify-content: space-around;
+    display: inline-flex;
+    justify-content: space-evenly;
     align-items: center;
-    right: 25px;
 }
 
 .billing-line {
@@ -217,6 +262,10 @@
     border-radius: 10px;
     color: white;
     cursor: pointer;
+}
+
+.card-details{
+    margin-top: 15px;
 }
 
 .billing-dialog-space {}

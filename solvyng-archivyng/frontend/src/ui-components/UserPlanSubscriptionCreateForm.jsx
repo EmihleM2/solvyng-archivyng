@@ -9,9 +9,9 @@ import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
-import { createUserCardDetails } from "../../mutations";
+import { createUserPlanSubscription } from "../../mutations";
 const client = generateClient();
-export default function UserCardDetailsCreateForm(props) {
+export default function UserPlanSubscriptionCreateForm(props) {
   const {
     clearOnSuccess = true,
     onSuccess,
@@ -23,36 +23,28 @@ export default function UserCardDetailsCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    card_name: "",
-    card_number: "",
-    expire_date: "",
-    cvc_number: "",
+    current_plan: "",
     user_email: "",
+    current_plan_price: "",
   };
-  const [card_name, setCard_name] = React.useState(initialValues.card_name);
-  const [card_number, setCard_number] = React.useState(
-    initialValues.card_number
+  const [current_plan, setCurrent_plan] = React.useState(
+    initialValues.current_plan
   );
-  const [expire_date, setExpire_date] = React.useState(
-    initialValues.expire_date
-  );
-  const [cvc_number, setCvc_number] = React.useState(initialValues.cvc_number);
   const [user_email, setUser_email] = React.useState(initialValues.user_email);
+  const [current_plan_price, setCurrent_plan_price] = React.useState(
+    initialValues.current_plan_price
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setCard_name(initialValues.card_name);
-    setCard_number(initialValues.card_number);
-    setExpire_date(initialValues.expire_date);
-    setCvc_number(initialValues.cvc_number);
+    setCurrent_plan(initialValues.current_plan);
     setUser_email(initialValues.user_email);
+    setCurrent_plan_price(initialValues.current_plan_price);
     setErrors({});
   };
   const validations = {
-    card_name: [{ type: "Required" }],
-    card_number: [{ type: "Required" }],
-    expire_date: [{ type: "Required" }],
-    cvc_number: [{ type: "Required" }],
+    current_plan: [{ type: "Required" }],
     user_email: [{ type: "Required" }],
+    current_plan_price: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -80,11 +72,9 @@ export default function UserCardDetailsCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          card_name,
-          card_number,
-          expire_date,
-          cvc_number,
+          current_plan,
           user_email,
+          current_plan_price,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -115,7 +105,7 @@ export default function UserCardDetailsCreateForm(props) {
             }
           });
           await client.graphql({
-            query: createUserCardDetails.replaceAll("__typename", ""),
+            query: createUserPlanSubscription.replaceAll("__typename", ""),
             variables: {
               input: {
                 ...modelFields,
@@ -135,124 +125,34 @@ export default function UserCardDetailsCreateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "UserCardDetailsCreateForm")}
+      {...getOverrideProps(overrides, "UserPlanSubscriptionCreateForm")}
       {...rest}
     >
       <TextField
-        label="Card name"
+        label="Current plan"
         isRequired={true}
         isReadOnly={false}
-        value={card_name}
+        value={current_plan}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              card_name: value,
-              card_number,
-              expire_date,
-              cvc_number,
+              current_plan: value,
               user_email,
+              current_plan_price,
             };
             const result = onChange(modelFields);
-            value = result?.card_name ?? value;
+            value = result?.current_plan ?? value;
           }
-          if (errors.card_name?.hasError) {
-            runValidationTasks("card_name", value);
+          if (errors.current_plan?.hasError) {
+            runValidationTasks("current_plan", value);
           }
-          setCard_name(value);
+          setCurrent_plan(value);
         }}
-        onBlur={() => runValidationTasks("card_name", card_name)}
-        errorMessage={errors.card_name?.errorMessage}
-        hasError={errors.card_name?.hasError}
-        {...getOverrideProps(overrides, "card_name")}
-      ></TextField>
-      <TextField
-        label="Card number"
-        isRequired={true}
-        isReadOnly={false}
-        value={card_number}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              card_name,
-              card_number: value,
-              expire_date,
-              cvc_number,
-              user_email,
-            };
-            const result = onChange(modelFields);
-            value = result?.card_number ?? value;
-          }
-          if (errors.card_number?.hasError) {
-            runValidationTasks("card_number", value);
-          }
-          setCard_number(value);
-        }}
-        onBlur={() => runValidationTasks("card_number", card_number)}
-        errorMessage={errors.card_number?.errorMessage}
-        hasError={errors.card_number?.hasError}
-        {...getOverrideProps(overrides, "card_number")}
-      ></TextField>
-      <TextField
-        label="Expire date"
-        isRequired={true}
-        isReadOnly={false}
-        value={expire_date}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              card_name,
-              card_number,
-              expire_date: value,
-              cvc_number,
-              user_email,
-            };
-            const result = onChange(modelFields);
-            value = result?.expire_date ?? value;
-          }
-          if (errors.expire_date?.hasError) {
-            runValidationTasks("expire_date", value);
-          }
-          setExpire_date(value);
-        }}
-        onBlur={() => runValidationTasks("expire_date", expire_date)}
-        errorMessage={errors.expire_date?.errorMessage}
-        hasError={errors.expire_date?.hasError}
-        {...getOverrideProps(overrides, "expire_date")}
-      ></TextField>
-      <TextField
-        label="Cvc number"
-        isRequired={true}
-        isReadOnly={false}
-        type="number"
-        step="any"
-        value={cvc_number}
-        onChange={(e) => {
-          let value = isNaN(parseInt(e.target.value))
-            ? e.target.value
-            : parseInt(e.target.value);
-          if (onChange) {
-            const modelFields = {
-              card_name,
-              card_number,
-              expire_date,
-              cvc_number: value,
-              user_email,
-            };
-            const result = onChange(modelFields);
-            value = result?.cvc_number ?? value;
-          }
-          if (errors.cvc_number?.hasError) {
-            runValidationTasks("cvc_number", value);
-          }
-          setCvc_number(value);
-        }}
-        onBlur={() => runValidationTasks("cvc_number", cvc_number)}
-        errorMessage={errors.cvc_number?.errorMessage}
-        hasError={errors.cvc_number?.hasError}
-        {...getOverrideProps(overrides, "cvc_number")}
+        onBlur={() => runValidationTasks("current_plan", current_plan)}
+        errorMessage={errors.current_plan?.errorMessage}
+        hasError={errors.current_plan?.hasError}
+        {...getOverrideProps(overrides, "current_plan")}
       ></TextField>
       <TextField
         label="User email"
@@ -263,11 +163,9 @@ export default function UserCardDetailsCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              card_name,
-              card_number,
-              expire_date,
-              cvc_number,
+              current_plan,
               user_email: value,
+              current_plan_price,
             };
             const result = onChange(modelFields);
             value = result?.user_email ?? value;
@@ -281,6 +179,38 @@ export default function UserCardDetailsCreateForm(props) {
         errorMessage={errors.user_email?.errorMessage}
         hasError={errors.user_email?.hasError}
         {...getOverrideProps(overrides, "user_email")}
+      ></TextField>
+      <TextField
+        label="Current plan price"
+        isRequired={true}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={current_plan_price}
+        onChange={(e) => {
+          let value = isNaN(parseFloat(e.target.value))
+            ? e.target.value
+            : parseFloat(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              current_plan,
+              user_email,
+              current_plan_price: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.current_plan_price ?? value;
+          }
+          if (errors.current_plan_price?.hasError) {
+            runValidationTasks("current_plan_price", value);
+          }
+          setCurrent_plan_price(value);
+        }}
+        onBlur={() =>
+          runValidationTasks("current_plan_price", current_plan_price)
+        }
+        errorMessage={errors.current_plan_price?.errorMessage}
+        hasError={errors.current_plan_price?.hasError}
+        {...getOverrideProps(overrides, "current_plan_price")}
       ></TextField>
       <Flex
         justifyContent="space-between"

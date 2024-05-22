@@ -1,6 +1,44 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getUserPlanSubscription = /* GraphQL */ `
+  query GetUserPlanSubscription($id: ID!) {
+    getUserPlanSubscription(id: $id) {
+      id
+      current_plan
+      user_email
+      current_plan_price
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const listUserPlanSubscriptions = /* GraphQL */ `
+  query ListUserPlanSubscriptions(
+    $filter: ModelUserPlanSubscriptionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserPlanSubscriptions(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        current_plan
+        user_email
+        current_plan_price
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
 export const getUserCardDetails = /* GraphQL */ `
   query GetUserCardDetails($id: ID!) {
     getUserCardDetails(id: $id) {
@@ -9,7 +47,6 @@ export const getUserCardDetails = /* GraphQL */ `
       card_number
       expire_date
       cvc_number
-      subscription_plan
       user_email
       createdAt
       updatedAt
@@ -30,7 +67,6 @@ export const listUserCardDetails = /* GraphQL */ `
         card_number
         expire_date
         cvc_number
-        subscription_plan
         user_email
         createdAt
         updatedAt
