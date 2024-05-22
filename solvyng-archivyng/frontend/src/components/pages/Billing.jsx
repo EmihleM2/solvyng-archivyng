@@ -44,10 +44,14 @@ const Billing = () => {
   const [removeCardDialog, setremoveCardDialog] = useState(false);
   const [paymentDialog, setpaymentDialog] = useState(false);
   const [cancelSubscriptionDialog, setcancelSubscriptionDialog] = useState(false);
-  const nextPaymentDateDummy = "08/08/2024"
 
   const opensaveCardDialog = () => {
-    setsaveCardDialog(true);
+    if (cardName && cardNumber && cvv && expiry) {
+      setsaveCardDialog(true);
+    } else {
+      alert('Enter the required card info.');
+    }
+
   };
 
   const opensaveConfirmationDialog = () => {
@@ -63,14 +67,16 @@ const Billing = () => {
   };
 
   const openPaymentDialog = () => {
-    
-    setpaymentDialog(true);
+    if (selectedPlanPrice) {
+      setpaymentDialog(true);
+    } else {
+      alert('Choose a plan in order to upgrade');
+    }
   };
 
   const openpaymentConfirmationDialog = () => {
     setPaymentConfirmationDialog(true);
   };
-
 
   const opencancelDialog = () => {
     setcancelSubscriptionDialog(true);
@@ -80,15 +86,19 @@ const Billing = () => {
     setCancelConfirmationDialog(true);
   };
 
+  const closeconfirmationDialogs = () => {
+    setsaveConfirmationDialog(false);
+    setdeleteConfirmationDialog(false);
+    setPaymentConfirmationDialog(false);
+    setCancelConfirmationDialog(false);
+    window.location.reload();
+  };
+
   const closeDialogs = () => {
     setsaveCardDialog(false);
     setremoveCardDialog(false);
     setpaymentDialog(false);
     setcancelSubscriptionDialog(false);
-    setsaveConfirmationDialog(false);
-    setdeleteConfirmationDialog(false);
-    setPaymentConfirmationDialog(false);
-    setCancelConfirmationDialog(false);
   };
 
   const handleDropdownChange = (evt) => {
@@ -98,7 +108,6 @@ const Billing = () => {
     setSelectedPlan(selectedOption.label);
     setSelectedPlanPrice(selectedOption.value);
   };
-
 
   const validateCardname = (cardName) => {
     const cardNameRegex = /^[a-zA-Z\s]*$/;
@@ -164,39 +173,15 @@ const Billing = () => {
     }
   }
 
-  // async function deleteCardDetails() {
-  //   try {
-  //     const userAttributes = await fetchUserAttributes();
-  //     const userEmail = userAttributes.email;
-  //     const variables = {
-  //       input: {
-  //         "user_email": userEmail
-  //       }
-  //     };
-  //     const removecardDetails = await client.graphql({
-  //       query: mutations.deleteUserCardDetails, variables
-  //     });
-  //     console.log(removecardDetails);
-  //     setremoveCardDialog(false);
-  //     opendeleteConfirmationDialog();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
   async function deleteCardDetails() {
     try {
       const variables = { input: { id: cardID } };
       const removecardDetails = await client.graphql({ query: mutations.deleteUserCardDetails, variables });
       console.log(removecardDetails);
-
-      // Remove the deleted card from the state
       const updatedCardDetails = cardDetails.filter(card => card.id !== cardID);
       setCardDetails(updatedCardDetails);
       setremoveCardDialog(false);
       opendeleteConfirmationDialog();
-
-      // Clear the input fields if the deleted card was the selected one
       if (selectedCard === cardID) {
         setcardID('');
         setCardName('');
@@ -214,20 +199,38 @@ const Billing = () => {
     try {
       const userAttributes = await fetchUserAttributes();
       const userEmail = userAttributes.email;
-      const variables = {
+      const create_variables = {
         input: {
           "current_plan": selectedPlan,
           "user_email": userEmail,
           "current_plan_price": selectedPlanPrice
         }
       };
-      const newSubsciption = await client.graphql({
-        query: mutations.createUserPlanSubscription, variables
-      });
-      console.log(newSubsciption);
-      window.location.reload();
-      setpaymentDialog(false);
-      openpaymentConfirmationDialog();
+      const update_variables = {
+        input: {
+          "id": subID,
+          "current_plan": selectedPlan,
+          "user_email": userEmail,
+          "current_plan_price": selectedPlanPrice
+        }
+      };
+      if (!subID) {
+        const newSubsciption = await client.graphql({
+          query: mutations.createUserPlanSubscription,
+          variables: create_variables
+        });
+        console.log(newSubsciption);
+        setpaymentDialog(false);
+        openpaymentConfirmationDialog();
+      } else {
+        const newSubsciption = await client.graphql({
+          query: mutations.updateUserPlanSubscription,
+          variables: update_variables
+        });
+        console.log(newSubsciption);
+        setpaymentDialog(false);
+        openpaymentConfirmationDialog();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -244,7 +247,6 @@ const Billing = () => {
         query: mutations.deleteUserPlanSubscription, variables
       });
       console.log(cancelSubscription);
-      window.location.reload();
       setsubID('');
       setcurrentPlan('No plan purchased');
       setcurrentPlanPrice('0.00');
@@ -268,6 +270,7 @@ const Billing = () => {
   useEffect(() => {
     async function fetchData() {
       try {
+        setSelectedPlan("");
         const userAttributes = await fetchUserAttributes();
         const userEmail = userAttributes.email;
         const variables = { filter: { user_email: { eq: userEmail } } };
@@ -342,7 +345,7 @@ const Billing = () => {
               <div className="billing-dialog-content">
                 <h2>Information:</h2>
                 <p className='billing-dialog-space'>Credit Card details saved!</p>
-                <button onClick={closeDialogs}>Ok</button>
+                <button onClick={closeconfirmationDialogs}>Ok</button>
               </div>
             </div>
           )}
@@ -365,7 +368,7 @@ const Billing = () => {
               <div className="billing-dialog-content">
                 <h2>Information:</h2>
                 <p className='billing-dialog-space'>Credit card details deleted!</p>
-                <button onClick={closeDialogs}>Ok</button>
+                <button onClick={closeconfirmationDialogs}>Ok</button>
               </div>
             </div>
           )}
@@ -389,7 +392,7 @@ const Billing = () => {
               <div className="billing-dialog-content">
                 <h2>Information:</h2>
                 <p className='billing-dialog-space'>Subscription successfully paid!<br />You may now proceed to utilize our resources!</p>
-                <button onClick={closeDialogs}>Ok</button>
+                <button onClick={closeconfirmationDialogs}>Ok</button>
               </div>
             </div>
           )}
@@ -412,7 +415,7 @@ const Billing = () => {
               <div className="billing-dialog-content">
                 <h2>Information:</h2>
                 <p className='billing-dialog-space'>Subscription successfully cancelled!<br />We are sad to see you go, hope to see you soon again.</p>
-                <button onClick={closeDialogs}>Ok</button>
+                <button onClick={closeconfirmationDialogs}>Ok</button>
               </div>
             </div>
           )}
@@ -439,7 +442,6 @@ const Billing = () => {
                   <option className='dropdown-options' key={option.value} value={option.value}>{option.label}</option>
                 ))}
               </select>
-
             </div>
           </div>
           <div className='card-details-form'>
