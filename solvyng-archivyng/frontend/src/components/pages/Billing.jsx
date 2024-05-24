@@ -88,9 +88,7 @@ const Billing = () => {
 
   const closeconfirmationDialogs = () => {
     setsaveConfirmationDialog(false);
-    setdeleteConfirmationDialog(false);
     setPaymentConfirmationDialog(false);
-    setCancelConfirmationDialog(false);
     window.location.reload();
   };
 
@@ -99,6 +97,8 @@ const Billing = () => {
     setremoveCardDialog(false);
     setpaymentDialog(false);
     setcancelSubscriptionDialog(false);
+    setCancelConfirmationDialog(false);
+    setdeleteConfirmationDialog(false);
   };
 
   const handleDropdownChange = (evt) => {
