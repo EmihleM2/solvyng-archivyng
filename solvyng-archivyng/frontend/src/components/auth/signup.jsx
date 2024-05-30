@@ -4,7 +4,9 @@ import './auth.css';
 import { User, Lock, Mail } from 'lucide-react';
 import { signUp } from 'aws-amplify/auth';
 import { useNavigate } from 'react-router-dom';
-import { SNSClient, SubscribeCommand } from "@aws-sdk/client-sns";
+import { SNSClient, SubscribeCommand, ConfirmSubscriptionCommand } from "@aws-sdk/client-sns";
+import { SESClient, VerifyEmailIdentityCommand } from "@aws-sdk/client-ses";
+
 
 const Signup = () => {
     const sns = new SNSClient({
@@ -100,10 +102,10 @@ const Signup = () => {
                 console.error(err, data);
             } else {
                 console.log(`Subscribed email to topic: ${params.TopicArn}`)
+                confirmSubscription();
             }
         });
     };
-
 
     const handleSignUp = async (evt) => {
         evt.preventDefault();
@@ -131,12 +133,38 @@ const Signup = () => {
             });
             console.log("Sign up complete:", userId)
             subscribeToTopic()
+            sesVerification()
             openDialog();
         } catch (error) {
             console.log('Unable to sign up, error:', error);
             setErrors('Unable to register, Try again!')
         }
     }
+
+    const ses = new SESClient({
+        region: 'eu-west-1',
+        credentials: {
+            accessKeyId: 'AKIAWUTJI5P3O3ER4UWG',
+            secretAccessKey: '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',
+        },
+    });
+
+    const createVerifyEmailIdentityCommand = (emailAddress) => {
+        return new VerifyEmailIdentityCommand({ EmailAddress: emailAddress });
+    };
+
+    const sesVerification = async () => {
+        const verifyEmailIdentityCommand =
+            createVerifyEmailIdentityCommand(email);
+        try {
+            await ses.send(verifyEmailIdentityCommand);
+            console.log("SES verification email sent");
+        } catch (err) {
+            console.log("Failed to verify email identity.", err);
+            return err;
+        }
+    };
+
 
     return (
         <div className='sign-up-page'>
@@ -202,7 +230,7 @@ const Signup = () => {
                         {passwordError && <span>{passwordError}</span>}
                     </div>
                     <div>
-                        <button className="button" onClick={handleSignUp}>Sign up</button>
+                    <button className="button" onClick={handleSignUp}>Sign up</button>
                     </div>
                     <div className="sign-up-div">
                         <p> Do not have an account? <a href="login" onClick={loginLink} className="navigate-link">Login</a></p>

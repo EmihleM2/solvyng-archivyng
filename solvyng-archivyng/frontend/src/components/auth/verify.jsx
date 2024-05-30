@@ -6,6 +6,7 @@ import { confirmSignUp } from 'aws-amplify/auth';
 import { generateClient } from "aws-amplify/api";
 import { createUserMails } from "../../graphql/mutations";
 import { SNSClient, PublishCommand } from "@aws-sdk/client-sns";
+import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 
 const client = generateClient();
 
@@ -19,11 +20,16 @@ const sns = new SNSClient({
         secretAccessKey: 'CpMRUQseFC7LXBy15XmP+RcvKP6UcE/KQzKD9u1V',
     },
 });
-
+const ses = new SESClient({
+    region: 'eu-west-1',
+    credentials: {
+        accessKeyId: 'AKIAWUTJI5P3O3ER4UWG',
+        secretAccessKey: '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',
+    },
+});
 
 function Verify() {
-    const navigate = useNavigate()
-
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [confirmationCode, setConfirmationCode] = useState('');
     const [usernameError, setUsernameError] = useState('');
@@ -83,7 +89,7 @@ function Verify() {
             });
             console.log('Successful verification')
             if (isSignUpComplete === true) {
-                publishToTopic()
+                sendEmail()
                 saveUserMails()
                 openDialog();
             }
@@ -96,28 +102,75 @@ function Verify() {
 
     //SES needs to be used for sending emails to specific users. Welcome email also needs to be sent by SES as using SNS will send to all subscribers instead of just the new registee 
 
-    const publishToTopic = () => {
-        const customEmailContent = `Welcome to Solvyng Archivyng!\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultrices gravida congue. \n\nCras diam tortor, vehicula eu semper id, varius sed urna. Fusce sed elit quis mi placerat malesuada.Suspendisse potenti. Aliquam finibus finibus lorem in tempor. Nunc blandit tellus et diam faucibus facilisis. Praesent vel venenatis erat, non consectetur dolor. \n\n @2024 Solvyng Archivyng. All rights reserved.\n\nWish to Unsubscribe, see below: `;
+    // const publishToTopic = () => {
+    //     const publishParams = {
+    //         Message: JSON.stringify({
+    //             default: 'Hello from Solvyng Archivyng!',
+    //             email: customEmailContent,
+    //         }),
+    //         Subject: emailSubject,
+    //         MessageStructure: 'json',
+    //         TopicArn: 'arn:aws:sns:eu-west-1:456561060854:solvyng-archivyng',
+    //     };
+    //     const command = new PublishCommand(publishParams);
 
-        const publishParams = {
-            Message: JSON.stringify({
-                default: 'Hello from Solvyng Archivyng!',
-                email: customEmailContent,
-            }),
-            Subject: emailSubject,
-            MessageStructure: 'json',
-            TopicArn: 'arn:aws:sns:eu-west-1:456561060854:solvyng-archivyng',
-        };
-        const command = new PublishCommand(publishParams);
+    //     sns.send(command, (err, data) => {
+    //         if (err) {
+    //             console.error(err, data);
+    //         } else {
+    //             console.log(`Published message to: ${publishParams.TopicArn}`);
+    //         }
+    //     });
+    // }
 
-        sns.send(command, (err, data) => {
-            if (err) {
-                console.error(err, data);
-            } else {
-                console.log(`Published message to: ${publishParams.TopicArn}`);
-            }
+    const createSendEmailCommand = (toAddress, fromAddress) => {
+        return new SendEmailCommand({
+            Destination: {
+                ToAddresses: [
+                    toAddress,
+                ],
+            },
+            Message: {
+                Body: {
+                    Html: {
+                        Charset: "UTF-8",
+                        Data: customEmailContent,
+                    },
+                    Text: {
+                        Charset: "UTF-8",
+                        Data: "This is a text email body.",
+                    },
+                },
+                Subject: {
+                    Charset: "UTF-8",
+                    Data: emailSubject,
+                },
+            },
+            Source: fromAddress,
+            ReplyToAddresses: [],
         });
-    }
+    };
+
+    const sendEmail = async () => {
+        const sendEmailCommand = createSendEmailCommand(
+            username,
+            "tumiso@solvyng.io", //To be changed to S-A email
+        );
+
+        try {
+            const data = await ses.send(sendEmailCommand);
+            console.log("Email sent successfully:", data);
+            return data;
+        } catch (caught) {
+            if (caught instanceof Error && caught.name === "MessageRejected") {
+                console.error("Message was rejected:", caught.message);
+                const messageRejectedError = caught;
+                return messageRejectedError;
+            }
+            console.error("An error occurred:", caught);
+            throw caught;
+        }
+    };
 
     async function saveUserMails() {
         try {
@@ -140,48 +193,48 @@ function Verify() {
 
     return (
         <div className='verify-page'>
-        <><div>
-            {isOpen && (
-                <div className="dialog-overlay-verify">
-                    <div className="dialog-content">
-                        <h2>Information:</h2>
-                        <p>Verification Successful! Click Ok to continue...</p>
-                        <button onClick={handlegotoLogin}>Ok</button>
+            <><div>
+                {isOpen && (
+                    <div className="dialog-overlay-verify">
+                        <div className="dialog-content">
+                            <h2>Information:</h2>
+                            <p>Verification Successful! Click Ok to continue...</p>
+                            <button onClick={handlegotoLogin}>Ok</button>
+                        </div>
                     </div>
-                </div>
-            )}
-        </div>
-            <form className='form-verify'>
-                <h1>Verification</h1>
-                <div>
-                    <label>Email:</label>
-                    <input
-                        type="text"
-                        name="username"
-                        placeholder='example@gmail.com'
-                        value={username}
-                        onChange={handleInput}
-                    />
-                    <Mail className="icon" />
-                    {usernameError && <span>{usernameError}</span>}
-                </div>
-                <div>
-                    <label>Enter code you recieved in your email:</label>
-                    <input
-                        type="number"
-                        name="confirmationCode"
-                        placeholder='******'
-                        value={confirmationCode}
-                        onChange={handleInput}
-                    />
-                    <Code className="icon" />
-                    {confirmationCodeError && <span>{confirmationCodeError}</span>}
-                </div>
-                <div>
-                    <button className="button" onClick={handleSignUpConfirmation}>Verify Sign-up</button>
-                </div>
-                {errors && <span className='error-span-verify'>{errors}</span>}
-            </form></></div>
+                )}
+            </div>
+                <form className='form-verify'>
+                    <h1>Verification</h1>
+                    <div>
+                        <label>Email:</label>
+                        <input
+                            type="text"
+                            name="username"
+                            placeholder='example@gmail.com'
+                            value={username}
+                            onChange={handleInput}
+                        />
+                        <Mail className="icon" />
+                        {usernameError && <span>{usernameError}</span>}
+                    </div>
+                    <div>
+                        <label>Enter code you recieved in your email:</label>
+                        <input
+                            type="number"
+                            name="confirmationCode"
+                            placeholder='******'
+                            value={confirmationCode}
+                            onChange={handleInput}
+                        />
+                        <Code className="icon" />
+                        {confirmationCodeError && <span>{confirmationCodeError}</span>}
+                    </div>
+                    <div>
+                        <button className="button" onClick={handleSignUpConfirmation}>Verify Sign-up</button>
+                    </div>
+                    {errors && <span className='error-span-verify'>{errors}</span>}
+                </form></></div>
     )
 }
 
