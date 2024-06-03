@@ -1,16 +1,18 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './auth.css';
 import { Mail, Code } from 'lucide-react';
 import { confirmSignUp } from 'aws-amplify/auth';
 import { generateClient } from "aws-amplify/api";
 import { createUserMails } from "../../graphql/mutations";
 import { SNSClient, PublishCommand } from "@aws-sdk/client-sns";
-import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
+import { SESClient, SendTemplatedEmailCommand, CreateTemplateCommand, SendEmailCommand } from "@aws-sdk/client-ses";
 
 const client = generateClient();
 
-const customEmailContent = `Welcome to Solvyng Archivyng!\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultrices gravida congue. \n\nCras diam tortor, vehicula eu semper id, varius sed urna. Fusce sed elit quis mi placerat malesuada.Suspendisse potenti. Aliquam finibus finibus lorem in tempor. Nunc blandit tellus et diam faucibus facilisis. Praesent vel venenatis erat, non consectetur dolor. \n\n @2024 Solvyng Archivyng. All rights reserved.\n\nWish to Unsubscribe, see below: `;
+const customEmailContent = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultrices gravida congue. \n\nAliquam finibus finibus lorem in tempor. Nunc blandit tellus et diam faucibus facilisis. Praesent vel venenatis erat, non consectetur dolor. \n\n @2024 Solvyng Archivyng. All rights reserved."`;
+const customHTMLEmailContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultrices gravida congue. <br/><br/>Aliquam finibus finibus lorem in tempor. Nunc blandit tellus et diam faucibus facilisis. Praesent vel venenatis erat, non consectetur dolor. <br/><br/> @2024 Solvyng Archivyng. All rights reserved.\n\n";
+
 const emailSubject = 'Solvyng Archivyng'
 
 const sns = new SNSClient({
@@ -29,7 +31,10 @@ const ses = new SESClient({
 });
 
 function Verify() {
+    const location = useLocation();
+    const { fullname } = location.state;
     const navigate = useNavigate();
+
     const [username, setUsername] = useState('');
     const [confirmationCode, setConfirmationCode] = useState('');
     const [usernameError, setUsernameError] = useState('');
@@ -89,7 +94,7 @@ function Verify() {
             });
             console.log('Successful verification')
             if (isSignUpComplete === true) {
-                sendEmail()
+                sendTemplatedEmail()
                 saveUserMails()
                 openDialog();
             }
@@ -123,54 +128,54 @@ function Verify() {
     //     });
     // }
 
-    const createSendEmailCommand = (toAddress, fromAddress) => {
-        return new SendEmailCommand({
-            Destination: {
-                ToAddresses: [
-                    toAddress,
-                ],
-            },
-            Message: {
-                Body: {
-                    Html: {
-                        Charset: "UTF-8",
-                        Data: customEmailContent,
-                    },
-                    Text: {
-                        Charset: "UTF-8",
-                        Data: "This is a text email body.",
-                    },
-                },
-                Subject: {
-                    Charset: "UTF-8",
-                    Data: emailSubject,
-                },
-            },
-            Source: fromAddress,
-            ReplyToAddresses: [],
-        });
-    };
+    // const createSendEmailCommand = (toAddress, fromAddress) => {
+    //     return new SendEmailCommand({
+    //         Destination: {
+    //             ToAddresses: [
+    //                 toAddress,
+    //             ],
+    //         },
+    //         Message: {
+    //             Body: {
+    //                 Html: {
+    //                     Charset: "UTF-8",
+    //                     Data: customEmailContent,
+    //                 },
+    //                 Text: {
+    //                     Charset: "UTF-8",
+    //                     Data: "This is a text email body.",
+    //                 },
+    //             },
+    //             Subject: {
+    //                 Charset: "UTF-8",
+    //                 Data: emailSubject,
+    //             },
+    //         },
+    //         Source: fromAddress,
+    //         ReplyToAddresses: [],
+    //     });
+    // };
 
-    const sendEmail = async () => {
-        const sendEmailCommand = createSendEmailCommand(
-            username,
-            "tumiso@solvyng.io", //To be changed to S-A email
-        );
+    // const sendEmail = async () => {
+    //     const sendEmailCommand = createSendEmailCommand(
+    //         username,
+    //         "tumiso@solvyng.io", //To be changed to S-A email
+    //     );
 
-        try {
-            const data = await ses.send(sendEmailCommand);
-            console.log("Email sent successfully:", data);
-            return data;
-        } catch (caught) {
-            if (caught instanceof Error && caught.name === "MessageRejected") {
-                console.error("Message was rejected:", caught.message);
-                const messageRejectedError = caught;
-                return messageRejectedError;
-            }
-            console.error("An error occurred:", caught);
-            throw caught;
-        }
-    };
+    //     try {
+    //         const data = await ses.send(sendEmailCommand);
+    //         console.log("Email sent successfully:", data);
+    //         return data;
+    //     } catch (caught) {
+    //         if (caught instanceof Error && caught.name === "MessageRejected") {
+    //             console.error("Message was rejected:", caught.message);
+    //             const messageRejectedError = caught;
+    //             return messageRejectedError;
+    //         }
+    //         console.error("An error occurred:", caught);
+    //         throw caught;
+    //     }
+    // };
 
     async function saveUserMails() {
         try {
@@ -189,7 +194,57 @@ function Verify() {
             console.log('error: ', error);
         }
     }
+    
+    //Template should include an image from a bucket
+    const templateInput = {
+        Template: {
+            TemplateName: "Welcome_to_S-A_Template",
+            SubjectPart: "Solvyng Archivyng",
+            TextPart: { customEmailContent },
+            HtmlPart: `
+        <h2>Welcome to Solvyng Archiyng, {{contact.firstName}}!</h2>
+        <p>
+        ${customHTMLEmailContent}
+        </p>
 
+      `,
+        }
+    };
+    // <img src="https://s3.amazonaws.com/your-bucket-name/image-name.jpg" alt="Image Description">
+    const createEmailTemplate = async () => {
+        const tempCommand = new CreateTemplateCommand(templateInput);
+        try {
+            const templateDone = await ses.send(tempCommand);
+            console.log(templateDone);
+        } catch (err) {
+            console.log("Failed to create template.", err);
+        }
+    };
+
+    const sendTemplatedEmailInput = {
+        Source: "tumiso@solvyng.io",
+        Destination: {
+            ToAddresses: [
+                username,
+            ]
+        },
+        Template: "Welcome_to_S-A_Template",
+        TemplateData: JSON.stringify({ contact: { firstName: fullname } }),
+    };
+
+    const sendTemplatedEmail = async () => {
+        const sendTempCommmand = new SendTemplatedEmailCommand(sendTemplatedEmailInput);
+        try {
+            const emailSent = await ses.send(sendTempCommmand);
+            console.log(emailSent);
+        } catch (caught) {
+            if (caught instanceof Error && caught.name === "MessageRejected") {
+                const messageRejectedError = caught;
+                console.log(messageRejectedError);
+            }
+            throw caught;
+        }
+    };
 
     return (
         <div className='verify-page'>
@@ -234,7 +289,9 @@ function Verify() {
                         <button className="button" onClick={handleSignUpConfirmation}>Verify Sign-up</button>
                     </div>
                     {errors && <span className='error-span-verify'>{errors}</span>}
-                </form></></div>
+                </form>
+
+            </></div>
     )
 }
 

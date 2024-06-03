@@ -5,8 +5,7 @@ import { User, Lock, Mail } from 'lucide-react';
 import { signUp } from 'aws-amplify/auth';
 import { useNavigate } from 'react-router-dom';
 import { SNSClient, SubscribeCommand, ConfirmSubscriptionCommand } from "@aws-sdk/client-sns";
-import { SESClient, VerifyEmailIdentityCommand } from "@aws-sdk/client-ses";
-
+import { SESClient, VerifyEmailIdentityCommand} from "@aws-sdk/client-ses";
 
 const Signup = () => {
     const sns = new SNSClient({
@@ -40,11 +39,10 @@ const Signup = () => {
     };
 
     const handlegotoVerify = () => {
-        navigate('/verify')
+        navigate('/verify', {state: {fullname, email}})
         console.log("Ok button clicked");
         closeDialog();
     };
-
 
     const loginLink = () => {
         navigate("/login");
@@ -89,23 +87,23 @@ const Signup = () => {
         }
     }
 
-    const subscribeToTopic = () => {
-        const params = {
-            Protocol: "email",
-            TopicArn: 'arn:aws:sns:eu-west-1:456561060854:solvyng-archivyng',
-            Endpoint: email
-        };
-        const command = new SubscribeCommand(params);
+    // const subscribeToTopic = () => {
+    //     const params = {
+    //         Protocol: "email",
+    //         TopicArn: 'arn:aws:sns:eu-west-1:456561060854:solvyng-archivyng',
+    //         Endpoint: email
+    //     };
+    //     const command = new SubscribeCommand(params);
 
-        sns.send(command, (err, data) => {
-            if (err) {
-                console.error(err, data);
-            } else {
-                console.log(`Subscribed email to topic: ${params.TopicArn}`)
-                confirmSubscription();
-            }
-        });
-    };
+    //     sns.send(command, (err, data) => {
+    //         if (err) {
+    //             console.error(err, data);
+    //         } else {
+    //             console.log(`Subscribed email to topic: ${params.TopicArn}`)
+    //             confirmSubscription();
+    //         }
+    //     });
+    // };
 
     const handleSignUp = async (evt) => {
         evt.preventDefault();
@@ -132,7 +130,7 @@ const Signup = () => {
                 }
             });
             console.log("Sign up complete:", userId)
-            subscribeToTopic()
+            //subscribeToTopic()
             sesVerification()
             openDialog();
         } catch (error) {
@@ -164,7 +162,6 @@ const Signup = () => {
             return err;
         }
     };
-
 
     return (
         <div className='sign-up-page'>
@@ -230,7 +227,7 @@ const Signup = () => {
                         {passwordError && <span>{passwordError}</span>}
                     </div>
                     <div>
-                    <button className="button" onClick={handleSignUp}>Sign up</button>
+                        <button className="button" onClick={handleSignUp}>Sign up</button>
                     </div>
                     <div className="sign-up-div">
                         <p> Do not have an account? <a href="login" onClick={loginLink} className="navigate-link">Login</a></p>
