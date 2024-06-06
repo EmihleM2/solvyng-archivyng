@@ -76,9 +76,10 @@ const Files = () => {
   };
 
   // Ensure imageUrls is always an array
-  const filteredImages = (imageUrls || []).filter((url) =>
-    url.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+ const filteredImages = (Array.isArray(imageUrls) ? imageUrls : []).filter(
+   (url) => url.toLowerCase().includes(searchTerm.toLowerCase())
+ );
+
 
   if (imagesLoading) return <div>Loading...</div>;
   if (fetchError) return <div>Error: {fetchError.message}</div>;
@@ -88,14 +89,11 @@ const Files = () => {
       <NavBar />
       <ToastContainer />
       <div className="flex justify-center items-center p-6 ml-10">
-        <h3 className="text-2xl font-bold tracking-tight">Files Page</h3>
-      </div>
-      <div className="flex justify-center items-center p-6 ml-10">
         <div className="relative w-full md:w-[200px] lg:w-[336px]">
           <Search className="absolute top-2.5 left-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             type="text"
-            placeholder="Search bookmarks..."
+            placeholder="Search files..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full rounded-lg bg-background pl-8"
