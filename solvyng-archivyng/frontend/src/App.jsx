@@ -6,6 +6,7 @@ import Verify from './components/auth/verify';
 import NotificationEmails from './components/pages/NotificationEmails';
 import EmailDetails from './components/pages/EmailDetails';
 import Billing from './components/pages/Billing';
+import Stamp from './components/pages/stamp';
 import { Route, Routes } from 'react-router-dom';
 import { Amplify } from 'aws-amplify';
 import amplifyconfig from './amplifyconfiguration.json';
@@ -31,6 +32,7 @@ function App() {
         <Route path="/Navbar" element={<NavBar />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/verify" element={<Verify />} />
+        <Route path="/stamp" element={<Stamp />} />
         <Route path="/Billing" element={<Billing />} />
         <Route path="/EmailDetails" element={<EmailDetails />} />
         <Route path="/reset-password" element={<ResetPassword />} />

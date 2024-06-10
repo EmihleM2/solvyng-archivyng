@@ -128,55 +128,6 @@ function Verify() {
     //     });
     // }
 
-    // const createSendEmailCommand = (toAddress, fromAddress) => {
-    //     return new SendEmailCommand({
-    //         Destination: {
-    //             ToAddresses: [
-    //                 toAddress,
-    //             ],
-    //         },
-    //         Message: {
-    //             Body: {
-    //                 Html: {
-    //                     Charset: "UTF-8",
-    //                     Data: customEmailContent,
-    //                 },
-    //                 Text: {
-    //                     Charset: "UTF-8",
-    //                     Data: "This is a text email body.",
-    //                 },
-    //             },
-    //             Subject: {
-    //                 Charset: "UTF-8",
-    //                 Data: emailSubject,
-    //             },
-    //         },
-    //         Source: fromAddress,
-    //         ReplyToAddresses: [],
-    //     });
-    // };
-
-    // const sendEmail = async () => {
-    //     const sendEmailCommand = createSendEmailCommand(
-    //         username,
-    //         "tumiso@solvyng.io", //To be changed to S-A email
-    //     );
-
-    //     try {
-    //         const data = await ses.send(sendEmailCommand);
-    //         console.log("Email sent successfully:", data);
-    //         return data;
-    //     } catch (caught) {
-    //         if (caught instanceof Error && caught.name === "MessageRejected") {
-    //             console.error("Message was rejected:", caught.message);
-    //             const messageRejectedError = caught;
-    //             return messageRejectedError;
-    //         }
-    //         console.error("An error occurred:", caught);
-    //         throw caught;
-    //     }
-    // };
-
     async function saveUserMails() {
         try {
             const newUserMails = await client.graphql({
@@ -220,6 +171,7 @@ function Verify() {
             console.log("Failed to create template.", err);
         }
     };
+    //aws ses get-template --template-name MyTemplate
 
     const sendTemplatedEmailInput = {
         Source: "tumiso@solvyng.io",
