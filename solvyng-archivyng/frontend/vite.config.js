@@ -7,6 +7,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export default defineConfig({
+    optimizeDeps: {
+        exclude: ['chunk-XAW3BXJU.js']
+    },
     server: {
         proxy: {
             '/api': 'http://localhost:5173'
