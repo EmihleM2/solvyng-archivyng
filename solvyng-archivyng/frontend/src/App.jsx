@@ -13,7 +13,11 @@ import Files from './components/pages/Files';
 import NavBar from './components/pages/Navbar';
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+<<<<<<< HEAD
 import Bookmarks from './components/pages/Bookmarks';
+=======
+import LandingPage from './components/pages/LandingPage';
+>>>>>>> a6175a3 (latest)
 
 
 //Amplify environment is to be changed before running auth pages
@@ -26,8 +30,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/Files" element={<Files />} />
+<<<<<<< HEAD
         <Route path="/Bookmarks" element={<Bookmarks />} />
         <Route path="/Navbar" element={<NavBar />} />
+=======
+        <Route path="/Navbar" element={<NavBar />} />
+        {/* <Route path="/" element={<HomePage />} /> */}
+>>>>>>> a6175a3 (latest)
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/verify" element={<Verify />} />

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import useQuery from "../../hooks/useQuery.js";
 import NavBar from "../pages/Navbar.jsx";
@@ -16,22 +17,34 @@ import "react-toastify/dist/ReactToastify.css";
 import axiosClient from "../../config/axios";
 import { Input } from "@/components/ui/input";
 
+=======
+import React, { useState } from "react";
+import useQuery from "../../hooks/useQuery.js";
+import NavBar from "../pages/Navbar.jsx";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CameraIcon } from "lucide-react";
+>>>>>>> a6175a3 (latest)
 
 const URL = "/images";
 
 const Files = () => {
+<<<<<<< HEAD
   const [bookmarks, setBookmarks] = useState(() => {
     const savedBookmarks = localStorage.getItem("bookmarks");
     return savedBookmarks ? JSON.parse(savedBookmarks) : [];
   });
   const [refetch, setRefetch] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+=======
+  const [refetch] = useState(0);
+>>>>>>> a6175a3 (latest)
   const {
     data: imageUrls = [],
     isLoading: imagesLoading,
     error: fetchError,
   } = useQuery(URL, refetch);
 
+<<<<<<< HEAD
   useEffect(() => {
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
   }, [bookmarks]);
@@ -81,12 +94,15 @@ const Files = () => {
  );
 
 
+=======
+>>>>>>> a6175a3 (latest)
   if (imagesLoading) return <div>Loading...</div>;
   if (fetchError) return <div>Error: {fetchError.message}</div>;
 
   return (
     <>
       <NavBar />
+<<<<<<< HEAD
       <ToastContainer />
       <div className="flex justify-center items-center p-6 ml-10">
         <div className="relative w-full md:w-[200px] lg:w-[336px]">
@@ -106,10 +122,23 @@ const Files = () => {
             filteredImages.map((url) => (
               <Card key={url} className="rounded-lg">
                 <CardHeader></CardHeader>
+=======
+      <div className="flex justify-center items-center p-6 pl-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {imageUrls.length > 0 ? (
+            imageUrls.map((url) => (
+              <Card key={url} className="rounded-lg shadow-lg">
+                <CardHeader>
+                  <CardTitle>
+                    <CameraIcon className="h-5 w-5" />
+                  </CardTitle>
+                </CardHeader>
+>>>>>>> a6175a3 (latest)
                 <CardContent>
                   <img
                     src={url}
                     alt="Uploaded File"
+<<<<<<< HEAD
                     className="w-full h-50 aspect-square rounded-md object-cover"
                   />
                   <div className="flex justify-between items-center mt-2">
@@ -153,11 +182,19 @@ const Files = () => {
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
+=======
+                    className="w-full h-auto"
+                  />
+>>>>>>> a6175a3 (latest)
                 </CardContent>
               </Card>
             ))
           ) : (
+<<<<<<< HEAD
             <p>No files found</p>
+=======
+            <p>No images found</p>
+>>>>>>> a6175a3 (latest)
           )}
         </div>
       </div>

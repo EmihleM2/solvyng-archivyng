@@ -15,6 +15,10 @@ export default defineConfig({
             '/api': 'http://localhost:5173'
         },
         open : true,
+    server: {
+        proxy: {
+            '/api': 'http://localhost:5173'
+        }
     },
     plugins: [react()],
     resolve: {
@@ -22,4 +26,6 @@ export default defineConfig({
             "@": path.resolve(__dirname, "./src"),
         },
     },
+}
+
 })
