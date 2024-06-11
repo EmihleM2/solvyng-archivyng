@@ -33,19 +33,6 @@ export const uploadToS3 = async ({ file, userId }) => {
     }
 };
 
-// const getImageKeysByUser = async (userId) => {
-//     const command = new ListObjectsV2Command({
-//         Bucket: BUCKET,
-//          Prefix: `${userId}/resized`,
-//     });
-
-//     const { Contents = [] } = await s3.send(command);
-
-//     return Contents.sort(
-//         (a, b) => new Date(b.LastModified) - new Date(a.LastModified)
-//     ).map((image) => image.Key);
-// };
-
 const getImageKeysByUser = async (userId) => {
     const command = new ListObjectsV2Command({
         Bucket: BUCKET,
@@ -89,10 +76,10 @@ export const deleteFromS3 = async (key) => {
 
     try {
         await s3.send(command);
-        console.log(response);
+        // console.log(response);
         return { message: 'File deleted successfully' };
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return { error };
     }
 };
