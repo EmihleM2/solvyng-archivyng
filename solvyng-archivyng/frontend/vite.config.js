@@ -7,18 +7,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export default defineConfig({
-    optimizeDeps: {
-        exclude: ['chunk-XAW3BXJU.js']
-    },
     server: {
         proxy: {
             '/api': 'http://localhost:5173'
         },
-        open : true,
-    server: {
-        proxy: {
-            '/api': 'http://localhost:5173'
-        }
+        open: true,
     },
     plugins: [react()],
     resolve: {
@@ -26,6 +19,4 @@ export default defineConfig({
             "@": path.resolve(__dirname, "./src"),
         },
     },
-}
-
 })
