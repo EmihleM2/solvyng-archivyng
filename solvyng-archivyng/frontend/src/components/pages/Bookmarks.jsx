@@ -37,12 +37,6 @@ const Bookmarks = () => {
       <NavBar />
       <ToastContainer />
       <div className="flex justify-center items-center p-6 ml-10">
-<<<<<<< HEAD
-        <h3 className="text-2xl font-bold tracking-tight">Bookmarks Page</h3>
-      </div>
-      <div className="flex justify-center items-center p-6 ml-10">
-=======
->>>>>>> temp-branch
         <div className="relative w-full md:w-[200px] lg:w-[336px]">
           <Search className="absolute top-2.5 left-2.5 h-4 w-4 text-muted-foreground" />
           <Input
