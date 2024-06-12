@@ -16,7 +16,6 @@ import "react-toastify/dist/ReactToastify.css";
 import axiosClient from "../../config/axios";
 import { Input } from "@/components/ui/input";
 
-
 const URL = "/images";
 
 const Files = () => {
@@ -76,10 +75,9 @@ const Files = () => {
   };
 
   // Ensure imageUrls is always an array
- const filteredImages = (Array.isArray(imageUrls) ? imageUrls : []).filter(
-   (url) => url.toLowerCase().includes(searchTerm.toLowerCase())
- );
-
+  const filteredImages = (Array.isArray(imageUrls) ? imageUrls : []).filter(
+    (url) => url.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   if (imagesLoading) return <div>Loading...</div>;
   if (fetchError) return <div>Error: {fetchError.message}</div>;

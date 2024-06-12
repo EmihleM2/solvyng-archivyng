@@ -18,7 +18,6 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        teal: "bg-teal text-white hover:bg-teal/90",
       },
       size: {
         default: "h-10 px-4 py-2",
@@ -32,7 +31,7 @@ const buttonVariants = cva(
       size: "default",
     },
   }
-);
+)
 
 const Button = React.forwardRef(({ className, variant, size, asChild = false, ...props }, ref) => {
   const Comp = asChild ? Slot : "button"

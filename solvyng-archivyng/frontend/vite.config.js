@@ -11,7 +11,7 @@ export default defineConfig({
         proxy: {
             '/api': 'http://localhost:5173'
         },
-        open : true,
+        open: true,
     },
     plugins: [react()],
     resolve: {

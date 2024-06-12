@@ -1,20 +1,19 @@
-import './App.css';
-import React from 'react';
-import Login from './components/auth/login';
-import Signup from './components/auth/signup';
-import Verify from './components/auth/verify';
-import {Route, Routes} from 'react-router-dom'
-import { Amplify } from 'aws-amplify';
-import amplifyconfig from './amplifyconfiguration.json';
-import ResetPassword from './components/auth/reset-password';
-import ConfirmResetPassword from './components/auth/confirm-reset-password';
-import Dashboard from './components/pages/Dashboard';
-import Files from './components/pages/Files';
-import NavBar from './components/pages/Navbar';
+import "./App.css";
+import React from "react";
+import Login from "./components/auth/login";
+import Signup from "./components/auth/signup";
+import Verify from "./components/auth/verify";
+import { Route, Routes } from "react-router-dom";
+import { Amplify } from "aws-amplify";
+import amplifyconfig from "./amplifyconfiguration.json";
+import ResetPassword from "./components/auth/reset-password";
+import ConfirmResetPassword from "./components/auth/confirm-reset-password";
+import Dashboard from "./components/pages/Dashboard";
+import Files from "./components/pages/Files";
+import NavBar from "./components/pages/Navbar";
 import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-import Bookmarks from './components/pages/Bookmarks';
-
+import "react-toastify/dist/ReactToastify.css";
+import Bookmarks from "./components/pages/Bookmarks";
 
 //Amplify environment is to be changed before running auth pages
 

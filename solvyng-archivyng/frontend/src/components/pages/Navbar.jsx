@@ -4,6 +4,7 @@ import Logo from "../assets/logo.jpg";
 import axios from "axios";
 import { saveTimezone } from "../../hooks/dynamoDb.mjs";
 
+
 import {
   SquareUser,
   ArrowUpRight,
@@ -27,7 +28,6 @@ import {
   VideoIcon,
   UploadCloudIcon,
   LayoutDashboardIcon,
-  Book,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -42,7 +42,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import {
   Tooltip,

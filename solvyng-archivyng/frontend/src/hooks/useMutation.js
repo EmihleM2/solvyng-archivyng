@@ -7,14 +7,14 @@ const useMutation = ({ url, method = 'POST' }) => {
     const [state, setState] = useState({
         isLoading: false,
         error: '',
-        progress: 0,  
+        progress: 0,
     });
 
     const fn = async data => {
         setState(prev => ({
             ...prev,
             isLoading: true,
-            progress: 0,  
+            progress: 0,
         }));
 
         const config = {
@@ -23,7 +23,7 @@ const useMutation = ({ url, method = 'POST' }) => {
                 console.log('Upload progress:', percentCompleted);
                 setState(prev => ({
                     ...prev,
-                    progress: percentCompleted,  
+                    progress: percentCompleted,
                 }));
                 // if (percentCompleted === 100) {
                 //     toast.success('Successfully Added File', {
