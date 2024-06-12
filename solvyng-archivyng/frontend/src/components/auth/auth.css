@@ -15,7 +15,7 @@
   background-position: 1px -10px;
 } */
 
-.sign-up-page{
+.sign-up-page {
   font-family: "Poppins", sans-serrif;
   display: flex;
   justify-content: center;
@@ -29,7 +29,10 @@
   overflow: hidden;
 }
 
-.login-page, .verify-page, .reset-password-page, .confirm-reset-password-page{
+.login-page,
+.verify-page,
+.reset-password-page,
+.confirm-reset-password-page {
   font-family: "Poppins", sans-serrif;
   display: flex;
   justify-content: center;
@@ -124,13 +127,13 @@ h1 {
   position: inherit;
 }
 
-h2{
+h2 {
   font-size: 22px;
   font-weight: 800;
 }
 
 
-h3{
+h3 {
   font-size: 20px;
   font-weight: 600;
 }
@@ -221,6 +224,24 @@ span {
 }
 
 .button:hover {
+  cursor: pointer;
+}
+
+.button-stamp {
+  transition: background-color 0.3s;
+  top: 7px;
+  width: 180px;
+  height: 35px;
+  background: #2666d0;
+  border-radius: 10px;
+  font-size: 16px;
+  color: white;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-stamp:hover {
   cursor: pointer;
 }
 
@@ -320,7 +341,7 @@ span {
   border-radius: 10px;
   color: white;
   cursor: pointer;
-  
+
 }
 
 .dialog-overlay-verify button {

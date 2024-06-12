@@ -62,7 +62,7 @@ const Login = () => {
       });
       console.log(isSignedIn)
       console.log('Sign in complete')
-      navigate("/");
+      navigate("/Dashboard");
     } catch (error) {
       setErrors('Incorrect login details, Try again!')
       console.log('Unable to login, error:', error);

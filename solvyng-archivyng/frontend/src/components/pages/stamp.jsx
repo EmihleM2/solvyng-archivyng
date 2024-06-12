@@ -6,8 +6,12 @@ const Stamp = () => {
   const [pdfUrl, setPdfUrl] = useState(null);
   const [modifiedPdfUrl, setModifiedPdfUrl] = useState(null);
   const [stampPosition, setStampPosition] = useState({ x: 0, y: 0 });
+  const [x, setX] = useState(null);
+  const [y, setY] = useState(null);
   const [isStampDropped, setIsStampDropped] = useState(false);
+  const [stampType, setStampType] = useState('approved');
   const pdfCanvasRef = useRef(null);
+  const stampRef = useRef(null);
 
   const loadPdf = async (event) => {
     const file = event.target.files[0];
@@ -17,6 +21,7 @@ const Stamp = () => {
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       setPdfUrl(url);
+      console.log('PDF loaded and URL set:', url);
     };
     fileReader.readAsArrayBuffer(file);
   };
@@ -24,29 +29,32 @@ const Stamp = () => {
   const handleDrop = (e, data) => {
     setStampPosition({ x: data.x, y: data.y });
     setIsStampDropped(true);
+    setX(data.x);
+    setY(data.y);
+    console.log('Stamp dropped at position:', data.x, data.y);
   };
 
   const addStampToPdf = async () => {
     if (!pdfUrl) return;
 
+    console.log('Starting to add stamp to PDF...');
     const response = await fetch(pdfUrl);
     const pdfBytes = await response.arrayBuffer();
     const pdfDoc = await PDFDocument.load(pdfBytes);
     const pages = pdfDoc.getPages();
     const firstPage = pages[0];
 
-    // Load the stamp image
-    const stampUrl = '/stamp.png';
+    const stampUrl = stampType === 'approved' ? 'approved_stamp.png' : 'deny_stamp.png';
+    console.log('Fetching stamp image from URL:', stampUrl);
     const stampImageBytes = await fetch(stampUrl).then((res) => res.arrayBuffer());
     const stampImage = await pdfDoc.embedPng(stampImageBytes);
 
-    // Convert canvas position to PDF coordinates
     const canvas = pdfCanvasRef.current;
-    const { x, y, width, height } = canvas.getBoundingClientRect();
-    const pdfX = stampPosition.x * (firstPage.getWidth() / width);
-    const pdfY = firstPage.getHeight() - (stampPosition.y * (firstPage.getHeight() / height)) - 150;
+    const canvasRect = canvas.getBoundingClientRect();
+    const pdfX = (x / canvasRect.width) * firstPage.getWidth() - 78;
+    const pdfY = firstPage.getHeight() - (y / canvasRect.height) * firstPage.getHeight() - 45;
 
-    // Draw the stamp image on the first page
+    console.log('Drawing stamp at PDF coordinates:', pdfX, pdfY);
     firstPage.drawImage(stampImage, {
       x: pdfX,
       y: pdfY,
@@ -58,25 +66,36 @@ const Stamp = () => {
     const blob = new Blob([pdfBytesModified], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
     setModifiedPdfUrl(url);
+    console.log('Modified PDF URL set:', url);
   };
 
   return (
     <div>
       <input type="file" onChange={loadPdf} />
-      <div style={{ position: 'relative', width: '1800px', height: '1200px' }}>
+      <div>
+        <button className='button-stamp' onClick={() => setStampType('approved')}>Select Approve Stamp</button>
+        <button className='button-stamp' onClick={() => setStampType('denied')}>Select Deny Stamp</button>
+        <button className='button-stamp' onClick={addStampToPdf} disabled={!isStampDropped}>
+          Add Stamp to PDF
+        </button>
+      </div>
+      <div>
+      </div>
+      <div style={{ position: 'relative', width: '1800px', height: '1200px', top: 18 }}>
         {pdfUrl && (
           <iframe
             ref={pdfCanvasRef}
             title="PDF Viewer"
             src={pdfUrl}
-            width="1800"
+            width="1500"
             height="1200"
             style={{ position: 'absolute', zIndex: 0 }}
           ></iframe>
         )}
-        <Draggable onStop={handleDrop}>
+        <Draggable onStop={handleDrop} nodeRef={stampRef}>
           <img
-            src="/approved_stamp.png"
+            ref={stampRef}
+            src={stampType === 'approved' ? 'approved_stamp.png' : 'deny_stamp.png'}
             alt="Stamp"
             style={{
               position: 'absolute',
@@ -88,16 +107,13 @@ const Stamp = () => {
           />
         </Draggable>
       </div>
-      <button onClick={addStampToPdf} disabled={!isStampDropped}>
-        Add Stamp to PDF
-      </button>
       {modifiedPdfUrl && (
         <iframe
           title="Modified PDF"
           src={modifiedPdfUrl}
-          width="600"
-          height="800"
-          style={{ marginTop: '20px' }}
+          width="1800"
+          height="1200"
+          style={{ position: 'absolute', top: '93px', zIndex: 2 }}
         ></iframe>
       )}
     </div>
@@ -105,6 +121,8 @@ const Stamp = () => {
 };
 
 export default Stamp;
+
+
 
 // import React, { useState } from 'react';
 // import { PDFDocument } from 'pdf-lib';
@@ -132,7 +150,7 @@ export default Stamp;
 //         const firstPage = pages[0];
 
 //         // Load the stamp image
-//         const stampUrl = 'google_symbol.png'; // Replace with the path to your stamp image
+//         const stampUrl = 'approved_stamp.png'; // Replace with the path to your stamp image
 //         const stampImageBytes = await fetch(stampUrl).then((res) => res.arrayBuffer());
 //         const stampImage = await pdfDoc.embedPng(stampImageBytes);
 
