@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "./Navbar";
+import DashboardNavbar from "./Navbar";
 import '../../../../aos/dist/aos.css';
 
 const Header = () => {
@@ -7,7 +7,7 @@ const Header = () => {
     return (
         <section className="header">
             <div className="container">
-                <Navbar />
+                <DashboardNavbar />
                 <div className="bottom-content mt-5 pt-5">
                     <div className="scaner-card card border-0 p-3">
                         <h2>Start play for exclusive Fishing, Slots and more!</h2>
