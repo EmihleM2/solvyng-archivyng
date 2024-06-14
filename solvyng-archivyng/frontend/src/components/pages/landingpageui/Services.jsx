@@ -1,6 +1,4 @@
 import React from 'react'
-import '../styling/landingpage.css';
-import '../../../../aos/dist/aos.css';
 
 const Services = () => {
   return (

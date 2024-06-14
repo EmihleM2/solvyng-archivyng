@@ -1,5 +1,4 @@
 import React from 'react'
-import '../../../../aos/dist/aos.css';
 
 const Documents = () => {
   return (

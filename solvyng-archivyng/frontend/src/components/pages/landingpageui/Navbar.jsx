@@ -1,33 +1,35 @@
 import React from "react";
+import '../styling/landingpage.css';
+import { useNavigate } from 'react-router-dom'
 
-const DashboardNavbar = () => {
+const Navbar = () => {
+  const navigate = useNavigate()
 
-    return (
-        <nav className="navbar navbar-expand-lg navbar-light">
-            <div className="container">
-              <a className="navbar-brand" href="#">
-                <img src="src/components/assets/logo.png" width='130' alt="" />
-              </a>
-              <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-              </button>
-              <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                <ul className="navbar-nav">
-                  <li className="nav-item">
-                    <a className="nav-link" href="#services">Services</a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="btn btn-primary" href="#">Login</a>
-                  </li>
-                  <li className="nav-item ms-2">
-                    <a href="#contact" className="btn btn-primary">Contact Us</a>
-                  </li>
-                </ul>
-               
-              </div>
-            </div>
-          </nav>
-    )
+  const LoginLink = () => {
+    navigate("/login");
+  }
+  return (
+    <nav className="navbar-landpage">
+      <div className="navbar-container-landpage">
+        <a className="navbar-brand-landpage" href="#">
+          <img src="src/components/assets/logo.png" width='130' alt="Logo" />
+        </a>
+        <div className="navbar-collapse-landpage">
+          <ul className="navbar-nav-landpage">
+            <li className="nav-item-landpage">
+              <a className="nav-link-landpage" href="#services">Services</a>
+            </li>
+            <li className="nav-item-landpage">
+              <a className="nav-link-landpage" href="#contact">Contact Us</a>
+            </li>
+            <li className="nav-item-landpage">
+              <a className="btn-landpage btn-custom-login-landpage" href="#" onClick={LoginLink}>Login</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  );
 }
 
-export default DashboardNavbar;
+export default Navbar;
