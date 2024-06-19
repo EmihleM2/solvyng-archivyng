@@ -33,6 +33,8 @@ export const uploadToS3 = async ({ file, userId }) => {
     }
 };
 
+<<<<<<< HEAD
+=======
 // const getImageKeysByUser = async (userId) => {
 //     const command = new ListObjectsV2Command({
 //         Bucket: BUCKET,
@@ -46,6 +48,7 @@ export const uploadToS3 = async ({ file, userId }) => {
 //     ).map((image) => image.Key);
 // };
 
+>>>>>>> f8aa2b7 (latest)
 const getImageKeysByUser = async (userId) => {
     const command = new ListObjectsV2Command({
         Bucket: BUCKET,
@@ -89,10 +92,17 @@ export const deleteFromS3 = async (key) => {
 
     try {
         await s3.send(command);
+<<<<<<< HEAD
+        // console.log(response);
+        return { message: 'File deleted successfully' };
+    } catch (error) {
+        // console.log(error);
+=======
         console.log(response);
         return { message: 'File deleted successfully' };
     } catch (error) {
         console.log(error);
+>>>>>>> f8aa2b7 (latest)
         return { error };
     }
 };
