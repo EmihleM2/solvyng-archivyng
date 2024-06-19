@@ -20,7 +20,6 @@ import Billing from './components/pages/Billing';
 import Stamp from './components/pages/stamp';
 import 'react-toastify/dist/ReactToastify.css';
 import LandingPage from './components/pages/LandingPage';
-
 //Amplify environment is to be changed before running auth pages
 
 Amplify.configure(amplifyconfig);
