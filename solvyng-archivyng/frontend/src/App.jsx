@@ -16,6 +16,7 @@ import NavBar from './components/pages/Navbar';
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Dashboard from './components/pages/Dashboard';
+import RecentFiles from './components/pages/RecentFiles';
 
 //Amplify environment is to be changed before running auth pages
 
@@ -36,6 +37,7 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/NotificationEmails" element={<NotificationEmails />} />
         <Route path="/confirm-reset-password" element={<ConfirmResetPassword />} />
+        <Route path="/RecentFiles" element={<RecentFiles/>} />
       </Routes>
       <ToastContainer />
     </>

@@ -1,0 +1,77 @@
+/* Existing styles */
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+      animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+      transform: rotate(0deg);
+  }
+  to {
+      transform: rotate(360deg);
+  }
+}
+
+/* New styles for navbar and main content */
+
+/* Style for the navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Ensures the navbar is on top of other elements */
+  background-color: #fff; /* or any other background color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: add a shadow for better visibility */
+  height: 60px; /* Set the height of the navbar */
+}
+
+/* Style for the main content */
+.main-content {
+  padding-top: 60px; /* Adjust this value based on the height of your navbar */
+  margin-left: 200px; /* Adjust this value based on the width of your sidebar */
+  text-align: left; /* Ensure content aligns to the left */
+}
+
+/* Style for the sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px; /* Set the width of the sidebar */
+  height: 100vh;
+  background-color: #f8f9fa; /* or any other background color */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional: add a shadow for better visibility */
+  z-index: 999; /* Ensures the sidebar is below the navbar */
+}
+
+/* Sidebar content alignment */
+.sidebar-content {
+  padding-top: 60px; /* Adjust this value based on the height of your navbar */
+}

@@ -127,6 +127,19 @@ export function Dashboard() {
     await uploadImage(form);
   };
 
+  <Tooltip>
+  <TooltipTrigger asChild>
+    <Link
+      to="/recent-files"
+      className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
+    >
+      <Clock className="h-5 w-5" />
+      <span className="sr-only">Recent Files</span>
+    </Link>
+  </TooltipTrigger>
+  <TooltipContent side="right">Recent Files</TooltipContent>
+</Tooltip>
+
 
 
   return (
@@ -191,7 +204,7 @@ export function Dashboard() {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  href="#"
+                   to="/RecentFiles" 
                   className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                 >
                   <Clock className="h-5 w-5" />
@@ -275,7 +288,7 @@ export function Dashboard() {
                     Favourites
                   </Link>
                   <Link
-                    href="#"
+                     to="/RecentFiles" 
                     className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                   >
                     <Clock className="h-5 w-5" />
