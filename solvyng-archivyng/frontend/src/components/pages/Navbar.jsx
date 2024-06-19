@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import Logo from "../assets/logo.jpg";
 import axios from "axios";
 import { saveTimezone } from "../../hooks/dynamoDb.mjs";
+import { useNavigate } from 'react-router-dom';
 
 import {
   SquareUser,
@@ -51,6 +52,7 @@ import {
 } from "@/components/ui/select";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { signOut } from 'aws-amplify/auth';
 
 const apiUrl =
   "http://api.timezonedb.com/v2.1/list-time-zone?key=2HK8BQKKV4E8&format=json";
@@ -100,6 +102,18 @@ export function Navbar() {
     }
   };
 
+  const navigate = useNavigate()
+
+  async function handleSignOut() {
+    try {
+      await signOut()
+      console.log("Logout works");
+      navigate("/login");
+    } catch (error) {
+      console.log('error signing out: ', error);
+    }
+  }
+
   return (
     <TooltipProvider>
       <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
@@ -120,7 +134,7 @@ export function Navbar() {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                to="/"
+                to="/Dashboard"
                 className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${
                   location.pathname === "/"
                     ? "bg-blue-500 text-white"
@@ -152,7 +166,7 @@ export function Navbar() {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                to=""
+                to="/NotificationEmails"
                 className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${
                   location.pathname === ""
                     ? "bg-blue-500 text-white"
@@ -259,7 +273,7 @@ export function Navbar() {
                       Preferences
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Logout</DropdownMenuItem>
+                    <DropdownMenuItem  onClick={handleSignOut}>Logout</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </Link>
