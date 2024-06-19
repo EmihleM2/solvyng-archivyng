@@ -1,43 +1,19 @@
 import { Link } from "react-router-dom";
-import Logo from "../assets/logo.jpg";
 import NavBar from "../pages/Navbar.jsx";
 
 import {
   ArrowUpRight,
-  Bookmark,
-  File,
-  Home,
-  ListFilter,
-  Package2,
-  PanelLeft,
-  Search,
-  Settings,
-  AudioLines,
-  Bell,
-  CameraIcon,
-  Clock,
-  Folder,
   MoreHorizontal,
-  Share2,
-  Share2Icon,
-  Star,
-  VideoIcon,
-  UploadCloudIcon,
-  LayoutDashboardIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
   Table,
   TableBody,
@@ -48,16 +24,13 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import {
-  Tooltip,
-  TooltipContent,
   TooltipProvider,
-  TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useState } from "react";
 import useMutation from "../../hooks/useMutation";
 import useQuery from "../../hooks/useQuery";
 import axiosClient from "../../config/axios";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ErrorText = ({ children, ...props }) => (
@@ -71,10 +44,6 @@ export function Dashboard() {
 
   // const validFileTypes = ["image/jpg", "image/jpeg", "image/png"];
   const URL = "/images";
-
-  {
-    /* Handle delete Function */
-  }
 
   const handleDelete = async (key) => {
     try {
@@ -94,9 +63,7 @@ export function Dashboard() {
     }
   };
 
-  {
-    /* Handle Upload Function */
-  }
+
   const {
     mutate: uploadImage,
     isLoading: uploading,
@@ -250,7 +217,6 @@ export function Dashboard() {
                               <TableRow key={url}>
                                 <TableCell className="hidden sm:table-cell">
                                   <img
-                                    alt="image"
                                     className="aspect-square rounded-md object-cover"
                                     src={url}
                                     width="64"

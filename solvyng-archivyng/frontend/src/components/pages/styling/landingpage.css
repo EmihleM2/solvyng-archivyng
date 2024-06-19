@@ -1,0 +1,312 @@
+.landing-page {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* landingpage.css */
+
+/* landingpage.css */
+
+.navbar-landpage {
+  background-color: #ffffff; /* Light background for the navbar */
+  padding: 1rem;
+}
+
+.navbar-container-landpage {
+  display: flex;
+  justify-content: space-between;
+  padding-inline-start: 80px;
+  align-items: center;
+  width: 100%;
+}
+
+.navbar-brand-landpage img {
+  max-width: 100%;
+  height: auto;
+}
+
+.navbar-nav-landpage {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-item-landpage {
+  margin-left: 1rem;
+}
+
+.nav-link-landpage {
+  text-decoration: none;
+  color: #000;
+  padding: 0.5rem 1rem;
+}
+
+.nav-link-landpage:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+}
+
+.btn-landpage {
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+}
+
+.btn-custom-login-landpage {
+  background-color: #007bff; /* Blue color for the login button */
+}
+
+.btn-custom-login-landpage:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.btn-primary-landpage {
+  background-color: #007bff; /* Blue color for the contact button */
+}
+
+.btn-primary-landpage:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+
+/* banner starts */
+.banner_wrapper h3 {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+/* banner ends */
+
+/* semi-banner starts */
+.semi-content h5 {
+  font-weight: 700;
+}
+
+/* semi-banner ends */
+
+/* services starts */
+.service_wrapper h6 {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.service_wrapper p {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* services ends */
+
+/* documemts starts */
+.doc-content h3 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.doc-content p {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* documents ends */
+
+/* pricing starts */
+.price_wrapper .card {
+  border: 1px solid rgba(53, 38, 208, 1);
+  border-radius: 10px;
+  height: 430px;
+}
+
+.price-header h3 {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.price_wrapper .card .card-header {
+  border: 0;
+  background-color: transparent;
+  text-align: center;
+}
+
+.price_wrapper .card .card-header h5 {
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(38, 102, 208, 1);
+}
+
+.price_wrapper .select-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.price_wrapper .select-item p {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 14px;
+}
+
+.price_wrapper .select-item i {
+  font-size: 16px;
+  color: rgba(38, 102, 208, 1);
+  font-weight: 700;
+}
+
+.price_wrapper .select-item p {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.price_wrapper .card-footer {
+  background-color: transparent;
+  border: 0;
+  font-weight: 600;
+  text-align: center;
+}
+
+.centerCard {
+  background: rgba(234, 234, 234, 0.59);
+  border: 1px solid rgba(6, 5, 5, 1) !important;
+  position: relative;
+}
+
+.centerCard img {
+  position: absolute;
+  right: 0;
+  top: 24px;
+}
+
+/* pricing ends */
+
+/* about us starts */
+
+.contact_wrapper .container {
+  background-color: #EDEDED;
+  padding: 45px;
+  border-radius: 10px;
+}
+
+.contact-left-side h4 {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.contact-left-side p {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.socials .social-item {
+  display: flex;
+  align-items: center;
+}
+
+.social-item span {
+  margin-left: 24px;
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon input {
+  border: 0;
+  border-radius: 10px;
+}
+
+.input-with-icon input[type="text"] {
+  padding-left: 30px;
+  /* Adjust the padding as needed */
+}
+
+.input-with-icon input[type="email"] {
+  padding-left: 30px;
+  /* Adjust the padding as needed */
+}
+
+.input-with-icon input::placeholder {
+  font-size: 12px;
+}
+
+.input-with-icon .icon {
+  position: absolute;
+  left: 10px;
+  /* Adjust the position as needed */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Assuming you're using Font Awesome for the user icon */
+.input-with-icon .icon i {
+  color: #888;
+}
+
+.contact-form button {
+  width: 145px;
+  border-radius: 10px;
+}
+
+.contact-form textarea {
+  border-radius: 10px;
+  border: 0;
+}
+
+.contact-form textarea::placeholder {
+  font-size: 12px;
+}
+
+/* about us ends */
+/* Add hover effect to buttons */
+.btn-primary:hover,
+.btn-outline-info:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Add bounce animation on hover */
+.btn-primary:hover {
+  animation: bounce 0.5s;
+}
+
+/* Keyframes for bounce animation */
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* CSS for banner image animation */
+.banner-img img {
+  animation: moveUpDown 2s infinite alternate;
+  /* alternate the animation direction */
+}
+
+/* Keyframes for the image animation */
+@keyframes moveUpDown {
+  0% {
+    transform: translateY(0);
+    /* start position */
+  }
+
+  100% {
+    transform: translateY(20px);
+    /* end position */
+  }
+}

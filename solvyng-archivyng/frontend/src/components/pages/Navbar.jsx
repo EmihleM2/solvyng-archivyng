@@ -4,45 +4,29 @@ import Logo from "../assets/logo.jpg";
 import axios from "axios";
 import { saveTimezone } from "../../hooks/dynamoDb.mjs";
 
-
 import {
   SquareUser,
-  ArrowUpRight,
-  File,
   Home,
-  ListFilter,
   Package2,
   PanelLeft,
-  Search,
   Settings,
-  AudioLines,
   Bell,
-  CameraIcon,
   Clock,
   Folder,
   Bookmark,
-  MoreHorizontal,
-  Share2,
   Share2Icon,
   Star,
-  VideoIcon,
-  UploadCloudIcon,
-  LayoutDashboardIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Tabs, TabsContent } from "@/components/ui/tabs";
 import {
   Tooltip,
   TooltipContent,
@@ -56,19 +40,16 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const apiUrl =
@@ -94,30 +75,30 @@ export function Navbar() {
   }, []); // Empty dependency array means this effect will only run once, when the component mounts
 
   // Save timezone on DynamoDB
- const handleSaveChanges = async () => {
-   if (!selectedTimezone) {
-     console.error("Timezone cannot be empty or undefined.");
-     return;
-   }
+  const handleSaveChanges = async () => {
+    if (!selectedTimezone) {
+      console.error("Timezone cannot be empty or undefined.");
+      return;
+    }
 
-   const response = await saveTimezone(userId, selectedTimezone);
-   if (response.error) {
-     console.error("Failed to save timezone", response.error);
-     toast.error("Failed to save timezone", {
-       // Display an error toast when there's an error
-       position: "bottom-right",
-       autoClose: 4000,
-     });
-   } else {
-     console.log(response.message);
-     setShowDialog(false);
-     toast.success("Timezone saved successfully", {
-       // Display a success toast when the timezone is saved successfully
-       position: "bottom-right",
-       autoClose: 4000,
-     });
-   }
- };
+    const response = await saveTimezone(userId, selectedTimezone);
+    if (response.error) {
+      console.error("Failed to save timezone", response.error);
+      toast.error("Failed to save timezone", {
+        // Display an error toast when there's an error
+        position: "bottom-right",
+        autoClose: 4000,
+      });
+    } else {
+      console.log(response.message);
+      setShowDialog(false);
+      toast.success("Timezone saved successfully", {
+        // Display a success toast when the timezone is saved successfully
+        position: "bottom-right",
+        autoClose: 4000,
+      });
+    }
+  };
 
   return (
     <TooltipProvider>

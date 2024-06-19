@@ -1,37 +1,68 @@
 {
-  "auth": {
+  "api": {
     "SolvyngArchivyng": {
-      "customAuth": false,
       "dependsOn": [],
-      "frontendAuthConfig": {
-        "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
-        ],
-        "passwordProtectionSettings": {
-          "passwordPolicyCharacters": [
-            "REQUIRES_LOWERCASE",
-            "REQUIRES_NUMBERS",
-            "REQUIRES_SYMBOLS",
-            "REQUIRES_UPPERCASE"
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
           ],
-          "passwordPolicyMinLength": 7
-        },
-        "signupAttributes": [
-          "NAME",
-          "PREFERRED_USERNAME",
-          "EMAIL"
-        ],
-        "socialProviders": [],
-        "usernameAttributes": [
-          "EMAIL"
-        ],
-        "verificationMechanisms": [
-          "EMAIL"
-        ]
+          "defaultAuthentication": {
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 30,
+              "description": "api key description"
+            },
+            "authenticationType": "API_KEY"
+          }
+        }
       },
       "providerPlugin": "awscloudformation",
-      "service": "Cognito"
+      "service": "AppSync"
+    }
+  },
+  "auth": {
+    "solvyngarchivyng": {
+      "customAuth": false,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito",
+      "serviceType": "imported"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_auth_solvyngarchivyng_nativeClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "solvyngarchivyng"
+        }
+      ]
+    },
+    "AMPLIFY_auth_solvyngarchivyng_userPoolId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "solvyngarchivyng"
+        }
+      ]
+    },
+    "AMPLIFY_auth_solvyngarchivyng_userPoolName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "solvyngarchivyng"
+        }
+      ]
+    },
+    "AMPLIFY_auth_solvyngarchivyng_webClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "solvyngarchivyng"
+        }
+      ]
     }
   }
 }

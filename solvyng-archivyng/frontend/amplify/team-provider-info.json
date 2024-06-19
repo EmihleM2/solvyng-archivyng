@@ -13,6 +13,15 @@
     },
     "categories": {
       "auth": {
+        "SolvyngArchivyng": {},
+        "solvyngarchivyng": {
+          "nativeClientId": "1jku2vj859bovphq4ccgo0l2bi",
+          "userPoolId": "eu-west-1_HpILQQQ6L",
+          "userPoolName": "solvyng-archivyng",
+          "webClientId": "1jku2vj859bovphq4ccgo0l2bi"
+        }
+      },
+      "api": {
         "SolvyngArchivyng": {}
       }
     }

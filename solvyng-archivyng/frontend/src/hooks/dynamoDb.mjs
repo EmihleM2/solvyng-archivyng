@@ -1,4 +1,5 @@
-import { DynamoDBClient, UpdateItemCommand, QueryCommand, ScanCommand } from '@aws-sdk/client-dynamodb';
+import { DynamoDBClient, UpdateItemCommand,ScanCommand } from '@aws-sdk/client-dynamodb';
+// import { DynamoDBClient, UpdateItemCommand, QueryCommand, ScanCommand } from '@aws-sdk/client-dynamodb';
 
 // Initialize DynamoDB client
 const dynamoDB = new DynamoDBClient({

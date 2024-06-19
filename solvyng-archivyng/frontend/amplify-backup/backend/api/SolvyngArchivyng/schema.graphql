@@ -1,0 +1,6 @@
+type UserMails @model @auth(rules: [{allow: public}]) {
+  id: ID! 
+  user_email: String!
+  mail_subject: String!
+  mail_message: String!
+}

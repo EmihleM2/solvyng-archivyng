@@ -8,10 +8,11 @@ dotenv.config();
 
 export default defineConfig({
     server: {
+        open: true,
         proxy: {
             '/api': 'http://localhost:5173'
-        },
-        open: true,
+        }
+      
     },
     plugins: [react()],
     resolve: {

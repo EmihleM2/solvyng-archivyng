@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import useQuery from "../../hooks/useQuery.js";
 import NavBar from "../pages/Navbar.jsx";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Bookmark, Trash, MoreVertical, Search } from "lucide-react";
+import { Bookmark, MoreVertical, Search } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
