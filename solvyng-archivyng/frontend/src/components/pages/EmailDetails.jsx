@@ -36,7 +36,6 @@ const EmailDetails = () => {
       <div className='boxes'>
         <h2>{subject}</h2>
         <Trash2 className="icon-mail-details" onClick={deleteEmail} />
-        <br></br>
         <p>{message}</p>
       </div>
     </div></>

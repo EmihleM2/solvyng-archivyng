@@ -29,7 +29,6 @@ const EmailItem = ({ email, onDelete }) => {
                 </div>
                 <Trash2 className="icon-notifications" onClick={onDelete} />
             </div>
-            <hr className="line"></hr><br></br>
         </>
     );
 };
@@ -97,17 +96,11 @@ const NotificationEmails = () => {
     return (
         <>
         <NavBar/>
-        <div>
+         <div>
             <h1>Notifications</h1>
-            {isLoading ? (
-                <p>Loading...</p>
-            ) : emails.length === 0 ? (
-                <p>No emails</p>
-            ) : (
-                emails.map(email => (
-                    <EmailItem key={email.id} email={email} onDelete={() => deleteEmail(email.id)} />
-                ))
-            )}
+            {emails.map(email => (
+                <EmailItem key={email.id} email={email} onDelete={() => deleteEmail(email.id)} />
+            ))}
         </div>
         </>
     );

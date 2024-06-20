@@ -7,14 +7,14 @@ const useMutation = ({ url, method = 'POST' }) => {
     const [state, setState] = useState({
         isLoading: false,
         error: '',
-        progress: 0,  
+        progress: 0,
     });
 
     const fn = async data => {
         setState(prev => ({
             ...prev,
             isLoading: true,
-            progress: 0,  
+            progress: 0,
         }));
 
         const config = {
@@ -23,14 +23,14 @@ const useMutation = ({ url, method = 'POST' }) => {
                 console.log('Upload progress:', percentCompleted);
                 setState(prev => ({
                     ...prev,
-                    progress: percentCompleted,  
+                    progress: percentCompleted,
                 }));
-                if (percentCompleted === 100) {
-                    toast.success('Successfully Added File', {
-                        position: "bottom-right",
-                        autoClose: 4000,
-                    });
-                }
+                // if (percentCompleted === 100) {
+                //     toast.success('Successfully Added File', {
+                //         position: "bottom-right",
+                //         autoClose: 4000,
+                //     });
+                // }
             },
         };
 
@@ -46,70 +46,26 @@ const useMutation = ({ url, method = 'POST' }) => {
     return { mutate: fn, ...state };
 };
 
-// const useMutation = ({ url, method = 'POST', onSuccessMessage, onErrorMessage }) => {
-//     const [state, setState] = useState({
-//         isLoading: false,
-//         error: '',
-//         progress: 0,  
-//     });
-
-//     const fn = async data => {
-//         setState(prev => ({
-//             ...prev,
-//             isLoading: true,
-//             progress: 0,  
-//         }));
-
-//         const config = {
-//             onUploadProgress: function (progressEvent) {
-//                 const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-//                 console.log('Upload progress:', percentCompleted);
-//                 setState(prev => ({
-//                     ...prev,
-//                     progress: percentCompleted, 
-//                 }));
-//                 if (percentCompleted === 100 && onSuccessMessage) {
-//                     toast.success(onSuccessMessage, {
-//                         position: "bottom-right",
-//                         autoClose: 4000,
-//                     });
-//                 }
-//             },
-//         };
-
-//         axiosClient({ url, method, data, ...config })
-//             .then(() => {
-//                 setState({ isLoading: false, error: '', progress: 0 });
-//             })
-//             .catch(error => {
-//                 setState({ isLoading: false, error: error.message, progress: 0 });
-//                 if (onErrorMessage) {
-//                     toast.error(onErrorMessage, {
-//                         position: "bottom-right",
-//                         autoClose: 4000,
-//                     });
-//                 }
-//             });
-//     };
-
-//     return { mutate: fn, ...state };
-// };
-
-
 const handleDelete = async (key) => {
     try {
         const response = await axiosClient.delete(`/images/${key}`);
         console.log(response.data);
-        toast.success('File deleted successfully', {
+        // Display a success toast
+        toast.success('Image deleted successfully', {
             position: "bottom-right",
             autoClose: 4000,
+            transition: Slide,
+            newestOnTop,
         });
-        // Here you can add code to remove the deleted image from the UI
+        // Remove the deleted image from the state
+        setRefetch(refetch + 1);
     } catch (error) {
         console.error(error);
         toast.error('Error deleting file', {
             position: "bottom-right",
             autoClose: 4000,
+            transition: Slide,
+            newestOnTop,
         });
     }
 };
