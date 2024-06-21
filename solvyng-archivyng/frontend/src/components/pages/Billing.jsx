@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './styling/billing.css';
 import NavBar from "./Navbar.jsx";
+import Settings from './Settings.jsx';
 import { useNavigate } from 'react-router-dom'
 import * as queries from "../../graphql/queries.js";
 import * as mutations from "../../graphql/mutations.js";
@@ -10,7 +11,6 @@ import { PaystackButton } from 'react-paystack';
 
 const Billing = () => {
   const publicKey = "pk_test_19bde361f26770c7d3a3b527acb1fd7f3e79e93b";
-  const navigate = useNavigate();
   const client = generateClient();
 
   const [userEmail, setuserEmail] = useState('');
@@ -63,7 +63,7 @@ const Billing = () => {
   };
 
   const openPaymentDialog = () => {
-    
+
     setpaymentDialog(true);
   };
 
@@ -163,26 +163,6 @@ const Billing = () => {
       console.log(error);
     }
   }
-
-  // async function deleteCardDetails() {
-  //   try {
-  //     const userAttributes = await fetchUserAttributes();
-  //     const userEmail = userAttributes.email;
-  //     const variables = {
-  //       input: {
-  //         "user_email": userEmail
-  //       }
-  //     };
-  //     const removecardDetails = await client.graphql({
-  //       query: mutations.deleteUserCardDetails, variables
-  //     });
-  //     console.log(removecardDetails);
-  //     setremoveCardDialog(false);
-  //     opendeleteConfirmationDialog();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
 
   async function deleteCardDetails() {
     try {
@@ -321,8 +301,11 @@ const Billing = () => {
   }
 
   return (
-    <><h1>Billing</h1>
-      <hr className='billing-line-2' />
+    <>
+      <NavBar />
+      <Settings />   
+       <hr className='billing-line-2' />
+      <h1>Billing</h1>
       <div className='billing-form'>
         <div>
           {saveCardDialog && (
