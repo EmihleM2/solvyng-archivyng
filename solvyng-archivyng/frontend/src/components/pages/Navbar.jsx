@@ -230,7 +230,7 @@ export function Navbar() {
           <Tooltip>
             <TooltipTrigger asChild>
               <Link
-                to="#"
+                to="/Settings"
                 className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors md:h-8 md:w-8 ${
                   location.pathname === "#"
                     ? "bg-blue-500 text-white"

@@ -7,6 +7,17 @@
   pointer-events: none;
 }
 
+.settings-hr{
+margin-top: -18px;
+}
+
+.billing-line-2 {
+  height: 1.3px;
+  background-color: rgba(219, 219, 219, 0.719);
+  align-items: center;
+  justify-content: center;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
