@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../assets/logo.jpg";
 import axios from "axios";
 import { saveTimezone } from "../../hooks/dynamoDb.mjs";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 import {
   SquareUser,
@@ -17,8 +19,18 @@ import {
   Bookmark,
   Share2Icon,
   Star,
+  Check,
+  ChevronsDown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -52,7 +64,7 @@ import {
 } from "@/components/ui/select";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { signOut } from 'aws-amplify/auth';
+import { signOut } from "aws-amplify/auth";
 
 const apiUrl =
   "http://api.timezonedb.com/v2.1/list-time-zone?key=2HK8BQKKV4E8&format=json";
@@ -61,6 +73,12 @@ export function Navbar() {
   const [selectedTimezone, setSelectedTimezone] = useState("");
   const [timezones, setTimezones] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredTimezones = timezones.filter((timezone) =>
+    timezone.zoneName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const location = useLocation();
   const userId = "123";
 
@@ -102,15 +120,15 @@ export function Navbar() {
     }
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   async function handleSignOut() {
     try {
-      await signOut()
+      await signOut();
       console.log("Logout works");
       navigate("/login");
     } catch (error) {
-      console.log('error signing out: ', error);
+      console.log("error signing out: ", error);
     }
   }
 
@@ -273,7 +291,9 @@ export function Navbar() {
                       Preferences
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem  onClick={handleSignOut}>Logout</DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleSignOut}>
+                      Logout
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </Link>
@@ -347,37 +367,102 @@ export function Navbar() {
         </header>
       </div>
 
-      {showDialog && (
-        <Dialog open={showDialog} onOpenChange={setShowDialog}>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Select a timezone</DialogTitle>
-              <DialogDescription>
-                Select your timezone based on your location.
-              </DialogDescription>
-            </DialogHeader>
-            <Select onValueChange={(value) => setSelectedTimezone(value)}>
-              <SelectTrigger className="w-[280px]">
-                <SelectValue placeholder="Select a timezone" />
-              </SelectTrigger>
-              <SelectContent>
-                {timezones.map((timezone, index) => (
-                  <SelectGroup key={index}>
-                    <SelectItem value={timezone.zoneName}>
-                      {timezone.zoneName} (GMT {timezone.gmtOffset / 3600})
-                    </SelectItem>
-                  </SelectGroup>
-                ))}
-              </SelectContent>
-            </Select>
-            <DialogFooter>
-              <Button type="submit" onClick={handleSaveChanges}>
+    
+      {/* {showDialog && (
+        <div className="dialog">
+          <div className="dialog-content">
+            <div className="dialog-header">
+              <h2>Select a timezone</h2>
+              <p>Select your timezone based on your location.</p>
+            </div>
+            <input
+              type="text"
+              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              placeholder="Search for a timezone..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <ul className="timezone-list">
+              {filteredTimezones.length === 0 && (
+                <li className="empty">No timezone found.</li>
+              )}
+              {filteredTimezones.map((timezone, index) => (
+                <li
+                  key={index}
+                  className="timezone-item"
+                  onClick={() => {
+                    setSelectedTimezone(
+                      timezone.zoneName === selectedTimezone
+                        ? ""
+                        : timezone.zoneName
+                    );
+                    setShowDialog(false);
+                  }}
+                >
+                  {timezone.zoneName} (GMT {timezone.gmtOffset / 3600})
+                  <Check
+                    className={cn(
+                      "ml-auto h-4 w-4",
+                      selectedTimezone === timezone.zoneName
+                        ? "opacity-100"
+                        : "opacity-0"
+                    )}
+                  />
+                </li>
+              ))}
+            </ul>
+            <div className="dialog-footer">
+              <button className="save-button" onClick={handleSaveChanges}>
                 Save changes
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )} */}
+      {showDialog && (
+  <Dialog open={showDialog} onOpenChange={setShowDialog}>
+    <DialogContent className="sm:max-w-[425px] z-[60] relative"> {/* Increased z-index */}
+      <DialogHeader>
+        <DialogTitle>Select a timezone</DialogTitle>
+        <DialogDescription>
+          Select your timezone based on your location.
+        </DialogDescription>
+      </DialogHeader>
+      <input
+        type="text"
+        className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+        placeholder="Search for a timezone..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+      <Select onValueChange={(value) => setSelectedTimezone(value)}> {/* Ensure dropdown is always open */}
+        <SelectTrigger className="w-[280px]">
+          <SelectValue placeholder="Select a timezone" />
+        </SelectTrigger>
+        <SelectContent className="py-2 pt-4 z-[70] absolute bg-white shadow-lg rounded-md max-h-80 overflow-y-auto"> {/* Increased max-height */}
+          {filteredTimezones.length === 0 && (
+            <SelectGroup>
+              <SelectItem>No timezone found.</SelectItem>
+            </SelectGroup>
+          )}
+          {filteredTimezones.map((timezone, index) => (
+            <SelectGroup key={index} className="px-4 py-2"> {/* Added padding */}
+              <SelectItem value={timezone.zoneName} className={`py-2 ${index === 0 ? 'pt-4' : ''}`}> {/* Added padding */}
+                {timezone.zoneName} (GMT {timezone.gmtOffset / 3600})
+              </SelectItem>
+            </SelectGroup>
+          ))}
+        </SelectContent>
+      </Select>
+      <DialogFooter>
+        <Button type="submit" onClick={handleSaveChanges}>
+          Save changes
+        </Button>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
+)}
+
     </TooltipProvider>
   );
 }
