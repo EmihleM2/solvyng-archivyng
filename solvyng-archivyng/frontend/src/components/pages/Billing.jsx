@@ -238,7 +238,7 @@ const Billing = () => {
 
   const formatDate = (createdAt) => {
     const dateObj = new Date(createdAt);
-    dateObj.setDate(dateObj.getDate() + 30);
+    dateObj.setDate(dateObj.getDate() + 60);
     const day = String(dateObj.getDate()).padStart(2, '0');
     const month = String(dateObj.getMonth() + 1).padStart(2, '0');
     const year = dateObj.getFullYear();
