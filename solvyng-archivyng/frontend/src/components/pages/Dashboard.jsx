@@ -63,7 +63,6 @@ export function Dashboard() {
     }
   };
 
-
   const {
     mutate: uploadImage,
     isLoading: uploading,

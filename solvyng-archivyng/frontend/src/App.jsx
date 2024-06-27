@@ -21,12 +21,10 @@ import Bookmarks from "./components/pages/Bookmarks";
 import NotificationEmails from './components/pages/NotificationEmails';
 import EmailDetails from './components/pages/EmailDetails';
 import Billing from './components/pages/Billing';
-import Stamp from './components/pages/stamp';
+import Stampfunction from './components/pages/Stampfunction';
 import 'react-toastify/dist/ReactToastify.css';
 import RecentFiles from './components/pages/RecentFiles';
-
 import LandingPage from './components/pages/LandingPage';
-import { Languages } from "lucide-react";
 //Amplify environment is to be changed before running auth pages
 
 Amplify.configure(amplifyconfig);
@@ -43,7 +41,7 @@ function App() {
         <Route path="/Navbar" element={<NavBar />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/verify" element={<Verify />} />
-        <Route path="/stamp" element={<Stamp />} />
+        <Route path="/Stampfunction" element={<Stampfunction />} />
         <Route path="/Settings"  element={<Settings />} />
         <Route path="/Language" element={<Language />} />
         <Route path="/Information" element={<Information />} />

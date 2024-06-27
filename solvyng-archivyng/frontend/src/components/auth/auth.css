@@ -227,24 +227,6 @@ span {
   cursor: pointer;
 }
 
-.button-stamp {
-  transition: background-color 0.3s;
-  top: 7px;
-  width: 180px;
-  height: 35px;
-  background: #2666d0;
-  border-radius: 10px;
-  font-size: 16px;
-  color: white;
-  position: relative;
-  align-items: center;
-  justify-content: center;
-}
-
-.button-stamp:hover {
-  cursor: pointer;
-}
-
 .navigate-link {
   color: blue;
   align-items: center;
