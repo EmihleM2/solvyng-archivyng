@@ -3,7 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import Logo from "../assets/logo.jpg";
 import axios from "axios";
 import { saveTimezone } from "../../hooks/dynamoDb.mjs";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { Input } from "@/components/ui/input";
 
 import {
   SquareUser,
@@ -52,7 +53,7 @@ import {
 } from "@/components/ui/select";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { signOut } from 'aws-amplify/auth';
+import { signOut } from "aws-amplify/auth";
 
 const apiUrl =
   "http://api.timezonedb.com/v2.1/list-time-zone?key=2HK8BQKKV4E8&format=json";
@@ -63,6 +64,11 @@ export function Navbar() {
   const [showDialog, setShowDialog] = useState(false);
   const location = useLocation();
   const userId = "123";
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const filteredTimezones = timezones.filter((timezone) =>
+     timezone.zoneName.toLowerCase().includes(searchTerm.toLowerCase())
+   );
 
   useEffect(() => {
     axios
@@ -102,15 +108,15 @@ export function Navbar() {
     }
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   async function handleSignOut() {
     try {
-      await signOut()
+      await signOut();
       console.log("Logout works");
       navigate("/login");
     } catch (error) {
-      console.log('error signing out: ', error);
+      console.log("error signing out: ", error);
     }
   }
 
@@ -273,7 +279,9 @@ export function Navbar() {
                       Preferences
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem  onClick={handleSignOut}>Logout</DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleSignOut}>
+                      Logout
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </Link>
@@ -356,14 +364,29 @@ export function Navbar() {
                 Select your timezone based on your location.
               </DialogDescription>
             </DialogHeader>
+            <Input
+              type="text"
+              className="w-full rounded-lg bg-background pl-8"
+              placeholder="Search for a timezone..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
             <Select onValueChange={(value) => setSelectedTimezone(value)}>
-              <SelectTrigger className="w-[280px]">
+              <SelectTrigger className="w-[380px]">
                 <SelectValue placeholder="Select a timezone" />
               </SelectTrigger>
               <SelectContent>
-                {timezones.map((timezone, index) => (
+                {filteredTimezones.length === 0 && (
+                  <SelectGroup>
+                    <SelectItem>No timezone found.</SelectItem>
+                  </SelectGroup>
+                )}
+                {filteredTimezones.map((timezone, index) => (
                   <SelectGroup key={index}>
-                    <SelectItem value={timezone.zoneName}>
+                    <SelectItem
+                      value={timezone.zoneName}
+                      className={`py-4 ${index === 0 ? "pt-4" : ""}`}
+                    >
                       {timezone.zoneName} (GMT {timezone.gmtOffset / 3600})
                     </SelectItem>
                   </SelectGroup>
@@ -371,8 +394,15 @@ export function Navbar() {
               </SelectContent>
             </Select>
             <DialogFooter>
+              <Button
+                type="button"
+                onClick={() => setShowDialog(false)}
+                variant="outline"
+              >
+                Cancel
+              </Button>
               <Button type="submit" onClick={handleSaveChanges}>
-                Save changes
+                Save
               </Button>
             </DialogFooter>
           </DialogContent>
