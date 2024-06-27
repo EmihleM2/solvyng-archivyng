@@ -25,6 +25,7 @@ import Stampfunction from './components/pages/Stampfunction';
 import 'react-toastify/dist/ReactToastify.css';
 import RecentFiles from './components/pages/RecentFiles';
 import LandingPage from './components/pages/LandingPage';
+import StampedDoc from "./components/pages/StampedDoc";
 //Amplify environment is to be changed before running auth pages
 
 Amplify.configure(amplifyconfig);
@@ -42,6 +43,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/verify" element={<Verify />} />
         <Route path="/Stampfunction" element={<Stampfunction />} />
+        <Route path="/StampedDoc" element={<StampedDoc />} />
         <Route path="/Settings"  element={<Settings />} />
         <Route path="/Language" element={<Language />} />
         <Route path="/Information" element={<Information />} />

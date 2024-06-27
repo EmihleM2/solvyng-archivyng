@@ -3,16 +3,21 @@ import { PDFDocument } from 'pdf-lib';
 import { Rnd } from 'react-rnd';
 import './styling/file-viewer.css';
 import { Stamp } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Stampfunction = () => {
+  const navigate = useNavigate();
   const [pdfUrl, setPdfUrl] = useState(null);
   const [modifiedPdfUrl, setModifiedPdfUrl] = useState(null);
   const [stampPosition, setStampPosition] = useState({ x: 0, y: 0, width: 150, height: 150 });
   const [isStampDropped, setIsStampDropped] = useState(false);
   const [stampType, setStampType] = useState('approved');
   const [selection, setSelection] = useState(''); // 'stamp' or 'signature'
-  const [showStamp, setShowStamp] = useState('appear'); // 'stamp' or 'signature'
+  const [showStamp, setShowStamp] = useState('appear'); // 'stamp' or 'signature
+  const [toolsMenu, setToolsMenu] = useState('');
+  const [pdfBox, setpdfBox] = useState('open');
   const pdfCanvasRef = useRef(null);
+
 
   const loadPdf = async (event) => {
     const file = event.target.files[0];
@@ -79,69 +84,81 @@ const Stampfunction = () => {
   };
 
   return (
-    <div >
+    <>
+      {/* File loader for testing */}
       <input type="file" onChange={loadPdf} />
-      <div className='file' style={{ position: 'relative', width: '100%', padding: "0px 0px 0px 200px", border: "2px solid" , backgroundColor: "black" }}>
-        {pdfUrl && (
-          <iframe
-            ref={pdfCanvasRef}
-            title="PDF Viewer"
-            src={pdfUrl}
-            width="100%"
-            height="700px"
-            style={{ position: 'relative', zIndex: 0 }}
-          >
-          </iframe>
-        )}
-        <div className='tools-menu'>
-          <label className='tools-label'>Tools</label>
+
+      {pdfBox === 'open' && (
+        <div className='pdf-box'>
+
+          {/* Positioning of pdf viewer */}
+          <div className='file-viewer'>
+          <label className='tools-label' onClick={() => setToolsMenu('stamp')}>Tools</label>
+        
+            {/* Get url from fetched file */}
+            {pdfUrl && (
+              <iframe
+                ref={pdfCanvasRef}
+                title="PDF Viewer"
+                src={pdfUrl}
+                width="100%"
+                height="700px"
+                style={{ position: 'relative', zIndex: 0 }}
+              >
+              </iframe>
+            )}
+          </div>
           <hr className='tools-line'></hr>
-        </div>
-        <div>
-          <button className='button-stamp' onClick={() => setSelection('stamp')}>Stamp</button>
-          <br />
-          <Stamp style={{ position: 'inherit', right: 80, top: -50, zIndex: 1 }} />
-        </div>
-        {selection === 'stamp' && (
-          <>  {showStamp === 'appear' && (
-            <Rnd
-              size={{ width: stampPosition.width, height: stampPosition.height }}
-              position={{ x: stampPosition.x, y: stampPosition.y }}
-              onDragStop={handleStop}
-              onResize={handleResize}
-              style={{ border: "1px solid black"}}
-            >
-              <img
-                src={stampType === 'approved' ? 'approved_stamp.png' : 'deny_stamp.png'}
-                alt="Stamp"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  cursor: 'move',
-                  zIndex: 1,
-                }} />
-            </Rnd>
-          )}
+
+          <div className='tools-menu'>
+
+          
             <div>
-              <button className='button-stamp-approve' onClick={() => setStampType('approved')}>Select Approve Stamp</button>
-            </div><div>
-              <button className='button-stamp-deny' onClick={() => setStampType('denied')}>Select Deny Stamp</button>
-            </div><div>
-              <button className='button-stamp-add' onClick={addStampToPdf} disabled={!isStampDropped}>Add Stamp to PDF</button>
-            </div></>
-        )}
-        <button className='button-signature' onClick={() => setSelection('signature')}>Signature </button>
-      </div>
-      {modifiedPdfUrl && (
-        <iframe
-          title="Modified PDF"
-          src={modifiedPdfUrl}
-          width="100%"
-          height="700px"
-          style={{ position: 'absolute', top: '40px', zIndex: 2, padding: "0px 0px 0px 200px" }}
-        ></iframe>
+              <button className='button-stamp' onClick={() => setSelection('stamp')}>Stamp</button>
+              <br />
+            </div>
+            {selection === 'stamp' && (
+              <>  {showStamp === 'appear' && (
+                <Rnd
+                  size={{ width: stampPosition.width, height: stampPosition.height }}
+                  position={{ x: stampPosition.x, y: stampPosition.y }}
+                  onDragStop={handleStop}
+                  onResize={handleResize}
+                  style={{ border: "1px solid black" }}
+                >
+                  <img
+                    src={stampType === 'approved' ? 'approved_stamp.png' : 'deny_stamp.png'}
+                    alt="Stamp"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      cursor: 'move',
+                      zIndex: 1,
+                    }} />
+                </Rnd>
+              )}
+                <div>
+                  <button className='button-stamp-approve' onClick={() => setStampType('approved')}>Select Approve Stamp</button>
+                </div><div>
+                  <button className='button-stamp-deny' onClick={() => setStampType('denied')}>Select Deny Stamp</button>
+                </div><div>
+                  <button className='button-stamp-add' onClick={addStampToPdf} disabled={!isStampDropped}>Add Stamp to PDF</button>
+                </div></>
+            )}
+            <button className='button-signature' onClick={() => setSelection('signature')}>Signature </button>
+          </div>
+          {modifiedPdfUrl && (
+            <iframe
+              title="Modified PDF"
+              src={modifiedPdfUrl}
+              width="100%"
+              height="700px"
+              style={{ position: 'absolute', top: '40px', zIndex: 2, padding: "0px 0px 0px 200px" }}
+            ></iframe>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

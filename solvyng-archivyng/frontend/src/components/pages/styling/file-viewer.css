@@ -1,98 +1,110 @@
-.file {
-    position: 'relative';
-    width: '100%';
-    height: '0px';
-    border: 1px solid;
-    border-color: black;
+.pdf-box{
+  margin: 0;
 }
 
-.tools-menu{
-    transition: background-color 0.3s;
-    width: 200px;
-    height: 42px;
-    background: rgb(58, 58, 58);
-    font-size: 16px;
-    color: white;
-    position: relative;
-    bottom: 700px;
-    right: 200px;
+.file-viewer {
+  position: relative;
+  width: 100%;
+  padding: 0px 0px 0px 200px;
+  border: 2px solid;
+  background-color: rgb(64, 64, 64);
 }
 
-.tools-label{
-    font-size: larger;
-    bottom: 5px;
-    right: -10px;
+.tools-label {
+  font-size: larger;
+  color: white;
+  margin: 8px;
+  position: absolute;
+  left: 4px;
+  text-decoration: underline;
 }
 
-.tools-line{
-    color: white;
-    size: 5px;
-    height: 10px;
+.tools-line {
+  position: absolute;
+  color: white;
+  size: 5px;
+  height: 2px;
+  margin: 8px;
 }
 
-.tools-buttons{
-    display: block;
+.tools-menu {
+  transition: background-color 0.3s;
+  width: 200px;
+  height: 42px;
+  background: rgb(58, 58, 58);
+  font-size: 16px;
+  color: white;
+  position: relative;
+  bottom: 700px;
+  right: 200px;
+}
+
+
+
+.tools-buttons {
+  display: block;
 }
 
 .button-stamp {
-    transition: background-color 0.3s;
-    width: 200px;
-    height: 35px;
-    background: #2c4c80;
-    font-size: 16px;
-    color: white;
-    position: relative;
-    bottom: 700px;
-    right: 200px;
-  }
+  transition: background-color 0.3s;
+  width: 200px;
+  height: 35px;
+  background: #2c4c80;
+  font-size: 16px;
+  color: white;
+  position: relative;
+  bottom: 700px;
+  right: 200px;
+}
 
-  .button-signature {
-    transition: background-color 0.3s;
-    width: 200px;
-    height: 35px;
-    background: #2c4c80;
-    font-size: 16px;
-    color: white;
-    position: relative;
-    bottom: 725px;
-    right: 200px;
-  }
-  
-  .button-stamp-approve{
-    transition: background-color 0.3s;
-    width: 160px;
-    height: 35px;
-    background: #2666d0;
-    font-size: 16px;
-    color: white;
-    position: relative;
-    bottom: 725px;
-    right: 160px;
-  }
+.button-signature {
+  transition: background-color 0.3s;
+  width: 200px;
+  height: 35px;
+  background: #2c4c80;
+  font-size: 16px;
+  color: white;
+  position: relative;
+  bottom: 725px;
+  right: 200px;
+}
 
-  .button-stamp-deny{
-    transition: background-color 0.3s;
-    width: 160px;
-    height: 35px;
-    background: #2666d0;
-    font-size: 16px;
-    color: white;
-    position: relative;
-    bottom: 725px;
-    right: 160px;
-  }
+.button-stamp-approve {
+  transition: background-color 0.3s;
+  width: 160px;
+  height: 35px;
+  background: #2666d0;
+  font-size: 16px;
+  color: white;
+  position: relative;
+  bottom: 725px;
+  right: 160px;
+}
 
-  .button-stamp-add{
-    transition: background-color 0.3s;
-    width: 160px;
-    height: 35px;
-    background: #2666d0;
-    font-size: 16px;
-    color: white;
-    position: relative;
-    bottom: 725px;
-    right: 160px;
-  }
-  .button-stamp:hover {
-    cursor: pointer;
-  }
+.button-stamp-deny {
+  transition: background-color 0.3s;
+  width: 160px;
+  height: 35px;
+  background: #2666d0;
+  font-size: 16px;
+  color: white;
+  position: relative;
+  bottom: 725px;
+  right: 160px;
+}
+
+.button-stamp-add {
+  transition: background-color 0.3s;
+  width: 160px;
+  height: 35px;
+  background: #2666d0;
+  font-size: 16px;
+  color: white;
+  position: relative;
+  bottom: 725px;
+  right: 160px;
+}
+
+.button-stamp:hover {
+  cursor: pointer;
+}
