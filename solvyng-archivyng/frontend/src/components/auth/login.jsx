@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import './auth.css';
+// import './auth.css';
 import { Lock, Mail } from 'lucide-react';
 import { signIn } from 'aws-amplify/auth';
 import { useNavigate } from 'react-router-dom'
+import styles from "./auth.module.css";
 
 const Login = () => {
   const navigate = useNavigate()
@@ -70,19 +71,19 @@ const Login = () => {
   }
 
   return (
-    <div className='login-page'>
-      <form className='form-login'>
+    <div className={styles["login-page"]}>
+      <form className={styles["form-login"]}>
         <h1>Login</h1>
         <div>
           <label>Email:</label>
           <input
             type="text"
             name="username"
-            placeholder='example@gmail.com'
+            placeholder="example@gmail.com"
             value={username}
             onChange={handleInput}
           />
-          <Mail className="icon" />
+          <Mail className={styles["icon"]} />
           {emailError && <span>{emailError}</span>}
         </div>
         <div>
@@ -90,28 +91,46 @@ const Login = () => {
           <input
             type="password"
             name="password"
-            placeholder='*******'
+            placeholder="*******"
             value={password}
             onChange={handleInput}
           />
-          <Lock className="icon" />
+          <Lock className={styles["icon"]} />
           {passwordError && <span>{passwordError}</span>}
         </div>
         <div>
-          <a href="reset-password" onClick={ForgotLink} className="forgot-password-link">Forgot Password?</a>
+          <a
+            href="reset-password"
+            onClick={ForgotLink}
+            className={styles["forgot-password-link"]}
+          >
+            Forgot Password?
+          </a>
         </div>
         <div>
-          <button className="button" onClick={handleLogin}>Login</button>
+          <button className={styles["button"]} onClick={handleLogin}>
+            Login
+          </button>
         </div>
-        <div className="sign-up-div">
-          <p> Do not have an account? <a href="signup" onClick={SignupLink} className="navigate-link">Sign up</a></p>
+        <div className={styles["sign-up-div"]}>
+          <p>
+            {" "}
+            Do not have an account?{" "}
+            <a
+              href="signup"
+              onClick={SignupLink}
+              className={styles["navigate-link"]}
+            >
+              Sign up
+            </a>
+          </p>
         </div>
         <div>
-          <button className="button-Google">Login with Google</button>
+          <button className={styles["button-Google"]}>Login with Google</button>
         </div>
-        {errors && <span className='error-span'>{errors}</span>}
+        {errors && <span className={styles["error-span"]}>{errors}</span>}
       </form>
     </div>
-  )
+  );
 }
 export default Login;

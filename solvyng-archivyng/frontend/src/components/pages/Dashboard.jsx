@@ -221,6 +221,7 @@ export function Dashboard() {
                                     src={url}
                                     width="64"
                                     height="64"
+                                    alt=""
                                   />
                                 </TableCell>
                                 <TableCell className="font-medium">

@@ -1,35 +1,93 @@
+// import React from "react";
+// import styles from "../styling/LandingPage.module.css";
+// import { useNavigate } from "react-router-dom";
+
+// const Navbar = () => {
+//   const navigate = useNavigate();
+
+//   const LoginLink = () => {
+//     navigate("/login");
+//   };
+
+//   return (
+//     <nav className={styles["navbar"]}>
+//       <div className={styles["navbar-container-landpage"]}>
+//         <a className={styles["navbar-brand-landpage"]} href="#">
+//           <img src="src/components/assets/logo.png" width="130" alt="Logo" />
+//         </a>
+//         <div className={styles["navbar-collapse-landpage"]}>
+//           <ul className={styles["navbar-nav-landpage"]}>
+//             <li className={styles["nav-item-landpage"]}>
+//               <a className={styles["nav-link-landpage"]} href="#services">
+//                 Services
+//               </a>
+//             </li>
+//             <li className={styles["nav-item-landpage"]}>
+//               <a className={styles["nav-link-landpage"]} href="#contact">
+//                 Contact Us
+//               </a>
+//             </li>
+//             <li className={styles["nav-item-landpage"]}>
+//               <a
+//                 className={`${styles["btn-landpage"]} ${styles["btn-custom-login-landpage"]}`}
+//                 href="#"
+//                 onClick={LoginLink}
+//               >
+//                 Login
+//               </a>
+//             </li>
+//           </ul>
+//         </div>
+//       </div>
+//     </nav>
+//   );
+// };
+
+// export default Navbar;
+
+
 import React from "react";
-import '../styling/landingpage.css';
-import { useNavigate } from 'react-router-dom'
+import "../styling/landingpage.css";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const LoginLink = () => {
     navigate("/login");
-  }
+  };
   return (
     <nav className="navbar-landpage">
       <div className="navbar-container-landpage">
         <a className="navbar-brand-landpage" href="#">
-          <img src="src/components/assets/logo.png" width='130' alt="Logo" />
+          <img src="src/components/assets/logo.png" width="130" alt="Logo" />
         </a>
         <div className="navbar-collapse-landpage">
           <ul className="navbar-nav-landpage">
             <li className="nav-item-landpage">
-              <a className="nav-link-landpage" href="#services">Services</a>
+              <a className="nav-link-landpage" href="#services">
+                Services
+              </a>
             </li>
             <li className="nav-item-landpage">
-              <a className="nav-link-landpage" href="#contact">Contact Us</a>
+              <a className="nav-link-landpage" href="#contact">
+                Contact Us
+              </a>
             </li>
             <li className="nav-item-landpage">
-              <a className="btn-landpage btn-custom-login-landpage" href="#" onClick={LoginLink}>Login</a>
+              <a
+                className="btn-landpage btn-custom-login-landpage"
+                href="#"
+                onClick={LoginLink}
+              >
+                Login
+              </a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;

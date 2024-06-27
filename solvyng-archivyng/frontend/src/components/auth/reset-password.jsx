@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import './auth.css';
+// import './auth.css';
+import styles from "./auth.module.css";
+
 import { Mail } from 'lucide-react';
 import { resetPassword } from 'aws-amplify/auth';
 import { useNavigate } from 'react-router-dom';
@@ -74,11 +76,11 @@ const ResetPassword = () => {
   }
 
   return (
-    <div className='reset-password-page'>
+    <div className={styles["reset-password-page"]}>
       <div>
         {isOpen && (
-          <div className="dialog-overlay-verify">
-            <div className="dialog-content">
+          <div className={styles["dialog-overlay-verify"]}>
+            <div className={styles["dialog-content"]}>
               <h2>Information:</h2>
               <p>Reset code sent! Click Ok to update password...</p>
               <button onClick={handlegotoconfirmPassword}>Ok</button>
@@ -86,24 +88,28 @@ const ResetPassword = () => {
           </div>
         )}
       </div>
-      <form className='form-reset-password'>
+      <form className={styles["form-reset-password"]}>
         <h1>Get Code</h1>
         <div>
           <label>Enter Email to recieve reset code:</label>
           <input
             type="text"
             name="username"
-            placeholder='example@gmail.com'
+            placeholder="example@gmail.com"
             value={username}
             onChange={handleInput}
           />
-          <Mail className="icon" />
+          <Mail className={styles["icon"]} />
           {usernameError && <span>{usernameError}</span>}
         </div>
         <div>
-          <button className="button" onClick={handleResetPassword}>Get Code</button>
+          <button className={styles["button"]} onClick={handleResetPassword}>
+            Get Code
+          </button>
         </div>
-        {errors && <span className='error-span-verify'>{errors}</span>}
+        {errors && (
+          <span className={styles["error-span-verify"]}>{errors}</span>
+        )}
       </form>
     </div>
   );

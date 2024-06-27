@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './styling/notifications.css';
+// import './styling/notifications.css';
+import styles from "../pages/styling/Notifications.module.css"; 
+
 import NavBar from "../pages/Navbar.jsx";
 import { Trash2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom'
@@ -19,17 +21,21 @@ const EmailItem = ({ email, onDelete }) => {
     }
 
     return (
-        <>
-            <div className='boxes-notifications'>
-                <h3 className='h3-notifications' onClick={gotoMail}>{subject}</h3>
-                <p className='p-notifications' onClick={gotoMail}>{date}</p>
-                <br></br>
-                <div className="message-container">
-                    <p className='p-notifications'>{message}</p>
-                </div>
-                <Trash2 className="icon-notifications" onClick={onDelete} />
-            </div>
-        </>
+      <>
+        <div className={styles["boxes-notifications"]}>
+          <h3 className={styles["h3-notifications"]} onClick={gotoMail}>
+            {subject}
+          </h3>
+          <p className={styles["p-notifications"]} onClick={gotoMail}>
+            {date}
+          </p>
+          <br></br>
+          <div className={styles["message-container"]}>
+            <p className={styles["p-notifications"]}>{message}</p>
+          </div>
+          <Trash2 className={styles["icon-notifications"]} onClick={onDelete} />
+        </div>
+      </>
     );
 };
 

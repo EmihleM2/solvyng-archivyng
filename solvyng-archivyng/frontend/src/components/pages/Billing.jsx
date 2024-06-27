@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './styling/billing.css';
+// import './styling/billing.css';
+import styles from '../pages/styling/Billing.module.css'; 
+
 import NavBar from "./Navbar.jsx";
 import Settings from './Settings.jsx';
 import { useNavigate } from 'react-router-dom'
@@ -303,16 +305,18 @@ const Billing = () => {
   return (
     <>
       <NavBar />
-      <Settings />   
-       <hr className='billing-line-2' />
+      <Settings />
+      <hr className={styles["billing-line-2"]} />
       <h1>Billing</h1>
-      <div className='billing-form'>
+      <div className={styles["billing-form"]}>
         <div>
           {saveCardDialog && (
-            <div className="billing-dialog-box">
-              <div className="billing-dialog-content">
+            <div className={styles["billing-dialog-box"]}>
+              <div className={styles["billing-dialog-content"]}>
                 <h2>Information:</h2>
-                <p className='billing-dialog-space'>Are you sure you want to save this card?</p>
+                <p className={styles["billing-dialog-space"]}>
+                  Are you sure you want to save this card?
+                </p>
                 <button onClick={saveCardDetails}>Yes!</button>
                 <button onClick={closeDialogs}>Cancel</button>
               </div>
@@ -321,10 +325,12 @@ const Billing = () => {
         </div>
         <div>
           {saveConfirmationDialog && (
-            <div className="billing-dialog-box">
-              <div className="billing-dialog-content">
+            <div className={styles["billing-dialog-box"]}>
+              <div className={styles["billing-dialog-content"]}>
                 <h2>Information:</h2>
-                <p className='billing-dialog-space'>Credit Card details saved!</p>
+                <p className={styles["billing-dialog-space"]}>
+                  Credit Card details saved!
+                </p>
                 <button onClick={closeDialogs}>Ok</button>
               </div>
             </div>
@@ -332,10 +338,12 @@ const Billing = () => {
         </div>
         <div>
           {removeCardDialog && (
-            <div className="billing-dialog-box">
-              <div className="billing-dialog-content">
+            <div className={styles["billing-dialog-box"]}>
+              <div className={styles["billing-dialog-content"]}>
                 <h2>Information:</h2>
-                <p className='billing-dialog-space'>Are you sure you want to delete this card?</p>
+                <p className={styles["billing-dialog-space"]}>
+                  Are you sure you want to delete this card?
+                </p>
                 <button onClick={deleteCardDetails}>Yes!</button>
                 <button onClick={closeDialogs}>Cancel</button>
               </div>
@@ -344,10 +352,12 @@ const Billing = () => {
         </div>
         <div>
           {deleteConfirmationDialog && (
-            <div className="billing-dialog-box">
-              <div className="billing-dialog-content">
+            <div className={styles["billing-dialog-box"]}>
+              <div className={styles["billing-dialog-content"]}>
                 <h2>Information:</h2>
-                <p className='billing-dialog-space'>Credit card details deleted!</p>
+                <p className={styles["billing-dialog-space"]}>
+                  Credit card details deleted!
+                </p>
                 <button onClick={closeDialogs}>Ok</button>
               </div>
             </div>
@@ -355,23 +365,38 @@ const Billing = () => {
         </div>
         <div>
           {paymentDialog && (
-            <div className="billing-dialog-box">
-              <div className="billing-dialog-content">
+            <div className={styles["billing-dialog-box"]}>
+              <div className={styles["billing-dialog-content"]}>
                 <h2>Information:</h2>
-                <p className='billing-dialog-space'>Are you sure you want to purchase this subscription plan: {selectedPlan}</p>
+                <p className={styles["billing-dialog-space"]}>
+                  Are you sure you want to purchase this subscription plan:{" "}
+                  {selectedPlan}
+                </p>
                 {/* <button onClick={subscribeToplan}>Yes!</button> */}
-                <PaystackButton className="billing-save-button" {...componentProps} />
-                <button className="billing-save-button" onClick={closeDialogs}>Cancel</button>
+                <PaystackButton
+                  className={styles["billing-save-button"]}
+                  {...componentProps}
+                />
+                <button
+                  className={styles["billing-save-button"]}
+                  onClick={closeDialogs}
+                >
+                  Cancel
+                </button>
               </div>
             </div>
           )}
         </div>
         <div>
           {paymentConfirmationDialog && (
-            <div className="billing-dialog-box">
-              <div className="billing-dialog-content">
+            <div className={styles["billing-dialog-box"]}>
+              <div className={styles["billing-dialog-content"]}>
                 <h2>Information:</h2>
-                <p className='billing-dialog-space'>Subscription successfully paid!<br />You may now proceed to utilize our resources!</p>
+                <p className={styles["billing-dialog-space"]}>
+                  Subscription successfully paid!
+                  <br />
+                  You may now proceed to utilize our resources!
+                </p>
                 <button onClick={closeDialogs}>Ok</button>
               </div>
             </div>
@@ -379,10 +404,12 @@ const Billing = () => {
         </div>
         <div>
           {cancelSubscriptionDialog && (
-            <div className="billing-dialog-box">
-              <div className="billing-dialog-content">
+            <div className={styles["billing-dialog-box"]}>
+              <div className={styles["billing-dialog-content"]}>
                 <h2>Information:</h2>
-                <p className='billing-dialog-space'>Are you sure you want to cancel your subscription?</p>
+                <p className={styles["billing-dialog-space"]}>
+                  Are you sure you want to cancel your subscription?
+                </p>
                 <button onClick={cancelPlan}>Yes!</button>
                 <button onClick={closeDialogs}>Cancel</button>
               </div>
@@ -391,10 +418,14 @@ const Billing = () => {
         </div>
         <div>
           {cancelConfirmationDialog && (
-            <div className="billing-dialog-box">
-              <div className="billing-dialog-content">
+            <div className={styles["billing-dialog-box"]}>
+              <div className={styles["billing-dialog-content"]}>
                 <h2>Information:</h2>
-                <p className='billing-dialog-space'>Subscription successfully cancelled!<br />We are sad to see you go, hope to see you soon again.</p>
+                <p className={styles["billing-dialog-space"]}>
+                  Subscription successfully cancelled!
+                  <br />
+                  We are sad to see you go, hope to see you soon again.
+                </p>
                 <button onClick={closeDialogs}>Ok</button>
               </div>
             </div>
@@ -402,94 +433,145 @@ const Billing = () => {
         </div>
         <div>
           <h2>Update your billing details</h2>
-          <hr className='billing-line' />
-          <h3 className='billing-h3'>Current plan</h3>
-          <div className='current-section'>
-            <h4 className='currentPlan'>{currentPlan}: </h4>
-            <p className='current-p'>R{currentPlanPrice} p/m</p>
+          <hr className={styles["billing-line"]} />
+          <h3 className={styles["billing-h3"]}>Current plan</h3>
+          <div className={styles["current-section"]}>
+            <h4 className={styles["currentPlan"]}>{currentPlan}: </h4>
+            <p className={styles["current-p"]}>R{currentPlanPrice} p/m</p>
           </div>
           <hr />
-          <h3 className='billing-h3'>Next Payment Date</h3>
+          <h3 className={styles["billing-h3"]}>Next Payment Date</h3>
           <p>{planDate}</p>
           <hr />
           <div>
-            <h3 className='billing-h3'>Upgrade subscription </h3>
+            <h3 className={styles["billing-h3"]}>Upgrade subscription </h3>
             <label>Select plan</label>
-            <div className='section'>
-              <select className='dropdown' id="dropdown" value={selectedPlanPrice} onChange={handleDropdownChange}>
-                <option className='dropdown-options' value="">Select...</option>
-                {options.map(option => (
-                  <option className='dropdown-options' key={option.value} value={option.value}>{option.label}</option>
+            <div className={styles["section"]}>
+              <select
+                className={styles["dropdown"]}
+                id="dropdown"
+                value={selectedPlanPrice}
+                onChange={handleDropdownChange}
+              >
+                <option className={styles["dropdown-options"]} value="">
+                  Select...
+                </option>
+                {options.map((option) => (
+                  <option
+                    className={styles["dropdown-options"]}
+                    key={option.value}
+                    value={option.value}
+                  >
+                    {option.label}
+                  </option>
                 ))}
               </select>
-
             </div>
           </div>
-          <div className='card-details-form'>
+          <div className={styles["card-details-form"]}>
             <h3>Card Details</h3>
-            <div className='section'>
+            <div className={styles["section"]}>
               <div>
                 <label>Name on Card:</label>
-                <input className='billing-input'
+                <input
+                  className={styles["billing-input"]}
                   type="text"
                   name="cardName"
-                  placeholder='Joe Doe'
+                  placeholder="Joe Doe"
                   value={cardName}
-                  onChange={handleInput} />
-                {cardNameError && <span className='billing-error'>{cardNameError}</span>}
+                  onChange={handleInput}
+                />
+                {cardNameError && (
+                  <span className={styles["billing-error"]}>
+                    {cardNameError}
+                  </span>
+                )}
               </div>
               <div>
                 <label>Expiry date:</label>
-                <input className='billing-input-1'
+                <input
+                  className={styles["billing-input-1"]}
                   type="text"
                   name="expiry"
-                  placeholder='07/07'
+                  placeholder="07/07"
                   value={expiry}
-                  onChange={handleInput} />
-                {expiryError && <span className='billing-error'>{expiryError}</span>}
+                  onChange={handleInput}
+                />
+                {expiryError && (
+                  <span className={styles["billing-error"]}>{expiryError}</span>
+                )}
               </div>
             </div>
-            <div className='section-1'>
+            <div className={styles["section-1"]}>
               <div>
                 <label>Card Number:</label>
-                <input className='billing-input'
+                <input
+                  className={styles["billing-input"]}
                   type="text"
                   name="cardNumber"
-                  placeholder='6549 7665 2558 2020'
+                  placeholder="6549 7665 2558 2020"
                   value={cardNumber}
-                  onChange={handleInput} />
-                {cardNumberError && <span className='billing-error'>{cardNumberError}</span>}
+                  onChange={handleInput}
+                />
+                {cardNumberError && (
+                  <span className={styles["billing-error"]}>
+                    {cardNumberError}
+                  </span>
+                )}
               </div>
               <div>
                 <label>CVV:</label>
-                <input className='billing-input-1'
+                <input
+                  className={styles["billing-input-1"]}
                   type="number"
                   name="cvv"
-                  placeholder='654'
+                  placeholder="654"
                   value={cvv}
-                  onChange={handleInput} />
-                {cvvError && <span className='billing-error'>{cvvError}</span>}
+                  onChange={handleInput}
+                />
+                {cvvError && (
+                  <span className={styles["billing-error"]}>{cvvError}</span>
+                )}
               </div>
             </div>
-            <div className='button-section'>
+            <div className={styles["button-section"]}>
               <div>
-                <button className="billing-save-button" onClick={opensaveCardDialog}>Save</button>
+                <button
+                  className={styles["billing-save-button"]}
+                  onClick={opensaveCardDialog}
+                >
+                  Save
+                </button>
               </div>
               <div>
-                <button className="billing-remove-button" onClick={openremoveCardDialog}>Remove</button>
+                <button
+                  className={styles["billing-remove-button"]}
+                  onClick={openremoveCardDialog}
+                >
+                  Remove
+                </button>
               </div>
             </div>
           </div>
           <div>
-            <button className="billing-update-button" onClick={openPaymentDialog}>Upgrade</button>
+            <button
+              className={styles["billing-update-button"]}
+              onClick={openPaymentDialog}
+            >
+              Upgrade
+            </button>
           </div>
           <div>
-            <button className="billing-cancel-button" onClick={opencancelDialog}>Cancel Subscription</button>
+            <button
+              className={styles["billing-cancel-button"]}
+              onClick={opencancelDialog}
+            >
+              Cancel Subscription
+            </button>
           </div>
         </div>
       </div>
     </>
-
   );
 };
 

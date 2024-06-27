@@ -1,0 +1,270 @@
+.billing-form {
+    position: inherit;
+    width: 670px;
+    height: 900px;
+    margin: 0 auto;
+    padding: 40px;
+    border-radius: 15px;
+    /* background-color: rgba(85, 82, 82, 0.120); */
+    background-color: white;
+    align-items: center;
+    border: 1px solid;
+    border-color: black;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.6);
+}
+
+.card-details-form{
+    border-radius: 15px;
+    padding: 20px;
+    border-color: rgb(255, 0, 0);
+    border: 1px solid;
+    width: 90%;
+    margin-top: -10px;
+}
+
+.billing-h3 {
+    margin-top: 10px;
+}
+
+.section {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.section-1 {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 25px;
+    margin-top: -15px;
+}
+
+.button-section{
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.billing-input {
+    position: relative;
+    width: 79%;
+    height: 40px;
+    border: none;
+    outline: none;
+    padding: 13px 15px 13px;
+    border-color: black;
+    border: 1px solid;
+    font-size: 17px;
+    border-radius: 10px;
+    background: #ffffff;
+    display: flex;
+    position: relative;
+    margin: 0 1px 0;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+
+.billing-input-1 {
+    position: relative;
+    width: 34%;
+    height: 40px;
+    border: none;
+    outline: none;
+    padding: 13px 15px 13px;
+    border-color: black;
+    border: 1px solid;
+    font-size: 17px;
+    border-radius: 10px;
+    background: #ffffff;
+    display: flex;
+    position: relative;
+    margin: 0 1px 0;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+
+
+.billing-save-button {
+    transition: background-color 0.3s;
+    width: 350%;
+    height: 35px;
+    background: #2666d0;
+    border-radius: 10px;
+    font-size: 16px;
+    color: white;
+    position: relative;
+}
+
+.billing-save-button:hover {
+    cursor: pointer;
+}
+
+.billing-remove-button {
+    transition: background-color 0.3s;
+    width: 250%;
+    height: 35px;
+    background: #2666d0;
+    border-radius: 10px;
+    font-size: 16px;
+    color: white;
+    position: relative;
+    left: 95px;
+}
+
+.billing-remove-button:hover {
+    cursor: pointer;
+}
+
+
+.billing-update-button {
+    transition: background-color 0.3s;
+    width: 30%;
+    height: 35px;
+    background: #2666d0;
+    border-radius: 10px;
+    font-size: 16px;
+    color: white;
+    position: relative;
+    top: 15px;
+}
+
+.billing-button-1:hover {
+    cursor: pointer;
+}
+
+
+.billing-cancel-button {
+    transition: background-color 0.3s;
+    width: 30%;
+    height: 35px;
+    background: #2666d0;
+    border-radius: 10px;
+    font-size: 16px;
+    color: white;
+    position: relative;
+    top: 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+.billing-cancel-button:hover {
+    cursor: pointer;
+}
+
+
+.dropdown {
+    position: relative;
+    width: 25%;
+    height: 40px;
+    border: none;
+    outline: none;
+    padding: 1px 15px 1px;
+    border: 1px solid;
+    border-color: black;
+    font-size: 17px;
+    border-radius: 10px;
+    background: #ffffff;
+    display: flex;
+    margin: 5px 1px;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+
+.currentPlan {
+    font-weight: 540;
+    color: #2666d0;
+    font-size: 19px;
+}
+
+.current-p{
+    margin-left: 10px;
+}
+
+.card-details{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.card-details:hover{
+    text-decoration: underline;
+   
+}
+
+.current-section{
+    display: inline-flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.billing-line {
+    height: 1.5px;
+    background-color: black;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+}
+
+.billing-line-2 {
+    height: 1.3px;
+    background-color: rgba(219, 219, 219, 0.719);
+    align-items: center;
+    justify-content: center;
+}
+
+.billing-error {
+    color: #e74c3c;
+    font-size: 15px;
+    display: block;
+    position: inherit;
+}
+
+.billing-dialog-box {
+    justify-content: center;
+    align-items: center;
+}
+
+.billing-dialog-content {
+    padding: 30px;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.6);
+    border-radius: 15px;
+    background-color: rgba(85, 82, 82, 0.68);
+    /*Blue: background-color: rgba(0, 51, 102); */
+    align-items: center;
+    border: 1px solid rgba(85, 82, 82, 0.68);
+    position: fixed;
+    justify-content: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.billing-dialog-content p {
+    margin-bottom: 2px;
+    color: #ffffff;
+}
+
+.billing-dialog-content h2 {
+    margin-bottom: 2px;
+    color: #ffffff;
+}
+
+
+.billing-dialog-content button {
+    width: 30%;
+    padding: 5px;
+    transition: background-color 0.3s;
+    margin-right: 10px;
+    background: #2666d0;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+.card-details{
+    margin-top: 15px;
+}
+

@@ -1,6 +1,8 @@
 import React from "react";
 import { useState } from "react";
-import './auth.css';
+// import './auth.css';
+import styles from "./auth.module.css";
+
 import { User, Lock, Mail } from 'lucide-react';
 import { signUp } from 'aws-amplify/auth';
 import { useNavigate } from 'react-router-dom';
@@ -164,80 +166,100 @@ const Signup = () => {
     };
 
     return (
-        <div className='sign-up-page'>
-            <><div>
-                {isOpen && (
-                    <div className="dialog-overlay">
-                        <div className="dialog-content">
-                            <h2>Information:</h2>
-                            <p>Please confirm your subscription to AWS Solvyng Archivyng <br></br> in your emails before verifying your sign up on the next page.<br></br>Click Ok to continue...</p>
-                            <button onClick={handlegotoVerify}>Ok</button>
-                        </div>
-                    </div>
-                )}
+      <div className={styles["sign-up-page"]}>
+        <>
+          <div>
+            {isOpen && (
+              <div className={styles["dialog-overlay"]}>
+                <div className={styles["dialog-content"]}>
+                  <h2>Information:</h2>
+                  <p>
+                    Please confirm your subscription to AWS Solvyng Archivyng{" "}
+                    <br></br> in your emails before verifying your sign up on
+                    the next page.<br></br>Click Ok to continue...
+                  </p>
+                  <button onClick={handlegotoVerify}>Ok</button>
+                </div>
+              </div>
+            )}
+          </div>
+          <form className={styles["form-sign-up"]}>
+            <h1>Sign up</h1>
+            <div>
+              <label>Full name:</label>
+              <input
+                type="text"
+                name="fullname"
+                placeholder="Solv Arch"
+                value={fullname}
+                onChange={handleInput}
+              />
+              <User className={styles["icon"]} />
+              {fullnameError && <span>{fullnameError}</span>}
             </div>
-                <form className='form-sign-up'>
-                    <h1>Sign up</h1>
-                    <div>
-                        <label>Full name:</label>
-                        <input
-                            type="text"
-                            name="fullname"
-                            placeholder='Solv Arch'
-                            value={fullname}
-                            onChange={handleInput}
-                        />
-                        <User className="icon" />
-                        {fullnameError && <span>{fullnameError}</span>}
-                    </div>
-                    <div>
-                        <label>Department:</label>
-                        <input
-                            type="text"
-                            name="username"
-                            placeholder='I.T'
-                            value={username}
-                            onChange={handleInput}
-                        />
-                        <User className="icon" />
-                        {usernameError && <span>{usernameError}</span>}
-                    </div>
-                    <div>
-                        <label>Email:</label>
-                        <input
-                            type="text"
-                            name="email"
-                            placeholder='example@gmail.com'
-                            value={email}
-                            onChange={handleInput}
-                        />
-                        <Mail className="icon" />
-                        {emailError && <span>{emailError}</span>}
-                    </div>
-                    <div>
-                        <label>Password:</label>
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder='*******'
-                            value={password}
-                            onChange={handleInput}
-                        />
-                        <Lock className="icon" />
-                        {passwordError && <span>{passwordError}</span>}
-                    </div>
-                    <div>
-                        <button className="button" onClick={handleSignUp}>Sign up</button>
-                    </div>
-                    <div className="sign-up-div">
-                        <p> Do not have an account? <a href="login" onClick={loginLink} className="navigate-link">Login</a></p>
-                    </div>
-                    <div>
-                        <button className="button-Google">Sign up with Google</button>
-                    </div>
-                    {errors && <span className="error-span">{errors}</span>}
-                </form>
-            </></div>
+            <div>
+              <label>Department:</label>
+              <input
+                type="text"
+                name="username"
+                placeholder="I.T"
+                value={username}
+                onChange={handleInput}
+              />
+              <User className={styles["icon"]} />
+              {usernameError && <span>{usernameError}</span>}
+            </div>
+            <div>
+              <label>Email:</label>
+              <input
+                type="text"
+                name="email"
+                placeholder="example@gmail.com"
+                value={email}
+                onChange={handleInput}
+              />
+              <Mail className={styles["icon"]} />
+              {emailError && <span>{emailError}</span>}
+            </div>
+            <div>
+              <label>Password:</label>
+              <input
+                type="password"
+                name="password"
+                placeholder="*******"
+                value={password}
+                onChange={handleInput}
+              />
+              <Lock className={styles["icon"]} />
+              {passwordError && <span>{passwordError}</span>}
+            </div>
+            <div>
+              <button className={styles["button"]} onClick={handleSignUp}>
+                Sign up
+              </button>
+            </div>
+            <div className={styles["sign-up-div"]}>
+              <p>
+                {" "}
+                Do not have an account?{" "}
+                <a
+                  href="login"
+                  onClick={loginLink}
+                  className={styles["navigate-link"]}
+                >
+                  Login
+                </a>
+              </p>
+            </div>
+            <div>
+              <button className={styles["button-Google"]}>
+                Sign up with Google
+              </button>
+            </div>
+            {errors && <span className={styles["error-span"]}>{errors}</span>}
+          </form>
+        </>
+      </div>
     );
 };
 

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import './auth.css';
+// import './auth.css';
+import styles from "./auth.module.css";
+
 import { Mail, Code } from 'lucide-react';
 import { confirmSignUp } from 'aws-amplify/auth';
 import { generateClient } from "aws-amplify/api";
@@ -199,52 +201,60 @@ function Verify() {
     };
 
     return (
-        <div className='verify-page'>
-            <><div>
-                {isOpen && (
-                    <div className="dialog-overlay-verify">
-                        <div className="dialog-content">
-                            <h2>Information:</h2>
-                            <p>Verification Successful! Click Ok to continue...</p>
-                            <button onClick={handlegotoLogin}>Ok</button>
-                        </div>
-                    </div>
-                )}
+      <div className={styles["verify-page"]}>
+        <>
+          <div>
+            {isOpen && (
+              <div className={styles["dialog-overlay-verify"]}>
+                <div className={styles["dialog-content"]}>
+                  <h2>Information:</h2>
+                  <p>Verification Successful! Click Ok to continue...</p>
+                  <button onClick={handlegotoLogin}>Ok</button>
+                </div>
+              </div>
+            )}
+          </div>
+          <form className={styles["form-verify"]}>
+            <h1>Verification</h1>
+            <div>
+              <label>Email:</label>
+              <input
+                type="text"
+                name="username"
+                placeholder="example@gmail.com"
+                value={username}
+                onChange={handleInput}
+              />
+              <Mail className={styles["icon"]} />
+              {usernameError && <span>{usernameError}</span>}
             </div>
-                <form className='form-verify'>
-                    <h1>Verification</h1>
-                    <div>
-                        <label>Email:</label>
-                        <input
-                            type="text"
-                            name="username"
-                            placeholder='example@gmail.com'
-                            value={username}
-                            onChange={handleInput}
-                        />
-                        <Mail className="icon" />
-                        {usernameError && <span>{usernameError}</span>}
-                    </div>
-                    <div>
-                        <label>Enter code you recieved in your email:</label>
-                        <input
-                            type="number"
-                            name="confirmationCode"
-                            placeholder='******'
-                            value={confirmationCode}
-                            onChange={handleInput}
-                        />
-                        <Code className="icon" />
-                        {confirmationCodeError && <span>{confirmationCodeError}</span>}
-                    </div>
-                    <div>
-                        <button className="button" onClick={handleSignUpConfirmation}>Verify Sign-up</button>
-                    </div>
-                    {errors && <span className='error-span-verify'>{errors}</span>}
-                </form>
-
-            </></div>
-    )
+            <div>
+              <label>Enter code you recieved in your email:</label>
+              <input
+                type="number"
+                name="confirmationCode"
+                placeholder="******"
+                value={confirmationCode}
+                onChange={handleInput}
+              />
+              <Code className={styles["icon"]} />
+              {confirmationCodeError && <span>{confirmationCodeError}</span>}
+            </div>
+            <div>
+              <button
+                className={styles["button"]}
+                onClick={handleSignUpConfirmation}
+              >
+                Verify Sign-up
+              </button>
+            </div>
+            {errors && (
+              <span className={styles["error-span-verify"]}>{errors}</span>
+            )}
+          </form>
+        </>
+      </div>
+    );
 }
 
 export default Verify;
