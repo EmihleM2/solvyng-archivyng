@@ -15,6 +15,14 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axiosClient from "../../config/axios";
 import { Input } from "@/components/ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 const URL = "/images";
 
@@ -25,6 +33,8 @@ const Files = () => {
   });
   const [refetch, setRefetch] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedFileUrl, setSelectedFileUrl] = useState("");
   const {
     data: imageUrls = [],
     isLoading: imagesLoading,
@@ -34,11 +44,6 @@ const Files = () => {
   useEffect(() => {
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
   }, [bookmarks]);
-
-  const clearBookmarks = () => {
-    setBookmarks([]);
-    localStorage.setItem("bookmarks", JSON.stringify([]));
-  };
 
   const toggleBookmark = (url) => {
     if (bookmarks.includes(url)) {
@@ -59,14 +64,12 @@ const Files = () => {
   const handleDelete = async (key) => {
     try {
       const response = await axiosClient.delete(`/images/${key}`);
-      console.log(response.data);
       toast.success("Image deleted successfully", {
         position: "bottom-right",
         autoClose: 4000,
       });
       setRefetch((prevRefetch) => prevRefetch + 1);
     } catch (error) {
-      console.error(error);
       toast.error("Error deleting file", {
         position: "bottom-right",
         autoClose: 4000,
@@ -74,7 +77,6 @@ const Files = () => {
     }
   };
 
-  // Ensure imageUrls is always an array
   const filteredImages = (Array.isArray(imageUrls) ? imageUrls : []).filter(
     (url) => url.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -136,8 +138,14 @@ const Files = () => {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>Share</DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => {
+                            setSelectedFileUrl(url);
+                            setDialogOpen(true);
+                          }}
+                        >
+                          View
+                        </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => toggleBookmark(url)}>
                           Add bookmark
                         </DropdownMenuItem>
@@ -159,6 +167,40 @@ const Files = () => {
           )}
         </div>
       </div>
+      <Dialog
+        open={dialogOpen}
+        onOpenChange={(isOpen) => {
+          setDialogOpen(isOpen);
+          if (!isOpen) {
+            window.location.reload();
+          }
+        }}
+      >
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>View File</DialogTitle>
+            <DialogDescription>
+              {selectedFileUrl && (
+                <img
+                  src={selectedFileUrl}
+                  alt="Selected File"
+                  className="w-full h-auto rounded-md"
+                />
+              )}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              onClick={() => {
+                setDialogOpen(false);
+                window.location.reload();
+              }}
+            >
+              Close
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
